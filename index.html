@@ -2843,16 +2843,20 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
+            overflow: hidden;
         }
 
         .iframe-content {
             position: relative;
-            width: 95%;
-            height: 90%;
-            margin: 2% auto;
+            width: 90%;
+            height: 85vh;
+            margin: 2vh auto;
+            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
         }
 
         .game-frame {
@@ -2861,6 +2865,7 @@
             border: none;
             border-radius: 10px;
             background: #000;
+            display: block;
         }
 
         .close-button {
@@ -2874,10 +2879,39 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            z-index: 1001;
         }
 
         .close-button:hover {
             background: #ff0000;
+        }
+
+        /* Ensure proper scaling for different screen sizes */
+        @media (max-width: 768px) {
+            .iframe-content {
+                width: 95%;
+                height: 80vh;
+                margin: 5vh auto;
+            }
+        }
+
+        /* Add fullscreen button styles */
+        .fullscreen-button {
+            position: absolute;
+            top: -40px;
+            right: 120px;
+            color: white;
+            background: #2196F3;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1001;
+        }
+
+        .fullscreen-button:hover {
+            background: #1976D2;
         }
     </style>
 
@@ -3769,17 +3803,37 @@
                         <h3>Riddle School 2</h3>
                         <p>Escape school sequel</p>
                     </div>
-                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbz3OFREmzT4e81mEypXp05AuZRpouds_D___kSEYZQrYzotlRohTErTei3J_l-CIWRe_w/exec')">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz3OFREmzT4e81mEypXp05AuZRpouds_D___kSEYZQrYzotlRohTErTei3J_l-CIWRe_w/exec')">
                         <img src="https://play-lh.googleusercontent.com/lHWQCHIZNxmQgJVk6tpOc8s0RHvzRZh_yTp4yQN4DmGEZYk-R15q4HFmNOE_hEPpVA=w240-h480-rw" alt="A Dance of Fire and Ice">
                         <h3>A Dance of Fire and Ice</h3>
                     </div>
-                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbxXoO9kGkqX4-V2KEgYsXQgVRxbEVxEBKlAEo6y_Vp0Ot6QGSyNXWVRhxqxQDQZdPXQ/exec')">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxXoO9kGkqX4-V2KEgYsXQgVRxbEVxEBKlAEo6y_Vp0Ot6QGSyNXWVRhxqxQDQZdPXQ/exec')">
                         <img src="https://play-lh.googleusercontent.com/4yQnQxC5_yGU4gYa0KL4b0myKUEVeqJThbqwU0U8ooLKm0ni-HGJux5iWEQjqhFPvqA" alt="Penguin IO">
                         <h3>Penguin IO</h3>
                     </div>
-                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbwkCrfSI42gVd3NRvCgQJ0iashnrdoZvPt2X5SpVW4qnXiHsdq2kv8kwXxCP67iv3-FTQ/exec')">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwkCrfSI42gVd3NRvCgQJ0iashnrdoZvPt2X5SpVW4qnXiHsdq2kv8kwXxCP67iv3-FTQ/exec')">
                         <img src="https://play-lh.googleusercontent.com/bfd2G8eZ8DgqzxD6Qj7hUXb5iBGjzxCjwXpHtQqGJFLNV_JvXqxwQQjhVqmv8BHYKvY" alt="Surviv.io">
                         <h3>Surviv.io</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxa3OjBw8KWer3YhEXl1wxoe1uQKNo-wgGuqPO3NTndX566TTs10-ioXopEPitTvE-B/exec')">
+                        <img src="https://play-lh.googleusercontent.com/X8FEOENa_t5mlRllBh2RRLc6sMnPIq56Wxa2ndValDOmwzIRhAv7MG6fT97TLQ2DK48" alt="Snowball.io">
+                        <h3>Snowball.io</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz8deZ6JGV1zK91Pgt3q8Rt2sHlrHdNGj_HuGFb3NNfs7r5iBEyTh4aZmqBA3LpXhR-/exec')">
+                        <img src="https://img.itch.zone/aW1nLzEwNjE4MDI4LnBuZw==/original/LWkYn3.png" alt="Grand Prix Tycoon">
+                        <h3>Grand Prix Tycoon</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzJ_NP6PO5TfHpjLOPue-sE-ZCGCI6jRn_JcSKPE6NLe5oDbdmIpt5lJhGy1imQ_eHe4Q/exec')">
+                        <img src="https://img.itch.zone/aW1nLzEyMjg0NzI2LnBuZw==/original/SXh%2BxL.png" alt="Coffee Tycoon">
+                        <h3>Coffee Tycoon</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzsD1trASCBd6oNEixAqKFqGzR4f8aPE949jxennOWHP6jb7mvzyn2q3cvuRU7J1IB7aA/exec')">
+                        <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/12a0ed7c6bc3dd4203a76f6c29f06a46.png" alt="Shop Empire 2">
+                        <h3>Shop Empire 2</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyN8NUPEdb0NuaPQ5bu3Q2y1JYn84NqvVN5IUyo50D5igRCymJ4qAXcmOYCTMV60L318g/exec')">
+                        <img src="https://img.itch.zone/aW1nLzEwNjE4MDI4LnBuZw==/347x500/D4bqL7.png" alt="Corporation Inc">
+                        <h3>Corporation Inc</h3>
                     </div>
                 </div>
             </div>
@@ -5996,17 +6050,22 @@
 
         function toggleFullscreen() {
             const gameFrame = document.getElementById('gameFrame');
+            
             if (!document.fullscreenElement) {
                 if (gameFrame.requestFullscreen) {
                     gameFrame.requestFullscreen();
-                } else if (gameFrame.webkitRequestFullscreen) {
+                } else if (gameFrame.mozRequestFullScreen) { // Firefox
+                    gameFrame.mozRequestFullScreen();
+                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari & Opera
                     gameFrame.webkitRequestFullscreen();
-                } else if (gameFrame.msRequestFullscreen) {
+                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
                     gameFrame.msRequestFullscreen();
                 }
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
                 } else if (document.webkitExitFullscreen) {
                     document.webkitExitFullscreen();
                 } else if (document.msExitFullscreen) {
@@ -6016,16 +6075,62 @@
         }
 
         function openGameFrame(gameUrl) {
-            document.getElementById('gameFrame').src = gameUrl;
-            document.getElementById('iframeContainer').style.display = 'block';
-            // Prevent scrolling of the main page when iframe is open
+            const loadingScreen = document.querySelector('.loading-screen');
+            const iframeContainer = document.getElementById('iframeContainer');
+            const gameFrame = document.getElementById('gameFrame');
+
+            // Show loading screen first
+            loadingScreen.style.display = 'flex';
+            iframeContainer.style.display = 'block';
             document.body.style.overflow = 'hidden';
+
+            // Clear existing iframe
+            gameFrame.src = '';
+            
+            // Add timestamp to URL to prevent caching issues
+            const timeStamp = new Date().getTime();
+            const urlWithTimestamp = gameUrl.includes('?') ? 
+                `${gameUrl}&t=${timeStamp}` : 
+                `${gameUrl}?t=${timeStamp}`;
+
+            // Set up load error timeout
+            let loadTimeout = setTimeout(() => {
+                // If loading takes too long, try reloading
+                gameFrame.src = urlWithTimestamp;
+            }, 10000);
+
+            // Set up iframe load handlers
+            gameFrame.onload = () => {
+                clearTimeout(loadTimeout);
+                // Start fade out animation after a short delay
+                setTimeout(() => {
+                    loadingScreen.classList.add('fade-out');
+                }, 1000);
+
+                // Hide loading screen
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    loadingScreen.classList.remove('fade-out');
+                }, 1300);
+            };
+
+            gameFrame.onerror = () => {
+                clearTimeout(loadTimeout);
+                console.log('Error loading game, retrying...');
+                // Try loading again
+                gameFrame.src = urlWithTimestamp;
+            };
+
+            // Set the iframe src to start loading
+            gameFrame.src = urlWithTimestamp;
         }
 
         function closeGameFrame() {
-            document.getElementById('gameFrame').src = '';
-            document.getElementById('iframeContainer').style.display = 'none';
-            // Re-enable scrolling of the main page
+            const gameFrame = document.getElementById('gameFrame');
+            const iframeContainer = document.getElementById('iframeContainer');
+            
+            gameFrame.src = '';
+            iframeContainer.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
@@ -6075,6 +6180,7 @@
             <path d="M50,45 C40,45 30,55 30,65 C30,75 40,85 50,85 C60,85 70,75 70,65 C70,55 60,45 50,45 Z" fill="#388E3C"/>
             <path d="M30,25 C20,25 10,35 10,45 C10,55 20,65 30,65 C40,65 50,55 50,45 C50,35 40,25 30,25 Z" fill="#4CAF50"/>
             <path d="M70,25 C60,25 50,35 50,45 C50,55 60,65 70,65 C80,65 90,55 90,45 C90,35 80,25 70,25 Z" fill="#4CAF50"/>
+            <rect x="45" y="85" width="10" height="15" fill="#8D6E63"/>
         </svg>
         <div class="loading-text">Loading Broccoli Unblocker...</div>
         <div class="loading-bar">
@@ -6086,6 +6192,7 @@
     <div class="iframe-container" id="iframeContainer">
         <div class="iframe-content">
             <button class="close-button" onclick="closeGameFrame()">Close Game</button>
+            <button class="fullscreen-button" onclick="toggleFullscreen()">Fullscreen</button>
             <iframe id="gameFrame" class="game-frame" src="" allowfullscreen></iframe>
         </div>
     </div>
