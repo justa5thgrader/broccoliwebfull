@@ -5691,6 +5691,43 @@
                 });
             });
         });
+
+        // Function to open games/apps in the iframe
+        function openGame(url, name) {
+            const gameFrame = document.getElementById('gameFrame');
+            const gameTitle = document.getElementById('gameTitle');
+            if (gameFrame && gameTitle) {
+                gameTitle.textContent = name;
+                // Check if URL is already proxied
+                if (!url.includes('00.adenny.net/service/')) {
+                    // Convert URL to proxy format
+                    const encodedUrl = url.replace('https://', '').replace('http://', '');
+                    url = `https://00.adenny.net/service/hvtrs8%2F-${encodedUrl}`;
+                }
+                gameFrame.src = url;
+                
+                // Show the game container
+                document.getElementById('gameContainer').style.display = 'block';
+                
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.style.display = 'none';
+                });
+            }
+        }
+
+        // Function to close the game
+        function closeGame() {
+            const gameContainer = document.getElementById('gameContainer');
+            const gameFrame = document.getElementById('gameFrame');
+            if (gameContainer && gameFrame) {
+                gameContainer.style.display = 'none';
+                gameFrame.src = 'about:blank';
+                
+                // Show the apps tab
+                document.getElementById('apps').style.display = 'block';
+            }
+        }
     </script>
 
     <div class="theme-selector">
