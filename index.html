@@ -17,19 +17,138 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/classroom_black_48dp.png">
     <style>
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --background-color: #121212;
-            --text-color: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --border-color: rgba(255, 255, 255, 0.2);
+            /* Default theme (Light) */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f0f0f0;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --accent-color: #4CAF50;
+            --card-bg: #ffffff;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --card-hover: 0 4px 10px rgba(0,0,0,0.15);
+            --nav-bg: #ffffff;
+            --border-color: #e0e0e0;
         }
 
-        [data-theme="light"] {
-            --background-color: #f5f5f5;
-            --text-color: #333333;
-            --card-bg: rgba(0, 0, 0, 0.05);
-            --border-color: rgba(0, 0, 0, 0.1);
+        /* Dark theme */
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-color: #66bb6a;
+            --card-bg: #2d2d2d;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            --card-hover: 0 4px 10px rgba(0,0,0,0.4);
+            --nav-bg: #2d2d2d;
+            --border-color: #404040;
+        }
+
+        /* Midnight theme */
+        [data-theme="midnight"] {
+            --bg-primary: #0a192f;
+            --bg-secondary: #112240;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --accent-color: #64ffda;
+            --card-bg: #112240;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            --card-hover: 0 4px 10px rgba(0,0,0,0.4);
+            --nav-bg: #112240;
+            --border-color: #233554;
+        }
+
+        /* Sunset theme */
+        [data-theme="sunset"] {
+            --bg-primary: #2c1810;
+            --bg-secondary: #4a1c10;
+            --text-primary: #fff3e0;
+            --text-secondary: #ffcc80;
+            --accent-color: #ff5722;
+            --card-bg: #4a1c10;
+            --card-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            --card-hover: 0 4px 10px rgba(0,0,0,0.4);
+            --nav-bg: #4a1c10;
+            --border-color: #6d2c15;
+        }
+
+        /* Apply theme variables to existing elements */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-content {
+            background-color: var(--bg-secondary);
+        }
+
+        .app-card, .game-card {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .app-card:hover, .game-card:hover {
+            box-shadow: var(--card-hover);
+        }
+
+        .app-card p, .game-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Theme selector styles */
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background-color: var(--card-bg);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-btn.light {
+            background-color: #ffffff;
+        }
+
+        .theme-btn.dark {
+            background-color: #1a1a1a;
+        }
+
+        .theme-btn.midnight {
+            background-color: #0a192f;
+        }
+
+        .theme-btn.sunset {
+            background-color: #2c1810;
+        }
+
+        .theme-btn.active {
+            border-color: var(--accent-color);
+            transform: scale(1.1);
         }
 
         .theme-customizer {
@@ -2126,10 +2245,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-        
-        .volume-control input[type="range"] {
-            flex: 1;
         }
         
         /* Enhanced Stats Tab Styles */
@@ -5549,6 +5664,40 @@
         document.addEventListener('DOMContentLoaded', () => {
             setupProxyTab();
         });
+
+        // Theme selection functionality
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('selected-theme', theme);
+            
+            // Update active state of theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === theme);
+            });
+        }
+
+        // Set dark theme by default
+        document.documentElement.setAttribute('data-theme', 'dark');
+
+        // Initialize theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('selected-theme') || 'dark';
+            setTheme(savedTheme);
+
+            // Add click event listeners to theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTheme(btn.dataset.theme);
+                });
+            });
+        });
     </script>
+
+    <div class="theme-selector">
+        <button class="theme-btn light" data-theme="light" title="Light Theme"></button>
+        <button class="theme-btn dark" data-theme="dark" title="Dark Theme"></button>
+        <button class="theme-btn midnight" data-theme="midnight" title="Midnight Theme"></button>
+        <button class="theme-btn sunset" data-theme="sunset" title="Sunset Theme"></button>
+    </div>
 </body>
 </html> 
