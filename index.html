@@ -2779,14 +2779,14 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--background-color);
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-color);
             display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            z-index: 2000;
+            z-index: 9999;
             opacity: 1;
             transition: opacity 0.3s ease-out;
         }
@@ -2796,24 +2796,24 @@
         }
 
         .loading-screen .broccoli-icon {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
             animation: pulse 1.5s ease-in-out infinite;
         }
 
         .loading-screen .loading-text {
             color: var(--accent-color);
-            margin-top: 20px;
-            font-size: 1.2em;
+            margin-top: 30px;
+            font-size: 1.5em;
             font-family: 'Courier New', monospace;
         }
 
         .loading-bar {
-            width: 200px;
-            height: 4px;
+            width: 300px;
+            height: 6px;
             background: rgba(0, 255, 0, 0.2);
-            border-radius: 2px;
-            margin-top: 15px;
+            border-radius: 3px;
+            margin-top: 25px;
             overflow: hidden;
         }
 
@@ -2836,42 +2836,48 @@
             100% { transform: scaleX(1); }
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px 0;
+        /* Add iframe container styles */
+        .iframe-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
         }
 
-        .logo .broccoli-icon {
-            width: 60px;
-            height: 60px;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3));
+        .iframe-content {
+            position: relative;
+            width: 95%;
+            height: 90%;
+            margin: 2% auto;
         }
 
-        .logo h1 {
-            font-size: 2.5em;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            font-family: 'Courier New', monospace;
-            margin: 0;
+        .game-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+            background: #000;
         }
 
-        .loading-screen .broccoli-icon {
-            width: 100px;
-            height: 100px;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
-        }
-
-        .loading-screen .loading-text {
-            color: var(--accent-color);
-            margin-top: 25px;
-            font-size: 1.5em;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .close-button {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            background: #ff4444;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
             font-weight: bold;
+        }
+
+        .close-button:hover {
+            background: #ff0000;
         }
     </style>
 
@@ -2952,27 +2958,21 @@
     <div class="container">
         <header>
             <div class="logo">
-                <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                    <!-- Enhanced broccoli icon with more detail -->
+                <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
                     <path d="M50,5 C40,5 30,15 30,25 C30,35 40,45 50,45 C60,45 70,35 70,25 C70,15 60,5 50,5 Z" fill="#4CAF50"/>
                     <path d="M50,45 C40,45 30,55 30,65 C30,75 40,85 50,85 C60,85 70,75 70,65 C70,55 60,45 50,45 Z" fill="#388E3C"/>
                     <path d="M30,25 C20,25 10,35 10,45 C10,55 20,65 30,65 C40,65 50,55 50,45 C50,35 40,25 30,25 Z" fill="#4CAF50"/>
                     <path d="M70,25 C60,25 50,35 50,45 C50,55 60,65 70,65 C80,65 90,55 90,45 C90,35 80,25 70,25 Z" fill="#4CAF50"/>
-                    <!-- Add highlight details -->
-                    <path d="M45,15 C42,18 40,22 42,25 C44,28 48,28 50,25" fill="#81C784" opacity="0.6"/>
-                    <path d="M65,35 C62,38 60,42 62,45 C64,48 68,48 70,45" fill="#81C784" opacity="0.6"/>
+                    <rect x="45" y="85" width="10" height="15" fill="#8D6E63"/>
                 </svg>
-                <h1>Broccoli Unblocker</h1>
+                <h1>Broccoli Direct</h1>
             </div>
+            <nav>
+                <div class="header">
+                    <h1 class="site-title">Broccoli Direct</h1>
+                </div>
+            </nav>
         </header>
-
-        <!-- Remove duplicate title -->
-        <nav>
-            <div class="header">
-                <!-- Original h1 removed -->
-            </div>
-            <!-- Rest of nav content -->
-        </nav>
 
         <!-- Main Navigation Tabs -->
         <div class="main-tabs">
@@ -3527,43 +3527,43 @@
                         <h3>Sprunki Clicker</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxeLEpzZpAIPrMSkB1dCTPkLcn8wcNTVCw0wfN2q_jOfXWQ3GhcrqygfgQq1t2yyK6tCQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Mr Racer">
+                        <img src="https://play-lh.googleusercontent.com/U8M8P1nB8TUZw4GhQn3LwXpUo1Hhp1jPAOLcmBRzg0YhFKxeRgi5e9IgQBg-7lI_PA=w240-h480-rw" alt="Mr Racer">
                         <h3>Mr Racer</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://scratch.mit.edu/projects/105500895/embed')">
-                        <img src="https://geometrydash.io/img/logo.png" alt="Geometry Dash">
+                        <img src="https://assets.geometrydash.io/favicon.ico" alt="Geometry Dash">
                         <h3>Geometry Dash</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://firebasestorage.googleapis.com/v0/b/test-1e83a.appspot.com/o/1.html?alt=media&token=3542ede2-65da-4871-a64a-3494f448bb76')">
-                        <img src="https://1v1.lol/img/logo.png" alt="1v1.LOL">
+                        <img src="https://1v1.lol/assets/images/logo.png" alt="1v1.LOL">
                         <h3>1v1.LOL</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxUirOvda1cK6lygKXhf6KU-fXxCw2oBnggnBCSH7A3tU8cyIgjoLGJNWUs3HtDootq/exec')">
-                        <img src="https://motox3m.io/img/logo.png" alt="Moto X3M">
+                        <img src="https://motox3m.co/assets/images/logo.png" alt="Moto X3M">
                         <h3>Moto X3M</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwOs-SsYeiN758I5eVCPGl7YW-IpawaSbapsKt3NUZwWLSpC8fZfDH7wqeQE1hGBiSZ/exec')">
-                        <img src="https://supermario.io/img/logo.png" alt="Super Mario">
+                        <img src="https://mario.nintendo.com/static/d783068682f98d6cfec666c747a27793/d6e64/mario-pose.png" alt="Super Mario">
                         <h3>Super Mario</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzrzH3F40_t7GSh9M-o6VzOYpFfCj2JG4N0dqqcZSAuARN-p_kF8xDDoCrU8bd-XZxA/exec')">
-                        <img src="https://supermario.io/img/logo.png" alt="Super Mario Bros 3">
+                        <img src="https://mario.nintendo.com/static/d783068682f98d6cfec666c747a27793/d6e64/mario-pose.png" alt="Super Mario Bros 3">
                         <h3>Super Mario Bros 3</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxY1zcRZnw2K9ovRCxOKaHocUcksiG7aw7OOs8IKSrDw8wtqyOXrXiCfxy2ZNEcLs-hlQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Fire Balls">
+                        <img src="https://play-lh.googleusercontent.com/Ni0S2Ltuia4c8oHqmE3z8NGFpJ1qhxGWmxwwa1t5oGtFhc6DYUMlbV6JUHxHLQOzk9rd=w240-h480-rw" alt="Fire Balls">
                         <h3>Fire Balls</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://scratch.mit.edu/projects/embed/17964117')">
-                        <img src="https://flappybird.io/img/logo.png" alt="Flappy Bird OG">
+                        <img src="https://flappybird.io/assets/images/logo.png" alt="Flappy Bird OG">
                         <h3>Flappy Bird OG</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzwDflD6NVq9iPdEWsRyyI4iqR_k47P-BK4sn_vpYaZGsPJz3zDYRDy45azzYiPnYs/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Bottle Flip 3D">
+                        <img src="https://play-lh.googleusercontent.com/4aznLu_JUWUKZBjCXtFAp8OjAU4Xp5N_kv3hD5mWCwZXvCdCFY8BfNfYg0QVqQIe1g=w240-h480-rw" alt="Bottle Flip 3D">
                         <h3>Bottle Flip 3D</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwgo9fzGlgbzqpBKfXrw7gGGvg8cYPPL-ycgd_y9jKePSDVnk_zr_keYn8v-0eUJQd5/exec')">
-                        <img src="https://2048.io/img/logo.png" alt="2048 Game">
+                        <img src="https://play2048.co/favicon.ico" alt="2048 Game">
                         <h3>2048 Game</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycby30nrhMSPeJyfgpPQfLsVVhOxjjyErkIsQtoYAzPkRYenYcSBpVyMcOwXy_flMCjFm/exec')">
@@ -3768,6 +3768,18 @@
                         <img src="https://i.ytimg.com/vi/S8LM0mYMI9w/maxresdefault.jpg" alt="Riddle School 2">
                         <h3>Riddle School 2</h3>
                         <p>Escape school sequel</p>
+                    </div>
+                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbz3OFREmzT4e81mEypXp05AuZRpouds_D___kSEYZQrYzotlRohTErTei3J_l-CIWRe_w/exec')">
+                        <img src="https://play-lh.googleusercontent.com/lHWQCHIZNxmQgJVk6tpOc8s0RHvzRZh_yTp4yQN4DmGEZYk-R15q4HFmNOE_hEPpVA=w240-h480-rw" alt="A Dance of Fire and Ice">
+                        <h3>A Dance of Fire and Ice</h3>
+                    </div>
+                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbxXoO9kGkqX4-V2KEgYsXQgVRxbEVxEBKlAEo6y_Vp0Ot6QGSyNXWVRhxqxQDQZdPXQ/exec')">
+                        <img src="https://play-lh.googleusercontent.com/4yQnQxC5_yGU4gYa0KL4b0myKUEVeqJThbqwU0U8ooLKm0ni-HGJux5iWEQjqhFPvqA" alt="Penguin IO">
+                        <h3>Penguin IO</h3>
+                    </div>
+                    <div class="game-card" onclick="openGameFrame('https://script.google.com/macros/s/AKfycbwkCrfSI42gVd3NRvCgQJ0iashnrdoZvPt2X5SpVW4qnXiHsdq2kv8kwXxCP67iv3-FTQ/exec')">
+                        <img src="https://play-lh.googleusercontent.com/bfd2G8eZ8DgqzxD6Qj7hUXb5iBGjzxCjwXpHtQqGJFLNV_JvXqxwQQjhVqmv8BHYKvY" alt="Surviv.io">
+                        <h3>Surviv.io</h3>
                     </div>
                 </div>
             </div>
@@ -6002,6 +6014,34 @@
                 }
             }
         }
+
+        function openGameFrame(gameUrl) {
+            document.getElementById('gameFrame').src = gameUrl;
+            document.getElementById('iframeContainer').style.display = 'block';
+            // Prevent scrolling of the main page when iframe is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGameFrame() {
+            document.getElementById('gameFrame').src = '';
+            document.getElementById('iframeContainer').style.display = 'none';
+            // Re-enable scrolling of the main page
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close iframe when clicking outside of it
+        document.getElementById('iframeContainer').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeGameFrame();
+            }
+        });
+
+        // Handle escape key to close iframe
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeGameFrame();
+            }
+        });
     </script>
 
     <div class="theme-selector">
@@ -6031,48 +6071,23 @@
     <!-- Add loading screen HTML -->
     <div class="loading-screen">
         <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <!-- Enhanced broccoli icon with more detail -->
             <path d="M50,5 C40,5 30,15 30,25 C30,35 40,45 50,45 C60,45 70,35 70,25 C70,15 60,5 50,5 Z" fill="#4CAF50"/>
             <path d="M50,45 C40,45 30,55 30,65 C30,75 40,85 50,85 C60,85 70,75 70,65 C70,55 60,45 50,45 Z" fill="#388E3C"/>
             <path d="M30,25 C20,25 10,35 10,45 C10,55 20,65 30,65 C40,65 50,55 50,45 C50,35 40,25 30,25 Z" fill="#4CAF50"/>
             <path d="M70,25 C60,25 50,35 50,45 C50,55 60,65 70,65 C80,65 90,55 90,45 C90,35 80,25 70,25 Z" fill="#4CAF50"/>
-            <!-- Add highlight details -->
-            <path d="M45,15 C42,18 40,22 42,25 C44,28 48,28 50,25" fill="#81C784" opacity="0.6"/>
-            <path d="M65,35 C62,38 60,42 62,45 C64,48 68,48 70,45" fill="#81C784" opacity="0.6"/>
         </svg>
-        <div class="loading-text">INITIALIZING SECURE CONNECTION</div>
+        <div class="loading-text">Loading Broccoli Unblocker...</div>
         <div class="loading-bar">
             <div class="loading-progress"></div>
         </div>
     </div>
 
-    <script>
-    // Modify the openGame function to include loading screen
-    function openGame(url, title) {
-        const loadingScreen = document.querySelector('.loading-screen');
-        const gameContainer = document.getElementById('gameContainer');
-        const gameFrame = document.getElementById('gameFrame');
-        const gameTitle = document.getElementById('gameTitle');
-
-        // First show the game container and set up the iframe
-        gameContainer.style.display = 'block';
-        gameTitle.textContent = title;
-        gameFrame.src = url;
-
-        // Then show the loading screen on top
-        loadingScreen.style.display = 'flex';
-        
-        // After 2.7 seconds, start fading out
-        setTimeout(() => {
-            loadingScreen.classList.add('fade-out');
-        }, 2700);
-
-        // After 3 seconds, hide completely
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            loadingScreen.classList.remove('fade-out');
-        }, 3000);
-    }
-    </script>
+    <!-- Add iframe container -->
+    <div class="iframe-container" id="iframeContainer">
+        <div class="iframe-content">
+            <button class="close-button" onclick="closeGameFrame()">Close Game</button>
+            <iframe id="gameFrame" class="game-frame" src="" allowfullscreen></iframe>
+        </div>
+    </div>
 </body>
 </html> 
