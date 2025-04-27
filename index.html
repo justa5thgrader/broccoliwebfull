@@ -2655,27 +2655,295 @@
             font-size: 12px;
             color: rgba(255, 255, 255, 0.7);
         }
+
+        /* GeForce Now Setup Styles */
+        .setup-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .setup-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .setup-step h3 {
+            color: var(--text-color);
+            margin-top: 0;
+        }
+        
+        .setup-step p {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .setup-step ul {
+            color: var(--text-color);
+            opacity: 0.8;
+            padding-left: 20px;
+        }
+        
+        .setup-step li {
+            margin: 10px 0;
+        }
+        
+        .setup-step .app-card {
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        /* Existing styles */
+        
+        /* Game Control Buttons */
+        .game-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--button-bg);
+            color: var(--text-color);
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .fullscreen-btn {
+            background: var(--accent-color);
+        }
+        
+        .close-btn {
+            background: #dc3545;
+        }
+        
+        .control-btn i {
+            font-size: 18px;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --nav-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --button-bg: #3d3d3d;
+            --accent-color: #4CAF50;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
+            transition: background 0.3s ease;
+        }
+
+        /* Background Styles */
+        body.matrix-rain {
+            background: var(--bg-color) url('path/to/matrix-rain.gif') repeat;
+        }
+
+        body.particles {
+            background: var(--bg-color);
+        }
+
+        body.gradient {
+            background: linear-gradient(45deg, var(--bg-color), #2d2d2d);
+        }
+
+        body.solid-color {
+            background: var(--bg-color);
+        }
+
+        /* Update iframe background */
+        #gameFrame {
+            background: var(--bg-color) !important;
+        }
+
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 2000;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+        }
+
+        .loading-screen .broccoli-icon {
+            width: 80px;
+            height: 80px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-screen .loading-text {
+            color: var(--accent-color);
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 2px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transform-origin: left;
+            animation: loading 3s linear;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes loading {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .logo .broccoli-icon {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.3));
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+        }
+
+        .loading-screen .broccoli-icon {
+            width: 100px;
+            height: 100px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
+        }
+
+        .loading-screen .loading-text {
+            color: var(--accent-color);
+            margin-top: 25px;
+            font-size: 1.5em;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
     </style>
-    <script src="https://www.gstatic.com/classroom/logo_square_48.svg"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/slides_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/sheets_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/forms_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/meet_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/calendar_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/drive_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/gmail_black_48dp.png"></script>
-    <script src="https://www.gstatic.com/images/icons/material/system/1x/classroom_black_48dp.png"></script>
-    <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/slides_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/sheets_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/forms_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/meet_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/calendar_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/drive_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/gmail_black_48dp.png">
-    <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/classroom_black_48dp.png">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        // Initialize theme and background
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set dark theme by default
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+            
+            // Set background style
+            const savedBgStyle = localStorage.getItem('bgStyle') || 'solid-color';
+            setBackgroundStyle(savedBgStyle);
+            
+            // Initialize other components
+            initializeComponents();
+        });
+
+        function setBackgroundStyle(style) {
+            const body = document.body;
+            // Remove all existing background classes
+            body.classList.remove('matrix-rain', 'particles', 'gradient', 'solid-color');
+            // Add the selected style
+            body.classList.add(style);
+            // Save the preference
+            localStorage.setItem('bgStyle', style);
+
+            // Update the select element to reflect current style
+            const bgStyleSelect = document.querySelector('.background-picker select');
+            if (bgStyleSelect) {
+                bgStyleSelect.value = style;
+            }
+        }
+
+        // Add event listener to background style selector
+        document.querySelector('.background-picker select')?.addEventListener('change', function(e) {
+            setBackgroundStyle(e.target.value);
+        });
+
+        function initializeComponents() {
+            // Add your other initialization code here
+        }
+
+        // Initialize theme
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Update active state of theme buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === theme);
+            });
+        }
+
+        // Set dark theme as default if no theme is saved
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+            
+            // Initialize other components
+            initializeTabs();
+            initializeProxyList();
+            initializeBrowser();
+            initializeCloaking();
+            initializeMatrixRain();
+            initializeErrorHandling();
+            registerServiceWorker();
+        });
+    </script>
 </head>
 <body>
     <!-- Particles background -->
@@ -2684,21 +2952,27 @@
     <div class="container">
         <header>
             <div class="logo">
-                <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+                <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <!-- Enhanced broccoli icon with more detail -->
                     <path d="M50,5 C40,5 30,15 30,25 C30,35 40,45 50,45 C60,45 70,35 70,25 C70,15 60,5 50,5 Z" fill="#4CAF50"/>
                     <path d="M50,45 C40,45 30,55 30,65 C30,75 40,85 50,85 C60,85 70,75 70,65 C70,55 60,45 50,45 Z" fill="#388E3C"/>
                     <path d="M30,25 C20,25 10,35 10,45 C10,55 20,65 30,65 C40,65 50,55 50,45 C50,35 40,25 30,25 Z" fill="#4CAF50"/>
                     <path d="M70,25 C60,25 50,35 50,45 C50,55 60,65 70,65 C80,65 90,55 90,45 C90,35 80,25 70,25 Z" fill="#4CAF50"/>
-                    <rect x="45" y="85" width="10" height="15" fill="#8D6E63"/>
+                    <!-- Add highlight details -->
+                    <path d="M45,15 C42,18 40,22 42,25 C44,28 48,28 50,25" fill="#81C784" opacity="0.6"/>
+                    <path d="M65,35 C62,38 60,42 62,45 C64,48 68,48 70,45" fill="#81C784" opacity="0.6"/>
                 </svg>
-                <h1>Broccoli Direct</h1>
+                <h1>Broccoli Unblocker</h1>
             </div>
-            <nav>
-                <div class="header">
-                    <h1 class="site-title">Broccoli Direct</h1>
-                </div>
-            </nav>
         </header>
+
+        <!-- Remove duplicate title -->
+        <nav>
+            <div class="header">
+                <!-- Original h1 removed -->
+            </div>
+            <!-- Rest of nav content -->
+        </nav>
 
         <!-- Main Navigation Tabs -->
         <div class="main-tabs">
@@ -2709,6 +2983,7 @@
             <button class="main-tab" data-tab="cloaking">Cloaking</button>
             <button class="main-tab" data-tab="proxy">Proxy</button>
             <button class="main-tab" data-tab="apps">Apps</button>
+            <button class="main-tab" data-tab="gfn-setup">GeForce Now Setup</button>
         </div>
 
         <!-- Browser Tab Content -->
@@ -2920,25 +3195,17 @@
                     <div class="option-group">
                         <h3>Theme Settings</h3>
                         <div class="theme-toggle">
-                            <label for="theme-toggle">Dark Mode</label>
-                            <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                            <label for="darkMode">Dark Mode</label>
+                            <input type="checkbox" id="darkMode" checked onchange="toggleTheme()">
                         </div>
-                        <div class="color-picker">
-                            <h4>Primary Color</h4>
-                            <div class="color-options">
-                                <div class="color-option" style="background-color: #4CAF50;" onclick="changeColor('#4CAF50')"></div>
-                                <div class="color-option" style="background-color: #2196F3;" onclick="changeColor('#2196F3')"></div>
-                                <div class="color-option" style="background-color: #FF5722;" onclick="changeColor('#FF5722')"></div>
-                                <div class="color-option" style="background-color: #9C27B0;" onclick="changeColor('#9C27B0')"></div>
-                            </div>
-                        </div>
+                        
                         <div class="background-picker">
                             <h4>Background Style</h4>
-                            <select id="background-style" onchange="changeBackground()">
-                                <option value="particles">Particles</option>
-                                <option value="matrix">Matrix Rain</option>
+                            <select onchange="setBackgroundStyle(this.value)">
+                                <option value="solid-color">Solid Color</option>
                                 <option value="gradient">Gradient</option>
-                                <option value="solid">Solid Color</option>
+                                <option value="matrix-rain">Matrix Rain</option>
+                                <option value="particles">Particles</option>
                             </select>
                         </div>
                     </div>
@@ -3404,26 +3671,8 @@
                         <img src="https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw" alt="Melon Playground">
                         <h3>Melon Playground</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://278889002-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.aua8ukEWe74.O%2Fd%3D1%2Frs%3DAHpOoo-9vDKdscewy8drQ984EeTo0iOz2A%2Fm%3D__features__')">
-                        <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/12a0ed7c6bc09b73d6ef5a5f35424b6d.png" alt="Ragdoll Bow" />
-                        <h3>Ragdoll Bow</h3>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://1180351671-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.aua8ukEWe74.O%2Fd%3D1%2Frs%3DAHpOoo-9vDKdscewy8drQ984EeTo0iOz2A%2Fm%3D__features__')">
-                        <img src="https://tr.rbxcdn.com/8f4c1556e8c397c82688f246360f8f28/768/432/Image/Png" alt="Obby 99% Lose" />
-                        <h3>Obby 99% Lose</h3>
-                    </div>
-                    <div class="game-card" onclick="window.open('https://829474971-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.aua8ukEWe74.O%2Fd%3D1%2Frs%3DAHpOoo-9vDKdscewy8drQ984EeTo0iOz2A%2Fm%3D__features__', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="Race Online City">
-                        <h3>Race Online City</h3>
-                    </div>
-                    <div class="game-card" onclick="window.open('https://1797259810-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.aua8ukEWe74.O%2Fd%3D1%2Frs%3DAHpOoo-9vDKdscewy8drQ984EeTo0iOz2A%2Fm%3D__features__', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="Crazy Planes">
-                        <h3>Crazy Planes</h3>
-                    </div>
-                    <div class="game-card" onclick="window.open('https://469242115-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.aua8ukEWe74.O%2Fd%3D1%2Frs%3DAHpOoo-9vDKdscewy8drQ984EeTo0iOz2A%2Fm%3D__features__', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="Cra Driving Drift">
-                        <h3>Cra Driving Drift</h3>
-                    </div>
+                 
+                    
                     <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbxJNtrKTWPCSIo9tOqq53G2xqoQCIPDTYUsVOT79Eqk8I7C5cQkGdDnj0jzlNHa7bvs3g/exec', '_blank')">
                         <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="FNAF">
                         <h3>FNAF</h3>
@@ -3510,6 +3759,16 @@
                         <h3>Minecraft</h3>
                         <p>EaglerCraft 1.8</p>
                     </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyBMzbST-uTVoOBVyLwbqs7LeloEnSkKiP4Cik0DmPAcVR7Oqq-BzXdvrOzNR6Uwl4MJQ/exec', 'Riddle School')">
+                        <img src="https://i.ytimg.com/vi/qCHHGGF9l-o/maxresdefault.jpg" alt="Riddle School">
+                        <h3>Riddle School</h3>
+                        <p>Classic Flash puzzle game</p>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxAxmSYav_FxW2KK6Uq4gGNAkqUdVghvBbB7RGGp94sgFIyB0zaNQwMmtyXUrA7Uh80yQ/exec', 'Riddle School 2')">
+                        <img src="https://i.ytimg.com/vi/S8LM0mYMI9w/maxresdefault.jpg" alt="Riddle School 2">
+                        <h3>Riddle School 2</h3>
+                        <p>Escape school sequel</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3567,6 +3826,47 @@
                         <img src="https://now.gg/themes/nowgg/assets/images/logo.svg" alt="Now.gg">
                         <h3>Now.gg</h3>
                         <p>Cloud gaming platform</p>
+                    </div>
+                    <div class="app-card" onclick="openGame('https://chess.com', 'Chess.com')">
+                        <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpZA7QOK.png" alt="Chess.com">
+                        <h3>Chess.com</h3>
+                        <p>Online chess platform</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GeForce Now Setup Tab Content -->
+        <div class="main-tab-content" id="gfn-setup-tab">
+            <div class="glass-panel">
+                <h2>GeForce Now Setup Guide</h2>
+                <div class="setup-container">
+                    <div class="setup-step">
+                        <h3>Step 1: Get a Temporary Email</h3>
+                        <p>First, you'll need a temporary email for registration:</p>
+                        <div class="app-card" onclick="window.open('about:blank').document.write('<iframe src=\'https://tempmailo.com/\' style=\'width:100%;height:100vh;border:none;\'></iframe>')">
+                            <img src="https://tempmailo.com/favicon.ico" alt="TempMailo">
+                            <h3>TempMailo</h3>
+                            <p>Get your temporary email</p>
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <h3>Step 2: Register for GeForce Now</h3>
+                        <p>Use your temporary email to create a GeForce Now account:</p>
+                        <div class="app-card" onclick="window.open('about:blank').document.write('<iframe src=\'https://108.181.11.175/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9LblI5NHRkdE54R1ZqZUVOT2txMzdOVHJ6ZXJaRThGaGg5MWhHU3ZGbElycGtaNFFKb2w3VmhUN3I2RjMzdWxKNHl3WkYrZ0ExQXZzMnFBVWVyU1YvMUE9&r=aHR0cHM6Ly8xMDguMTgxLjExLjE3NS9tYWxsLz9fX2Nwbz1hSFIwY0hNNkx5OXdiR0Y1TG1kbFptOXlZMlZ1YjNjdVkyOXQ%3D&__cpo=1\' style=\'width:100%;height:100vh;border:none;\'></iframe>')">
+                            <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/gfn/webassets/gfn-share-image.jpg" alt="GeForce Now">
+                            <h3>GeForce Now</h3>
+                            <p>Cloud gaming service</p>
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <h3>Important Notes:</h3>
+                        <ul>
+                            <li>The temporary email is valid for 2 days</li>
+                            <li>Make sure to save your login credentials</li>
+                            <li>You can create multiple accounts if needed</li>
+                            <li>Free tier available with 1-hour session limit</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -5026,21 +5326,30 @@
         };
 
         // Add this function to your existing JavaScript
-        function openGame(url, name) {
+        function openGame(url, title) {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const gameContainer = document.getElementById('gameContainer');
             const gameFrame = document.getElementById('gameFrame');
             const gameTitle = document.getElementById('gameTitle');
-            if (gameFrame && gameTitle) {
-                gameTitle.textContent = name || 'Game';
-                gameFrame.src = url;
-                
-                // Show the game container
-                document.getElementById('gameContainer').style.display = 'block';
-                
-                // Hide all tabs
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.style.display = 'none';
-                });
-            }
+
+            // First show the game container and set up the iframe
+            gameContainer.style.display = 'block';
+            gameTitle.textContent = title;
+            gameFrame.src = url;
+
+            // Then show the loading screen on top
+            loadingScreen.style.display = 'flex';
+            
+            // After 2.7 seconds, start fading out
+            setTimeout(() => {
+                loadingScreen.classList.add('fade-out');
+            }, 2700);
+
+            // After 3 seconds, hide completely
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                loadingScreen.classList.remove('fade-out');
+            }, 3000);
         }
 
         // Function to close the game
@@ -5703,14 +6012,67 @@
                     </div>
 
     <div id="gameContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; background: var(--bg-color);">
-        <div style="padding: 10px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
-            <h2 id="gameTitle" style="margin: 0; color: var(--text-color);">Game</h2>
-            <div>
-                <button onclick="toggleFullscreen()" style="padding: 8px; margin-right: 10px; cursor: pointer; background: var(--button-bg); color: var(--text-color); border: none; border-radius: 4px;">Fullscreen</button>
-                <button onclick="closeGame()" style="padding: 8px; cursor: pointer; background: var(--button-bg); color: var(--text-color); border: none; border-radius: 4px;">Close</button>
-                    </div>
-                    </div>
-        <iframe id="gameFrame" style="width: 100%; height: calc(100vh - 60px); border: none; background: white;"></iframe>
-                    </div>
+        <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; background: var(--nav-bg);">
+            <h2 id="gameTitle" style="margin: 0; color: var(--text-color); font-size: 24px;">Game</h2>
+            <div class="game-controls">
+                <button onclick="toggleFullscreen()" class="control-btn fullscreen-btn">
+                    <i class="fas fa-expand"></i>
+                    Fullscreen
+                </button>
+                <button onclick="closeGame()" class="control-btn close-btn">
+                    <i class="fas fa-times"></i>
+                    Close
+                </button>
+            </div>
+        </div>
+        <iframe id="gameFrame" style="width: 100%; height: calc(100vh - 80px); border: none; background: var(--bg-color);"></iframe>
+    </div>
+
+    <!-- Add loading screen HTML -->
+    <div class="loading-screen">
+        <svg class="broccoli-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <!-- Enhanced broccoli icon with more detail -->
+            <path d="M50,5 C40,5 30,15 30,25 C30,35 40,45 50,45 C60,45 70,35 70,25 C70,15 60,5 50,5 Z" fill="#4CAF50"/>
+            <path d="M50,45 C40,45 30,55 30,65 C30,75 40,85 50,85 C60,85 70,75 70,65 C70,55 60,45 50,45 Z" fill="#388E3C"/>
+            <path d="M30,25 C20,25 10,35 10,45 C10,55 20,65 30,65 C40,65 50,55 50,45 C50,35 40,25 30,25 Z" fill="#4CAF50"/>
+            <path d="M70,25 C60,25 50,35 50,45 C50,55 60,65 70,65 C80,65 90,55 90,45 C90,35 80,25 70,25 Z" fill="#4CAF50"/>
+            <!-- Add highlight details -->
+            <path d="M45,15 C42,18 40,22 42,25 C44,28 48,28 50,25" fill="#81C784" opacity="0.6"/>
+            <path d="M65,35 C62,38 60,42 62,45 C64,48 68,48 70,45" fill="#81C784" opacity="0.6"/>
+        </svg>
+        <div class="loading-text">INITIALIZING SECURE CONNECTION</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <script>
+    // Modify the openGame function to include loading screen
+    function openGame(url, title) {
+        const loadingScreen = document.querySelector('.loading-screen');
+        const gameContainer = document.getElementById('gameContainer');
+        const gameFrame = document.getElementById('gameFrame');
+        const gameTitle = document.getElementById('gameTitle');
+
+        // First show the game container and set up the iframe
+        gameContainer.style.display = 'block';
+        gameTitle.textContent = title;
+        gameFrame.src = url;
+
+        // Then show the loading screen on top
+        loadingScreen.style.display = 'flex';
+        
+        // After 2.7 seconds, start fading out
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+        }, 2700);
+
+        // After 3 seconds, hide completely
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            loadingScreen.classList.remove('fade-out');
+        }, 3000);
+    }
+    </script>
 </body>
 </html> 
