@@ -3820,14 +3820,7 @@
                 unlockAllAchievements();
             });
             
-            const resetButton = document.createElement('button');
-            resetButton.textContent = 'Reset Achievements';
-            resetButton.style.padding = '5px 10px';
-            resetButton.style.marginLeft = '10px';
-            resetButton.style.cursor = 'pointer';
-            resetButton.addEventListener('click', function() {
-                resetAchievements();
-            });
+           
             
             debugDiv.appendChild(unlockButton);
             debugDiv.appendChild(resetButton);
