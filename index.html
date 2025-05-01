@@ -3013,6 +3013,9 @@
             setTimeout(() => {
                 initializeAchievements();
                 initializeStats();
+                
+                // Add a debug button to test achievements
+                addDebugButton();
             }, 500);
         });
         
@@ -3085,10 +3088,6 @@
                 }
             } else {
                 console.log('No saved achievements found');
-                // Unlock a few achievements to demonstrate the system
-                setTimeout(() => {
-                    unlockAchievement('First Game');
-                }, 2000);
             }
             
             // Update the UI to reflect earned achievements
@@ -3101,8 +3100,39 @@
                 }, 1500);
             }
             
+            // Check for time-based achievements
+            checkTimeAchievements();
+            
+            // Check for weekend warrior achievement
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            if (dayOfWeek === 0 || dayOfWeek === 6) { // 0 is Sunday, 6 is Saturday
+                setTimeout(() => {
+                    unlockAchievement('Weekend Warrior');
+                }, 2000);
+            }
+            
             // Add achievement CSS if not already present
             addAchievementStyles();
+        }
+        
+        function checkTimeAchievements() {
+            const now = new Date();
+            const hours = now.getHours();
+            
+            // Night Owl: after midnight and before 5 AM
+            if (hours >= 0 && hours < 5) {
+                setTimeout(() => {
+                    unlockAchievement('Night Owl');
+                }, 1000);
+            }
+            
+            // Early Bird: between 5 AM and 8 AM
+            if (hours >= 5 && hours < 8) {
+                setTimeout(() => {
+                    unlockAchievement('Early Bird');
+                }, 1000);
+            }
         }
         
         function initializeStats() {
@@ -3769,6 +3799,58 @@
             }
             
             // Existing cloaking logic here...
+        }
+        
+        function addDebugButton() {
+            // Only add in development mode
+            const debugDiv = document.createElement('div');
+            debugDiv.style.position = 'fixed';
+            debugDiv.style.bottom = '10px';
+            debugDiv.style.left = '10px';
+            debugDiv.style.zIndex = '9999';
+            debugDiv.style.background = 'rgba(0,0,0,0.7)';
+            debugDiv.style.padding = '10px';
+            debugDiv.style.borderRadius = '5px';
+            
+            const unlockButton = document.createElement('button');
+            unlockButton.textContent = 'Unlock All Achievements';
+            unlockButton.style.padding = '5px 10px';
+            unlockButton.style.cursor = 'pointer';
+            unlockButton.addEventListener('click', function() {
+                unlockAllAchievements();
+            });
+            
+            const resetButton = document.createElement('button');
+            resetButton.textContent = 'Reset Achievements';
+            resetButton.style.padding = '5px 10px';
+            resetButton.style.marginLeft = '10px';
+            resetButton.style.cursor = 'pointer';
+            resetButton.addEventListener('click', function() {
+                resetAchievements();
+            });
+            
+            debugDiv.appendChild(unlockButton);
+            debugDiv.appendChild(resetButton);
+            document.body.appendChild(debugDiv);
+        }
+        
+        function unlockAllAchievements() {
+            console.log('Unlocking all achievements');
+            Object.keys(achievements).forEach(name => {
+                setTimeout(() => {
+                    unlockAchievement(name);
+                }, Math.random() * 1000);
+            });
+        }
+        
+        function resetAchievements() {
+            console.log('Resetting all achievements');
+            Object.keys(achievements).forEach(name => {
+                achievements[name].earned = false;
+                achievements[name].dateEarned = null;
+            });
+            localStorage.setItem('achievements', JSON.stringify(achievements));
+            updateAchievementsUI();
         }
         
         function addAchievementStyles() {
