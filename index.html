@@ -2848,17 +2848,6 @@
             z-index: 1000;
             overflow: hidden;
         }
-
-        .iframe-content {
-            position: relative;
-            width: 90%;
-            height: 85vh;
-            margin: 2vh auto;
-            max-width: 1400px;
-            display: flex;
-            flex-direction: column;
-        }
-
         .game-frame {
             width: 100%;
             height: 100%;
@@ -2896,22 +2885,21 @@
         }
 
         /* Add fullscreen button styles */
-        .fullscreen-button {
+        .themed-fullscreen-btn {
             position: absolute;
-            top: -40px;
-            right: 120px;
-            color: white;
-            background: #2196F3;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            z-index: 1001;
-        }
-
-        .fullscreen-button:hover {
-            background: #1976D2;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
         }
     </style>
 
@@ -3524,7 +3512,7 @@
                         <img src="https://smashkarts.io/img/logo.png" alt="Smash Karts">
                         <h3>Smash Karts</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://firebasestorage.googleapis.com/v0/b/test-1e83a.appspot.com/o/sr3d2.html?alt=media&token=5646f6dd-eddf-47ef-b7cb-8d99937a054f')">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbw5Z-Ryg_JfIIDYH7pzzPKXlr2tN0HCw-tT_ZvxBGDPsDDY41ewPVneVeLzelfpnBab/exec')">
                         <img src="https://snowrider3d.com/img/logo.png" alt="Snow Rider 3D">
                         <h3>Snow Rider 3D</h3>
                     </div>
@@ -3611,6 +3599,58 @@
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxI5KGOnqExl7GEpiCd5XXr9PXBMkGhDLWnOQfEuXRjmXom-nUzLjOXfP4iwAYUvbE/exec')">
                         <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 2">
                         <h3>Bloons TD 2</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx_UkN82Xr4zxNn4q901BCmYWYFOHOwtIHtmyQPNO6SxZpAWQmpOSQCyPDkN5lrRMzm/exec')">
+                        <img src="https://cdn.freebiesupply.com/logos/large/2x/backyard-sports-logo-png-transparent.png" alt="Backyard Football">
+                        <h3>Backyard Football</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzutG_IKsHOQPExLK1OU1gKUy0FzeES71P13XgouwmJWvJaDi8U26ivFGRD_IHuFIDJ/exec')">
+                        <img src="https://cdn.freebiesupply.com/logos/large/2x/backyard-sports-logo-png-transparent.png" alt="Backyard Basketball">
+                        <h3>Backyard Basketball</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwHkVCo3fYATO97SHDQ0DJTap-GuL2xUItBjeP82rhu07WolAyryxxelfs6B-NC8kLc/exec')">
+                        <img src="https://cdn.freebiesupply.com/logos/large/2x/backyard-sports-logo-png-transparent.png" alt="Backyard Hockey">
+                        <h3>Backyard Hockey</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzBG3iwMy-Kdz3gY7oQSBugoIGwmA-IWITNrA8j1vX5ytZQHcKTS-61QLSpA5ixBJ2U/exec')">
+                        <img src="https://img.itch.zone/aW1nLzIyMTU3MDkucG5n/original/aE3bDk.png" alt="Pixel Shooter">
+                        <h3>Pixel Shooter</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwhQbabxqsWUj8FVuMKX-JY3y-i2X6KPZaHJWlxsCahODzz6dEQ0kV9sVLgs2p--Fi0/exec')">
+                        <img src="https://play-lh.googleusercontent.com/uJn2i9h7KxYQarC_c6dSuJ8kdpjXkuUmxwj8LoWxQOFfKCXBBG8-MJ8kbOLCbVwKEyLa" alt="Run 1">
+                        <h3>Run 1</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyxLM58t1oGIyqp09GNTAGBqUBaFg7A9nY5lLwS45Zg2z63ax0EmnhHCXW_aHhEpdFcqg/exec')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Doom_cover_art.jpg/220px-Doom_cover_art.jpg" alt="Doom">
+                        <h3>Doom</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyrD6eAAeG8uwUWVUyzAEk0oAHDWQZz0SW9hxUplVfcurspNtWSeoivayJW2ifs4lRj/exec')">
+                        <img src="https://img.itch.zone/aW1nLzQ3MTc1MDMucG5n/original/KXpnvQ.png" alt="Neon Blaster">
+                        <h3>Neon Blaster</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxJ3oet4bnNqQK_nqPo6KSwPlvIMR448__kEYKx_WN-QbncNc98PEc-qaFme7l2tbKH/exec')">
+                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="1 on 1 Soccer">
+                        <h3>1 on 1 Soccer</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxutg4sKZIHB5Nu6jyZ1PcIze8YSbsHFDx8xJraC4VHAfJOu4If-Tk7swki5Mia_IGY/exec')">
+                        <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Games_Subnav_Minecraft-300x465.jpg" alt="Minecraft Sandbox">
+                        <h3>Minecraft Sandbox</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycby6VkmafM4044keDc4OclZ4Saq2a8lth-pAC1XY_7c1_qVsH9IsVKrqbuWH-SJO1puW/exec')">
+                        <img src="https://neal.fun/infinite-craft/og-image.png" alt="Infinite Craft">
+                        <h3>Infinite Craft</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzmbu0xqSDhN5GEbzHuR8FI0pvwkiQU7sCHoqPYlW4FOFQroirILUS0VdpMdnzdGt897g/exec')">
+                        <img src="https://img.gamedistribution.com/1b1d4ca0d5b44c1b9b1c9e5b0b5c2f8d.jpg" alt="Driving Force 3">
+                        <h3>Driving Force 3</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzcQ6u-fz4Zo2x1jyN-hh80Mcuu9gNX0EBUyFoyNzxDDF2YqMMqNvspj2a3BXjfslc/exec')">
+                        <img src="https://play-lh.googleusercontent.com/QS5aTgWJ0-vj9SifKjnDYLCv8yfX7FEKmNfLUFm1FhOQJQkrDM7NqUBw7Qxs_FYkJQ" alt="Road Fury">
+                        <h3>Road Fury</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzRrVJiEXoimmMg0t2bETfPBBzdso57t545PyqMQBcNBdemkvtyyMrZlP93iaYHLZRzNw/exec')">
+                        <img src="https://play-lh.googleusercontent.com/fXQVXTmZHjy0M0vfXIBOogUA5tPm4b9k0YJUwwjpvlw6UQS8xj6MjLfKQP-so-Q-7g" alt="Parking Fury">
+                        <h3>Parking Fury</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzRkRFh3xH_YzLqtvFVsKcPOdqkcps9umH96kwECqmzugE1XkxYo6ryhCKD1m7JkR0-rw/exec')">
                         <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 3">
@@ -3896,7 +3936,11 @@
         <div class="main-tab-content" id="proxy-tab">
             <div class="glass-panel">
                 <div class="proxy-container">
-                    <iframe src="https://00.adenny.net" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
+                    <iframe src="https://00.adenny.net" frameborder="0" style="width: 100%; height: 100vh;" allowfullscreen></iframe>
+                    <button class="themed-fullscreen-btn" onclick="toggleProxyFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        Fullscreen
+                    </button>
                 </div>
             </div>
         </div>
@@ -4980,7 +5024,7 @@
             }
             
             // Create a new window with specific features
-            const newWindow = window.open('', '_blank', 'width=1024,height=768,menubar=no,toolbar=no,location=no,status=no');
+            const newWindow = window.open('', '_blank', 'width=1024,height=768,menubar=no,toolbar=no,location=no');
             
             if (!newWindow) {
                 alert('Please allow popups for this site to open in a new tab');
@@ -5128,7 +5172,7 @@
             // Set display URL if provided
             if (displayUrl) {
                 try {
-                    win.history.pushState({}, '', displayUrl);
+                    win.history.pushState({}, title || win.document.title, displayUrl);
                 } catch (e) {
                     console.error('Failed to set display URL:', e);
                 }
@@ -5354,13 +5398,10 @@
                 document.title = title;
                 
                 // Change the favicon
-                let link = document.querySelector("link[rel~='icon']");
-                if (!link) {
-                    link = document.createElement('link');
-                    link.rel = 'icon';
-                    document.head.appendChild(link);
-                }
+                let link = document.querySelector("link[rel='icon']") || document.createElement('link');
+                link.rel = 'icon';
                 link.href = favicon;
+                document.head.appendChild(link);
                 
                 // Visual feedback
                 this.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
@@ -5429,7 +5470,7 @@
         // Add Canvas favicon
         var link = document.createElement('link');
         link.rel = 'icon';
-        link.href = 'https://sso.canvaslms.com/login/canvas/favicon.ico';
+        link.href = 'https://www.instructure.com/sites/default/files/image/2021-12/canvas_reversed_logo.png';
         document.getElementsByTagName('head')[0].appendChild(link);
 
         document.getElementById('khan-cloak').onclick = function() {
@@ -5441,9 +5482,37 @@
         };
 
         document.getElementById('canvas-cloak').onclick = function() {
-            setTab('Canvas LMS', 'https://sso.canvaslms.com/login/canvas/favicon.ico');
+            setTab('Canvas LMS', 'https://www.instructure.com/sites/default/files/image/2021-12/canvas_reversed_logo.png');
         };
 
+        // Function to toggle fullscreen for the proxy iframe
+        function toggleProxyFullscreen() {
+            const proxyContainer = document.querySelector('.proxy-container iframe');
+            if (proxyContainer) {
+                if (document.fullscreenElement) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { // Firefox
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { // IE/Edge
+                        document.msExitFullscreen();
+                    }
+                } else {
+                    if (proxyContainer.requestFullscreen) {
+                        proxyContainer.requestFullscreen();
+                    } else if (proxyContainer.mozRequestFullScreen) { // Firefox
+                        proxyContainer.mozRequestFullScreen();
+                    } else if (proxyContainer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                        proxyContainer.webkitRequestFullscreen();
+                    } else if (proxyContainer.msRequestFullscreen) { // IE/Edge
+                        proxyContainer.msRequestFullscreen();
+                    }
+                }
+            }
+        }
+        
         // Add this function to your existing JavaScript
         function openGame(url, title) {
             const loadingScreen = document.querySelector('.loading-screen');
@@ -5891,187 +5960,7 @@
             localStorage.setItem('currentTab', tabName);
         }
 
-        // Initialize tabs on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentTab = localStorage.getItem('currentTab') || 'games';
-            switchTab(currentTab);
-            
-            document.querySelectorAll('.main-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    switchTab(tab.getAttribute('data-tab'));
-                });
-            });
-        });
-
-        const cloakingMethods = {
-            'about-blank': {
-                title: 'About:Blank',
-                description: 'Opens in a clean window'
-            },
-            'iframe': {
-                title: 'iFrame Embed',
-                description: 'Loads within the page'
-            },
-            'google-classroom': {
-                title: 'Google Classroom',
-                description: 'Educational platform disguise'
-            },
-            'canvas': {
-                title: 'Canvas LMS',
-                description: 'Learning platform appearance'
-            }
-        };
-
-        function applyCloaking(url, method) {
-            if (!url) return;
-            
-            const win = window.open('about:blank', '_blank');
-            if (!win) {
-                alert('Please allow popups for this site');
-                return;
-            }
-            
-            const methodConfig = cloakingMethods[method];
-            if (methodConfig) {
-                if (methodConfig.favicon) {
-                    const favicon = win.document.createElement('link');
-                    favicon.rel = 'icon';
-                    favicon.href = methodConfig.favicon;
-                    win.document.head.appendChild(favicon);
-                }
-                
-                if (methodConfig.displayUrl) {
-                    win.history.pushState({}, '', methodConfig.displayUrl);
-                }
-                
-                win.document.title = methodConfig.title || 'Loading...';
-            }
-            
-            const iframe = win.document.createElement('iframe');
-            iframe.style.width = '100%';
-            iframe.style.height = '100vh';
-            iframe.style.border = 'none';
-            iframe.src = url;
-            
-            win.document.body.style.margin = '0';
-            win.document.body.appendChild(iframe);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const cloakForm = document.getElementById('cloak-form');
-            if (cloakForm) {
-                cloakForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const url = document.getElementById('cloak-url').value;
-                    const method = document.getElementById('cloak-method').value;
-                    applyCloaking(url, method);
-                });
-            }
-            
-            // Populate cloaking methods dropdown
-            const methodSelect = document.getElementById('cloak-method');
-            if (methodSelect) {
-                Object.entries(cloakingMethods).forEach(([key, config]) => {
-                    const option = document.createElement('option');
-                    option.value = key;
-                    option.textContent = config.title;
-                    methodSelect.appendChild(option);
-                });
-            }
-        });
-
-        const educationalPresets = {
-            classroom: {
-                title: "Google Classroom",
-                favicon: "https://www.gstatic.com/classroom/logo_square_48.svg",
-                theme: "light"
-            },
-            docs: {
-                title: "Google Docs",
-                favicon: "https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png",
-                theme: "light"
-            },
-            slides: {
-                title: "Google Slides",
-                favicon: "https://www.gstatic.com/images/icons/material/system/1x/slides_black_48dp.png",
-                theme: "light"
-            },
-            sheets: {
-                title: "Google Sheets",
-                favicon: "https://www.gstatic.com/images/icons/material/system/1x/sheets_black_48dp.png",
-                theme: "light"
-            },
-            forms: {
-                title: "Google Forms",
-                favicon: "https://www.gstatic.com/images/icons/material/system/1x/forms_black_48dp.png",
-                theme: "light"
-            },
-            canvas: {
-                title: "Canvas LMS",
-                favicon: "https://www.instructure.com/sites/default/files/image/2021-12/canvas_reversed_logo.png",
-                theme: "light"
-            },
-            blackboard: {
-                title: "Blackboard",
-                favicon: "https://www.blackboard.com/sites/all/themes/blackboard/favicon.ico",
-                theme: "dark"
-            },
-            schoology: {
-                title: "Schoology",
-                favicon: "https://www.schoology.com/sites/all/themes/schoology/favicon.ico",
-                theme: "light"
-            },
-            edmodo: {
-                title: "Edmodo",
-                favicon: "https://www.edmodo.com/favicon.ico",
-                theme: "light"
-            },
-            moodle: {
-                title: "Moodle",
-                favicon: "https://moodle.org/theme/image.php/moodleorg/theme_moodleorg/1667892019/favicon",
-                theme: "light"
-            }
-        };
-
-        function applyEducationalPreset(presetKey) {
-            const preset = educationalPresets[presetKey];
-            if (!preset) return;
-
-            // Update tab title
-            document.title = preset.title;
-
-            // Update favicon
-            const favicon = document.querySelector("link[rel='icon']") || document.createElement('link');
-            favicon.rel = 'icon';
-            favicon.href = preset.favicon;
-            document.head.appendChild(favicon);
-
-            // Apply theme
-            if (preset.theme === 'dark') {
-                document.body.classList.add('dark-theme');
-            } else {
-                document.body.classList.remove('dark-theme');
-            }
-        }
-
-        // Update proxy tab
-        function setupProxyTab() {
-            const proxyTab = document.getElementById('proxy');
-            if (proxyTab) {
-                proxyTab.innerHTML = `
-                    <div class="proxy-container">
-                        <iframe src="https://00.adenny.net" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
-                    </div>
-                `;
-            }
-        }
-
-        // Call setup functions when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            setupProxyTab();
-        });
-
-        // Theme selection functionality
+        // Theme customization
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('selected-theme', theme);
@@ -6101,105 +5990,94 @@
             });
         });
 
-        function toggleFullscreen() {
-            const gameFrame = document.getElementById('gameFrame');
-            
-            if (!document.fullscreenElement) {
-                if (gameFrame.requestFullscreen) {
-                    gameFrame.requestFullscreen();
-                } else if (gameFrame.mozRequestFullScreen) { // Firefox
-                    gameFrame.mozRequestFullScreen();
-                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari & Opera
-                    gameFrame.webkitRequestFullscreen();
-                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
-                    gameFrame.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-            }
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const themedFullscreenBtn = document.querySelector('.themed-fullscreen-btn');
+            if (themedFullscreenBtn) {
+                themedFullscreenBtn.style.background = 'var(--bg-color)';
+                themedFullscreenBtn.style.color = 'var(--text-color)';
+                themedFullscreenBtn.style.border = '2px solid var(--accent-color)';
+                themedFullscreenBtn.style.padding = '8px 16px';
+                themedFullscreenBtn.style.borderRadius = '8px';
+                themedFullscreenBtn.style.cursor = 'pointer';
+                themedFullscreenBtn.style.transition = 'all 0.3s ease';
+                themedFullscreenBtn.style.display = 'flex';
+                themedFullscreenBtn.style.alignItems = 'center';
+                themedFullscreenBtn.style.gap = '8px';
 
-        function openGameFrame(gameUrl) {
-            const loadingScreen = document.querySelector('.loading-screen');
-            const iframeContainer = document.getElementById('iframeContainer');
-            const gameFrame = document.getElementById('gameFrame');
+                // Add hover effect
+                themedFullscreenBtn.addEventListener('mouseover', () => {
+                    themedFullscreenBtn.style.background = 'var(--accent-color)';
+                    themedFullscreenBtn.style.color = 'var(--bg-color)';
+                });
 
-            // Show loading screen first
-            loadingScreen.style.display = 'flex';
-            iframeContainer.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+                themedFullscreenBtn.addEventListener('mouseout', () => {
+                    themedFullscreenBtn.style.background = 'var(--bg-color)';
+                    themedFullscreenBtn.style.color = 'var(--text-color)';
+                });
 
-            // Clear existing iframe
-            gameFrame.src = '';
-            
-            // Add timestamp to URL to prevent caching issues
-            const timeStamp = new Date().getTime();
-            const urlWithTimestamp = gameUrl.includes('?') ? 
-                `${gameUrl}&t=${timeStamp}` : 
-                `${gameUrl}?t=${timeStamp}`;
-
-            // Set up load error timeout
-            let loadTimeout = setTimeout(() => {
-                // If loading takes too long, try reloading
-                gameFrame.src = urlWithTimestamp;
-            }, 10000);
-
-            // Set up iframe load handlers
-            gameFrame.onload = () => {
-                clearTimeout(loadTimeout);
-                // Start fade out animation after a short delay
-                setTimeout(() => {
-                    loadingScreen.classList.add('fade-out');
-                }, 1000);
-
-                // Hide loading screen
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    loadingScreen.classList.remove('fade-out');
-                }, 1300);
-            };
-
-            gameFrame.onerror = () => {
-                clearTimeout(loadTimeout);
-                console.log('Error loading game, retrying...');
-                // Try loading again
-                gameFrame.src = urlWithTimestamp;
-            };
-
-            // Set the iframe src to start loading
-            gameFrame.src = urlWithTimestamp;
-        }
-
-        function closeGameFrame() {
-            const gameFrame = document.getElementById('gameFrame');
-            const iframeContainer = document.getElementById('iframeContainer');
-            
-            gameFrame.src = '';
-            iframeContainer.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close iframe when clicking outside of it
-        document.getElementById('iframeContainer').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeGameFrame();
+                // Add click effect
+                themedFullscreenBtn.addEventListener('click', () => {
+                    themedFullscreenBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        themedFullscreenBtn.style.transform = 'scale(1)';
+                    }, 100);
+                });
             }
         });
 
-        // Handle escape key to close iframe
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeGameFrame();
+        // Add themed fullscreen button styling
+        document.addEventListener('DOMContentLoaded', () => {
+            const themedFullscreenBtn = document.querySelector('.themed-fullscreen-btn');
+            if (themedFullscreenBtn) {
+                themedFullscreenBtn.style.background = 'var(--bg-color)';
+                themedFullscreenBtn.style.color = 'var(--text-color)';
+                themedFullscreenBtn.style.border = '2px solid var(--accent-color)';
+                themedFullscreenBtn.style.padding = '8px 16px';
+                themedFullscreenBtn.style.borderRadius = '8px';
+                themedFullscreenBtn.style.cursor = 'pointer';
+                themedFullscreenBtn.style.transition = 'all 0.3s ease';
+                themedFullscreenBtn.style.display = 'flex';
+                themedFullscreenBtn.style.alignItems = 'center';
+                themedFullscreenBtn.style.gap = '8px';
+                themedFullscreenBtn.style.position = 'absolute';
+                themedFullscreenBtn.style.top = '20px';
+                themedFullscreenBtn.style.right = '20px';
+                themedFullscreenBtn.style.zIndex = '10';
+
+                // Add hover effect
+                themedFullscreenBtn.addEventListener('mouseover', () => {
+                    themedFullscreenBtn.style.background = 'var(--accent-color)';
+                    themedFullscreenBtn.style.color = 'var(--bg-color)';
+                });
+
+                themedFullscreenBtn.addEventListener('mouseout', () => {
+                    themedFullscreenBtn.style.background = 'var(--bg-color)';
+                    themedFullscreenBtn.style.color = 'var(--text-color)';
+                });
+
+                // Add click effect
+                themedFullscreenBtn.addEventListener('click', () => {
+                    themedFullscreenBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        themedFullscreenBtn.style.transform = 'scale(1)';
+                    }, 100);
+                });
             }
         });
+
+        // Define toggleProxyFullscreen function
+        window.toggleProxyFullscreen = function() {
+            const proxyContainer = document.querySelector('.proxy-container iframe');
+            if (proxyContainer.requestFullscreen) {
+                proxyContainer.requestFullscreen();
+            } else if (proxyContainer.mozRequestFullScreen) { // Firefox
+                proxyContainer.mozRequestFullScreen();
+            } else if (proxyContainer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                proxyContainer.webkitRequestFullscreen();
+            } else if (proxyContainer.msRequestFullscreen) { // IE/Edge
+                proxyContainer.msRequestFullscreen();
+            }
+        };
     </script>
 
     <div class="theme-selector">
@@ -6250,4 +6128,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
