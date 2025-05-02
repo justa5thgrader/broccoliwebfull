@@ -184,11 +184,999 @@
         }
 
         body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--background-color);
+            background-color: var(--bg-color);
             color: var(--text-color);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Challenges Styles */
+        .challenges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .challenge-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .challenge-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .challenge-header h3 {
+            flex-grow: 1;
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .challenge-xp {
+            background: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .challenge-progress {
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+        
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-color-secondary);
+            text-align: right;
+            display: block;
+        }
+        
+        .challenge-description {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-color-secondary);
+        }
+        
+        .claim-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+        
+        .claim-btn:hover {
+            background: #3d8b40;
+        }
+        
+        .claim-btn.disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+        
+        .active-challenge {
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .completed-challenge {
+            border-left: 4px solid #00ff8b;
+        }
+        
+        .locked-challenge {
+            opacity: 0.7;
+            border-left: 4px solid var(--text-color-secondary);
+        }
+        
+        /* Tournaments Styles */
+        .tournaments-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tournament-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tournament-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tournament-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tournament-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .tournament-info {
+            flex-grow: 1;
+        }
+        
+        .tournament-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: var(--accent-color);
+        }
+        
+        .tournament-details {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .tournament-players, .tournament-time {
+            font-size: 14px;
+            color: var(--text-color-secondary);
+        }
+        
+        .tournament-prizes {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .prize {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            flex: 1;
+        }
+        
+        .prize-place {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+        
+        .prize-reward {
+            font-size: 14px;
+        }
+        
+        .tournament-description {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-color-secondary);
+            line-height: 1.5;
+        }
+        
+        .join-tournament-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+        
+        .join-tournament-btn:hover {
+            background: #3d8b40;
+        }
+        
+        .join-tournament-btn.disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+        
+        .tournament-card.upcoming {
+            opacity: 0.8;
+        }
+        
+        .tournament-card.premium {
+            border: 2px solid #ffee00;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffee00;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Rewards Styles */
+        .rewards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .user-currency {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .currency-item {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 20, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            margin-right: 10px;
+        }
+        
+        .currency-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .currency-amount {
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 5px;
+            color: #0f0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
             font-family: 'Courier New', monospace;
+        }
+        
+        .currency-name {
+            font-size: 14px;
+            color: #0f0;
+            opacity: 0.8;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .daily-rewards {
+            background: rgba(0, 20, 0, 0.7);
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .daily-rewards h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .daily-rewards-track {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .reward-day {
+            background: rgba(0, 20, 0, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 100px;
+            text-align: center;
+            position: relative;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+        }
+        
+        .reward-day.claimed {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+        }
+        
+        .reward-day.active {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #0f0;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+        
+        .reward-day.special {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px dashed #ff0;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+        }
+        
+        .reward-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .reward-amount {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .day-label {
+            font-size: 12px;
+            color: var(--text-color-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .claimed-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--accent-color);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .claim-reward-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .claim-reward-btn:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .rewards-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .reward-category-btn {
+            background: rgba(0, 20, 0, 0.7);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: #0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 5px;
+        }
+        
+        .reward-category-btn:hover, .reward-category-btn.active {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .reward-item {
+            background: rgba(0, 20, 0, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+        }
+        
+        .reward-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            border-color: #0f0;
+        }
+        
+        .reward-item-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .reward-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .theme-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-sample {
+            width: 80%;
+            height: 80%;
+            border-radius: 8px;
+        }
+        
+        .neon-theme .theme-sample {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .galaxy-theme .theme-sample {
+            background: url('https://i.imgur.com/vYE3Pju.jpg');
+            background-size: cover;
+        }
+        
+        .reward-item h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #0f0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .reward-item-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .price-amount {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .buy-reward-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .buy-reward-btn:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .reward-item.premium {
+            border: 2px solid #ff0;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+        }
+        
+        .premium-item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff0;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+        
+        /* Notification Styles */
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+        
+        .notification {
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slide-in 0.3s ease;
+            position: relative;
+        }
+        
+        .notification.info {
+            background: #2196F3;
+        }
+        
+        .notification.success {
+            background: #4CAF50;
+        }
+        
+        .notification.error {
+            background: #F44336;
+        }
+        
+        .notification.warning {
+            background: #FF9800;
+        }
+        
+        .notification.fade-out {
+            animation: fade-out 0.5s ease forwards;
+        }
+        
+        @keyframes slide-in {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fade-out {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Cursor Effects */
+        .effect-fire-cursor {
+            cursor: url('https://i.imgur.com/6PzOxS3.gif'), auto;
+        }
+        
+        .effect-rainbow-trail {
+            cursor: url('https://i.imgur.com/JYhGKzV.gif'), auto;
+        }
+        
+        .effect-lightning-cursor {
+            cursor: url('https://i.imgur.com/9qGH2JZ.gif'), auto;
+        }
+        
+        /* Owned item styles */
+        .buy-reward-btn.owned {
+            background: #888;
+            cursor: default;
+        }
+        
+        /* Additional Theme Styles */
+        .retro-theme .theme-sample {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .hacker-theme .theme-sample {
+            background: linear-gradient(45deg, #00ff00, #003300);
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        /* Login/Signup Styles */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .login-btn {
+            background: #0f0;
+            color: #000;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .login-btn:hover {
+            background: #000;
+            color: #0f0;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+            background: #000;
+            border: 1px solid #0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .username {
+            font-weight: bold;
+            color: #0f0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: rgba(0, 10, 0, 0.9);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #0f0;
+            font-size: 20px;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .modal-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #0f0;
+        }
+        
+        .modal-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #0f0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            opacity: 0.7;
+        }
+        
+        .modal-tab.active {
+            color: #0f0;
+            border-bottom: 2px solid #0f0;
+            opacity: 1;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .modal-content {
+            display: none;
+        }
+        
+        .modal-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #0f0;
+            background: rgba(0, 20, 0, 0.5);
+            color: #0f0;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .submit-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #0f0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .form-footer a {
+            color: #0f0;
+            text-decoration: none;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            font-weight: bold;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Profile Tab Styles */
+        .profile-container {
+            padding: 20px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 36px;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .profile-info {
+            flex-grow: 1;
+        }
+        
+        .profile-info h2 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .profile-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-color-secondary);
+        }
+        
+        .profile-stat-value {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .profile-edit-btn, .profile-logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .profile-edit-btn:hover {
+            background: var(--accent-color);
+        }
+        
+        .profile-logout-btn:hover {
+            background: #f44336;
+        }
+        
+        .profile-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .profile-section {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .profile-section h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .achievement-list, .recent-games-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .achievement-item, .recent-game-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .achievement-icon, .recent-game-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .achievement-info, .recent-game-info {
+            flex-grow: 1;
+        }
+        
+        .achievement-info h4, .recent-game-info h4 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        
+        .achievement-info p, .recent-game-info p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-color-secondary);
+        }
+        
+        .achievement-date, .recent-game-date {
+            font-size: 12px;
+            color: var(--text-color-secondary);
         }
 
         .container {
@@ -2544,6 +3532,100 @@
             margin: 0 auto;
         }
 
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background: rgba(30, 30, 40, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .game-card h3 {
+            padding: 10px 15px 5px;
+            margin: 0;
+            font-size: 16px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .game-card p {
+            padding: 0 15px 10px;
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-color-secondary);
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        .search-container {
+            grid-column: 1 / -1;
+            margin-bottom: 10px;
+        }
+
+        #gameSearch {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #gameSearch::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .game-categories {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-category-btn {
+            padding: 8px 16px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--accent-color);
+            border-radius: 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-category-btn:hover,
+        .game-category-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -2735,11 +3817,26 @@
             font-size: 18px;
         }
 
-        :root[data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --nav-bg: #2d2d2d;
+        :root {
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 40, 0.7);
             --text-color: #ffffff;
-            --button-bg: #3d3d3d;
+            --text-color-secondary: #cccccc;
+            --accent-color: #4CAF50;
+            --header-height: 60px;
+            --neon-blue: #00f2ff;
+            --neon-purple: #b700ff;
+            --neon-green: #00ff8b;
+            --neon-red: #ff0055;
+            --neon-yellow: #ffee00;
+        }
+        
+        /* Light mode colors */
+        .light-mode {
+            --bg-color: #f0f2f5;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-color: #333333;
+            --text-color-secondary: #666666;
             --accent-color: #4CAF50;
         }
 
@@ -2907,6 +4004,711 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
+        // User data and rewards shop functionality
+        let userData = {
+            username: 'Player',
+            password: '',  // This will be hashed in a real app
+            level: 1,
+            xp: 0,
+            currency: {
+                broccoli: 500,  // Starting with 500 Broccoli Coins
+                gems: 10       // Starting with 10 Premium Gems
+            },
+            inventory: [],
+            activeItems: {
+                avatar: null,
+                theme: null,
+                effect: null,
+                boosts: []
+            },
+            dailyRewards: {
+                lastClaim: null,
+                streak: 0,
+                maxStreak: 0
+            },
+            gameStats: {
+                gamesPlayed: 0,
+                highScores: {}
+            },
+            achievements: []
+        };
+        
+        // Track login state
+        let isLoggedIn = false;
+        
+        // Load user data from local storage if available
+        function loadUserData() {
+            const storedData = localStorage.getItem('userData');
+            if (storedData) {
+                userData = JSON.parse(storedData);
+                updateUserInterface();
+            }
+        }
+        
+        // Save user data to local storage
+        function saveUserData() {
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+        
+        // Update all UI elements with current user data
+        function updateUserInterface() {
+            // Update currency display
+            const broccoliAmount = document.querySelector('.currency-amount');
+            const gemsAmount = document.querySelectorAll('.currency-amount')[1];
+            
+            if (broccoliAmount && gemsAmount) {
+                broccoliAmount.textContent = userData.currency.broccoli;
+                gemsAmount.textContent = userData.currency.gems;
+            }
+            
+            // Update owned items in the shop
+            updateShopItems();
+            
+            // Update profile if it exists
+            if (document.getElementById('profileUsername')) {
+                document.getElementById('profileUsername').textContent = userData.username;
+                document.getElementById('profileLevel').textContent = userData.level;
+                document.getElementById('profileXP').textContent = userData.xp;
+                document.getElementById('profileCoins').textContent = userData.currency.broccoli;
+            }
+            
+            // Update login UI
+            updateLoginUI();
+            
+            // Apply active items if any
+            if (userData.activeItems.theme) {
+                applyTheme(userData.activeItems.theme);
+            }
+            
+            if (userData.activeItems.effect) {
+                applyEffect(userData.activeItems.effect);
+            }
+        }
+        
+        // Update shop items to show owned status
+        function updateShopItems() {
+            const rewardItems = document.querySelectorAll('.reward-item');
+            
+            rewardItems.forEach(item => {
+                const itemId = item.dataset.id;
+                const buyButton = item.querySelector('.buy-reward-btn');
+                
+                // Check if item is already owned
+                const isOwned = userData.inventory.some(ownedItem => ownedItem.id === itemId);
+                
+                if (isOwned) {
+                    buyButton.textContent = 'Owned';
+                    buyButton.classList.add('owned');
+                    buyButton.disabled = true;
+                } else {
+                    buyButton.textContent = 'Purchase';
+                    buyButton.classList.remove('owned');
+                    buyButton.disabled = false;
+                }
+            });
+        }
+        
+        // Handle reward item purchase
+        function purchaseRewardItem(itemElement) {
+            const itemId = itemElement.dataset.id;
+            const itemPrice = parseInt(itemElement.dataset.price);
+            const itemCurrency = itemElement.dataset.currency;
+            const itemCategory = itemElement.dataset.category;
+            const itemName = itemElement.querySelector('h4').textContent;
+            
+            // Check if user has enough currency
+            if (userData.currency[itemCurrency] < itemPrice) {
+                showNotification('Not enough ' + (itemCurrency === 'broccoli' ? 'Broccoli Coins' : 'Premium Gems'), 'error');
+                return;
+            }
+            
+            // Deduct currency
+            userData.currency[itemCurrency] -= itemPrice;
+            
+            // Add item to inventory
+            userData.inventory.push({
+                id: itemId,
+                name: itemName,
+                category: itemCategory,
+                purchaseDate: new Date().toISOString()
+            });
+            
+            // Save user data
+            saveUserData();
+            
+            // Update UI
+            updateUserInterface();
+            
+            // Show success notification
+            showNotification('Successfully purchased ' + itemName, 'success');
+            
+            // Apply item if it's a theme
+            if (itemCategory === 'themes') {
+                applyTheme(itemId);
+            }
+        }
+        
+        // Apply a theme from inventory
+        function applyTheme(themeId) {
+            let themeName = '';
+            
+            switch(themeId) {
+                case 'neon-theme':
+                    document.documentElement.setAttribute('data-theme', 'neon');
+                    themeName = 'Neon Theme';
+                    break;
+                case 'retro-theme':
+                    document.documentElement.setAttribute('data-theme', 'retro');
+                    themeName = 'Retro Theme';
+                    break;
+                case 'galaxy-theme':
+                    document.documentElement.setAttribute('data-theme', 'galaxy');
+                    themeName = 'Galaxy Theme';
+                    break;
+                case 'hacker-theme':
+                    document.documentElement.setAttribute('data-theme', 'hacker');
+                    themeName = 'Hacker Theme';
+                    break;
+                default:
+                    return;
+            }
+            
+            // Update active items
+            userData.activeItems.theme = themeId;
+            saveUserData();
+            
+            showNotification(themeName + ' applied!', 'success');
+        }
+        
+        // Apply an effect from inventory
+        function applyEffect(effectId) {
+            // Remove any existing effects
+            document.body.classList.remove('effect-fire-cursor', 'effect-rainbow-trail', 'effect-lightning-cursor');
+            
+            let effectName = '';
+            
+            switch(effectId) {
+                case 'fire-cursor':
+                    document.body.classList.add('effect-fire-cursor');
+                    effectName = 'Fire Cursor';
+                    break;
+                case 'rainbow-trail':
+                    document.body.classList.add('effect-rainbow-trail');
+                    effectName = 'Rainbow Trail';
+                    break;
+                case 'lightning-cursor':
+                    document.body.classList.add('effect-lightning-cursor');
+                    effectName = 'Lightning Cursor';
+                    break;
+                default:
+                    return;
+            }
+            
+            // Update active items
+            userData.activeItems.effect = effectId;
+            saveUserData();
+            
+            showNotification(effectName + ' applied!', 'success');
+        }
+        
+        // Apply an avatar from inventory
+        function applyAvatar(avatarId) {
+            let avatarUrl = '';
+            let avatarName = '';
+            
+            switch(avatarId) {
+                case 'ninja-avatar':
+                    avatarUrl = 'https://i.imgur.com/8tBPYMa.png';
+                    avatarName = 'Ninja Avatar';
+                    break;
+                case 'robot-avatar':
+                    avatarUrl = 'https://i.imgur.com/JzVjuOX.png';
+                    avatarName = 'Robot Avatar';
+                    break;
+                case 'gamer-avatar':
+                    avatarUrl = 'https://i.imgur.com/pSNBCDM.png';
+                    avatarName = 'Gamer Avatar';
+                    break;
+                case 'dragon-avatar':
+                    avatarUrl = 'https://i.imgur.com/qHDGqCJ.png';
+                    avatarName = 'Dragon Avatar';
+                    break;
+                default:
+                    return;
+            }
+            
+            // Update profile avatar if it exists
+            if (document.getElementById('profileAvatar')) {
+                document.getElementById('profileAvatar').innerHTML = `<img src="${avatarUrl}" alt="${avatarName}">`;
+            }
+            
+            // Update user avatar in header if it exists
+            if (document.getElementById('userAvatar')) {
+                document.getElementById('userAvatar').innerHTML = `<img src="${avatarUrl}" alt="${avatarName}">`;
+            }
+            
+            // Update active items
+            userData.activeItems.avatar = avatarId;
+            saveUserData();
+            
+            showNotification(avatarName + ' applied!', 'success');
+        }
+        
+        // Apply a boost from inventory
+        function applyBoost(boostId) {
+            let boostName = '';
+            let boostDuration = 0;
+            
+            switch(boostId) {
+                case 'xp-boost-1h':
+                    boostName = '2x XP Boost (1 hour)';
+                    boostDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+                    break;
+                case 'coin-boost-1h':
+                    boostName = '2x Coin Boost (1 hour)';
+                    boostDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+                    break;
+                case 'xp-boost-24h':
+                    boostName = '2x XP Boost (24 hours)';
+                    boostDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+                    break;
+                case 'vip-access':
+                    boostName = 'VIP Tournament Access (7 days)';
+                    boostDuration = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+                    break;
+                default:
+                    return;
+            }
+            
+            // Add boost to active boosts with expiration time
+            const expirationTime = new Date().getTime() + boostDuration;
+            
+            userData.activeItems.boosts.push({
+                id: boostId,
+                name: boostName,
+                expiresAt: expirationTime
+            });
+            
+            saveUserData();
+            showNotification(boostName + ' activated!', 'success');
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element if it doesn't exist
+            let notificationContainer = document.getElementById('notification-container');
+            
+            if (!notificationContainer) {
+                notificationContainer = document.createElement('div');
+                notificationContainer.id = 'notification-container';
+                document.body.appendChild(notificationContainer);
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+        
+        // Handle daily rewards
+        function handleDailyRewards() {
+            const today = new Date().toDateString();
+            const lastClaim = userData.dailyRewards.lastClaim;
+            
+            if (lastClaim !== today) {
+                // Check if this is a consecutive day
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayString = yesterday.toDateString();
+                
+                if (lastClaim === yesterdayString) {
+                    // Consecutive day, increase streak
+                    userData.dailyRewards.streak++;
+                } else {
+                    // Not consecutive, reset streak
+                    userData.dailyRewards.streak = 1;
+                }
+                
+                // Update max streak if needed
+                if (userData.dailyRewards.streak > userData.dailyRewards.maxStreak) {
+                    userData.dailyRewards.maxStreak = userData.dailyRewards.streak;
+                }
+                
+                // Update last claim date
+                userData.dailyRewards.lastClaim = today;
+                
+                // Save user data
+                saveUserData();
+                
+                // Update daily rewards UI
+                updateDailyRewardsUI();
+            }
+        }
+        
+        // Update daily rewards UI
+        function updateDailyRewardsUI() {
+            const rewardDays = document.querySelectorAll('.reward-day');
+            const streak = userData.dailyRewards.streak;
+            
+            rewardDays.forEach((day, index) => {
+                // Clear existing classes
+                day.classList.remove('claimed', 'active');
+                
+                // Add appropriate class based on streak
+                if (index + 1 < streak) {
+                    day.classList.add('claimed');
+                    day.querySelector('button')?.remove();
+                    
+                    // Add claimed badge if it doesn't exist
+                    if (!day.querySelector('.claimed-badge')) {
+                        const claimedBadge = document.createElement('div');
+                        claimedBadge.className = 'claimed-badge';
+                        claimedBadge.textContent = '✓';
+                        day.appendChild(claimedBadge);
+                    }
+                } else if (index + 1 === streak) {
+                    day.classList.add('active');
+                    
+                    // Add claim button if it doesn't exist
+                    if (!day.querySelector('button')) {
+                        const claimButton = document.createElement('button');
+                        claimButton.className = 'claim-reward-btn';
+                        claimButton.textContent = 'Claim';
+                        claimButton.addEventListener('click', () => claimDailyReward(index + 1));
+                        day.appendChild(claimButton);
+                    }
+                } else {
+                    // Remove any buttons or badges
+                    day.querySelector('button')?.remove();
+                    day.querySelector('.claimed-badge')?.remove();
+                }
+            });
+        }
+        
+        // Claim daily reward
+        function claimDailyReward(day) {
+            let reward = {
+                type: 'broccoli',
+                amount: 0
+            };
+            
+            // Determine reward based on day
+            switch(day) {
+                case 1:
+                    reward.amount = 10;
+                    break;
+                case 2:
+                    reward.amount = 20;
+                    break;
+                case 3:
+                    reward.amount = 30;
+                    break;
+                case 4:
+                    reward.amount = 50;
+                    break;
+                case 5:
+                    reward.amount = 75;
+                    break;
+                case 6:
+                    reward.amount = 100;
+                    break;
+                case 7:
+                    reward.type = 'gems';
+                    reward.amount = 1;
+                    break;
+                default:
+                    reward.amount = 10;
+            }
+            
+            // Add reward to user currency
+            userData.currency[reward.type] += reward.amount;
+            
+            // Save user data
+            saveUserData();
+            
+            // Update UI
+            updateUserInterface();
+            updateDailyRewardsUI();
+            
+            // Show notification
+            showNotification(`Claimed ${reward.amount} ${reward.type === 'broccoli' ? 'Broccoli Coins' : 'Premium Gems'}!`, 'success');
+        }
+        
+        // Initialize login system functionality
+        function initializeLoginSystem() {
+            const loginBtn = document.getElementById('loginBtn');
+            const loginModal = document.getElementById('loginModal');
+            const closeModal = document.getElementById('closeModal');
+            const switchToSignup = document.getElementById('switchToSignup');
+            const switchToLogin = document.getElementById('switchToLogin');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const userProfile = document.getElementById('userProfile');
+            const loginTabs = document.querySelectorAll('.modal-tab');
+            const modalContents = document.querySelectorAll('.modal-content');
+            
+            // Show login modal when login button is clicked
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function() {
+                    loginModal.classList.add('active');
+                });
+            }
+            
+            // Close modal when close button is clicked
+            if (closeModal) {
+                closeModal.addEventListener('click', function() {
+                    loginModal.classList.remove('active');
+                });
+            }
+            
+            // Switch between login and signup tabs
+            if (switchToSignup) {
+                switchToSignup.addEventListener('click', function() {
+                    modalContents.forEach(content => content.classList.remove('active'));
+                    loginTabs.forEach(tab => tab.classList.remove('active'));
+                    document.getElementById('signupContent').classList.add('active');
+                    document.querySelector('.modal-tab[data-tab="signup"]').classList.add('active');
+                });
+            }
+            
+            if (switchToLogin) {
+                switchToLogin.addEventListener('click', function() {
+                    modalContents.forEach(content => content.classList.remove('active'));
+                    loginTabs.forEach(tab => tab.classList.remove('active'));
+                    document.getElementById('loginContent').classList.add('active');
+                    document.querySelector('.modal-tab[data-tab="login"]').classList.add('active');
+                });
+            }
+            
+            // Tab switching
+            loginTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.dataset.tab;
+                    
+                    // Remove active class from all tabs and contents
+                    loginTabs.forEach(t => t.classList.remove('active'));
+                    modalContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(tabName + 'Content').classList.add('active');
+                });
+            });
+            
+            // Handle login form submission
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById('loginUsername').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    // Check if user exists in local storage
+                    const storedData = localStorage.getItem('userData');
+                    if (storedData) {
+                        const parsedData = JSON.parse(storedData);
+                        
+                        if (parsedData.username === username && parsedData.password === password) {
+                            // Successful login
+                            userData = parsedData;
+                            isLoggedIn = true;
+                            updateUserInterface();
+                            loginModal.classList.remove('active');
+                            showNotification('Login successful! Welcome back, ' + username, 'success');
+                        } else {
+                            // Failed login
+                            showNotification('Invalid username or password', 'error');
+                        }
+                    } else {
+                        showNotification('No account found. Please sign up first.', 'error');
+                    }
+                });
+            }
+            
+            // Handle signup form submission
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.getElementById('signupUsername').value;
+                    const password = document.getElementById('signupPassword').value;
+                    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+                    
+                    // Validate passwords match
+                    if (password !== confirmPassword) {
+                        showNotification('Passwords do not match', 'error');
+                        return;
+                    }
+                    
+                    // Create new user
+                    userData.username = username;
+                    userData.password = password; // In a real app, this would be hashed
+                    
+                    // Save to local storage
+                    saveUserData();
+                    
+                    // Update UI and login state
+                    isLoggedIn = true;
+                    updateUserInterface();
+                    loginModal.classList.remove('active');
+                    showNotification('Account created successfully! Welcome, ' + username, 'success');
+                });
+            }
+            
+            // Update UI based on login state
+            updateLoginUI();
+        }
+        
+        // Update login UI based on login state
+        function updateLoginUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const userProfile = document.getElementById('userProfile');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const userAvatar = document.getElementById('userAvatar');
+            
+            if (isLoggedIn) {
+                // Show user profile, hide login button
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (userProfile) {
+                    userProfile.style.display = 'flex';
+                    usernameDisplay.textContent = userData.username;
+                    
+                    // Set avatar initial or image if user has one
+                    if (userData.activeItems.avatar) {
+                        applyAvatar(userData.activeItems.avatar);
+                    } else {
+                        userAvatar.textContent = userData.username.charAt(0).toUpperCase();
+                    }
+                }
+            } else {
+                // Show login button, hide user profile
+                if (loginBtn) loginBtn.style.display = 'block';
+                if (userProfile) userProfile.style.display = 'none';
+            }
+        }
+        
+        // Handle logout
+        function logout() {
+            isLoggedIn = false;
+            updateLoginUI();
+            showNotification('You have been logged out', 'info');
+        }
+        
+        // Initialize rewards shop functionality
+        function initializeRewardsShop() {
+            // Add event listeners to reward category buttons
+            const categoryButtons = document.querySelectorAll('.reward-category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter rewards based on selected category
+                    const category = this.dataset.category;
+                    filterRewards(category);
+                });
+            });
+            
+            // Add event listeners to purchase buttons
+            const buyButtons = document.querySelectorAll('.buy-reward-btn');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!isLoggedIn) {
+                        showNotification('Please login to purchase items', 'error');
+                        document.getElementById('loginBtn').click();
+                        return;
+                    }
+                    
+                    const rewardItem = this.closest('.reward-item');
+                    purchaseRewardItem(rewardItem);
+                });
+            });
+            
+            // Add event listener to daily reward claim button
+            const claimButton = document.querySelector('.claim-reward-btn');
+            if (claimButton) {
+                claimButton.addEventListener('click', function() {
+                    if (!isLoggedIn) {
+                        showNotification('Please login to claim rewards', 'error');
+                        document.getElementById('loginBtn').click();
+                        return;
+                    }
+                    
+                    const day = parseInt(this.closest('.reward-day').querySelector('.day-label').textContent.replace('Day ', ''));
+                    claimDailyReward(day);
+                });
+            }
+            
+            // Update shop items to show owned status
+            updateShopItems();
+            
+            // Update currency display
+            updateCurrencyDisplay();
+        }
+        
+        // Filter rewards based on category
+        function filterRewards(category) {
+            const rewardItems = document.querySelectorAll('.reward-item');
+            
+            rewardItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        // Update currency display
+        function updateCurrencyDisplay() {
+            const broccoliAmount = document.querySelector('.currency-amount');
+            const gemsAmount = document.querySelectorAll('.currency-amount')[1];
+            
+            if (broccoliAmount && gemsAmount) {
+                broccoliAmount.textContent = userData.currency.broccoli;
+                gemsAmount.textContent = userData.currency.gems;
+            }
+        }
+        
+        // Initialize the main tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set dark theme by default
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+            
+            // Load user data
+            loadUserData();
+            
+            // Initialize login system
+            initializeLoginSystem();
+            
+            // Initialize rewards shop
+            initializeRewardsShop();
+            
+            // Initialize other components
+            initializeComponents();
+            
+            // Handle daily rewards
+            handleDailyRewards();
+            
+            // Add logout functionality
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', logout);
+            }
+        });
+
         // Initialize theme and background
         document.addEventListener('DOMContentLoaded', function() {
             // Set dark theme by default
@@ -3017,7 +4819,6 @@
                 // Add a debug button to test achievements
                 addDebugButton();
             }, 500);
-        });
         
         // Stats and Achievements System
         let userStats = {
@@ -3992,6 +5793,52 @@
 <body>
     <!-- Particles background -->
     <div id="particles-js" class="particles-container"></div>
+    <!-- Login/Signup Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">×</button>
+            <div class="modal-tabs">
+                <div class="modal-tab active" data-tab="login">Login</div>
+                <div class="modal-tab" data-tab="signup">Sign Up</div>
+            </div>
+            <div class="modal-content active" id="loginContent">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <div class="form-footer">
+                    Don't have an account? <a id="switchToSignup">Sign up</a>
+                </div>
+            </div>
+            <div class="modal-content" id="signupContent">
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupUsername">Username</label>
+                        <input type="text" id="signupUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+                <div class="form-footer">
+                    Already have an account? <a id="switchToLogin">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="container">
         <header>
@@ -4010,6 +5857,13 @@
                     <h1 class="site-title">Broccoli Direct</h1>
                 </div>
             </nav>
+            <div class="user-actions" id="userActions">
+                <button id="loginBtn" class="login-btn">Login</button>
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <div class="avatar" id="userAvatar">U</div>
+                    <span class="username" id="usernameDisplay">Username</span>
+                </div>
+            </div>
         </header>
 
         <!-- Main Navigation Tabs -->
@@ -4021,15 +5875,589 @@
             <button class="main-tab" data-tab="proxy">Proxy</button>
             <button class="main-tab" data-tab="apps">Apps</button>
             <button class="main-tab" data-tab="gfn-setup">GeForce Now Setup</button>
+            <button class="main-tab" data-tab="challenges">Challenges</button>
+            <button class="main-tab" data-tab="tournaments">Tournaments</button>
+            <button class="main-tab" data-tab="rewards">Rewards</button>
         </div>
 
         <!-- Browser Tab Content -->
         
+        <!-- Challenges Tab Content -->
+        <div class="main-tab-content" id="challenges-tab">
+            <div class="glass-panel">
+                <h2>Daily Challenges</h2>
+                <div class="challenges-container">
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🔥</span>
+                            <h3>3-Day Streak</h3>
+                            <span class="challenge-xp">+50 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 66%;"></div>
+                            </div>
+                            <span class="progress-text">2/3 days</span>
+                        </div>
+                        <div class="challenge-description">Play games 3 days in a row</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🎮</span>
+                            <h3>Game Explorer</h3>
+                            <span class="challenge-xp">+30 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                            <span class="progress-text">2/5 games</span>
+                        </div>
+                        <div class="challenge-description">Play 5 different games today</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card completed-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">⭐</span>
+                            <h3>First Win</h3>
+                            <span class="challenge-xp">+20 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-text">1/1 wins</span>
+                        </div>
+                        <div class="challenge-description">Win your first game today</div>
+                        <button class="claim-btn">Claim Reward</button>
+                    </div>
+                </div>
+                
+                <h2>Weekly Challenges</h2>
+                <div class="challenges-container">
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🏆</span>
+                            <h3>Victory Royale</h3>
+                            <span class="challenge-xp">+100 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 30%;"></div>
+                            </div>
+                            <span class="progress-text">3/10 wins</span>
+                        </div>
+                        <div class="challenge-description">Win 10 games this week</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">⏱️</span>
+                            <h3>Time Master</h3>
+                            <span class="challenge-xp">+150 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 25%;"></div>
+                            </div>
+                            <span class="progress-text">1h 15m / 5h</span>
+                        </div>
+                        <div class="challenge-description">Play for 5 hours this week</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card locked-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🔒</span>
+                            <h3>Mystery Challenge</h3>
+                            <span class="challenge-xp">+200 XP</span>
+                        </div>
+                        <div class="challenge-description">Unlocks at Level 5</div>
+                        <button class="claim-btn disabled">Locked</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tournaments Tab Content -->
+        <div class="main-tab-content" id="tournaments-tab">
+            <div class="glass-panel">
+                <h2>Active Tournaments</h2>
+                <div class="tournaments-container">
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <img src="https://img.gamedistribution.com/7a3fd749f4d04da5b0d4c2e8bd7b5e7c-512x512.jpeg" alt="Death Run 3D Tournament">
+                            <div class="tournament-info">
+                                <h3>Death Run 3D Championship</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 128 Players</span>
+                                    <span class="tournament-time">⏱️ Ends in 2d 5h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-prizes">
+                            <div class="prize">
+                                <span class="prize-place">1st</span>
+                                <span class="prize-reward">500 Coins + Exclusive Skin</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">2nd</span>
+                                <span class="prize-reward">250 Coins</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">3rd</span>
+                                <span class="prize-reward">100 Coins</span>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Get the highest score in Death Run 3D to win amazing prizes! Top 10 players will be featured on the leaderboard.</p>
+                        </div>
+                        <button class="join-tournament-btn">Join Tournament</button>
+                    </div>
+                    
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <img src="https://play-lh.googleusercontent.com/QqKDFt9_0dTZi4NvQkQxYqZWdZGJQmvL-QjxEWi3WYEbP88tLJxP0-XG3-FgXBxngA=w240-h480-rw" alt="Drift Hunters Tournament">
+                            <div class="tournament-info">
+                                <h3>Drift Kings Competition</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 64 Players</span>
+                                    <span class="tournament-time">⏱️ Starts in 12h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-prizes">
+                            <div class="prize">
+                                <span class="prize-place">1st</span>
+                                <span class="prize-reward">400 Coins + Rare Car</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">2nd</span>
+                                <span class="prize-reward">200 Coins</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">3rd</span>
+                                <span class="prize-reward">75 Coins</span>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Show off your drifting skills in this weekend tournament! Highest drift score wins.</p>
+                        </div>
+                        <button class="join-tournament-btn">Pre-Register</button>
+                    </div>
+                </div>
+                
+                <h2>Upcoming Tournaments</h2>
+                <div class="tournaments-container">
+                    <div class="tournament-card upcoming">
+                        <div class="tournament-header">
+                            <img src="https://play-lh.googleusercontent.com/V3M-ZVyu4NCOR8oxeH0R5-yw4tKUwVUUU-HbgUrsxLuQz_6xv0vVpS6WnkEJ4ID3YRjV" alt="Fall Guys Tournament">
+                            <div class="tournament-info">
+                                <h3>Fall Guys Weekly Challenge</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 Unlimited Entries</span>
+                                    <span class="tournament-time">⏱️ Starts in 3d</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Weekly tournament with new challenges every week. Stay tuned for details!</p>
+                        </div>
+                        <button class="join-tournament-btn disabled">Coming Soon</button>
+                    </div>
+                    
+                    <div class="tournament-card upcoming premium">
+                        <div class="tournament-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/CoD_Logo.svg/1200px-CoD_Logo.svg.png" alt="Call of Duty Tournament">
+                            <div class="tournament-info">
+                                <h3>Call of Duty Pro League</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 32 Teams</span>
+                                    <span class="tournament-time">⏱️ Starts in 5d</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Premium tournament with real prizes! Form a team of 4 and compete in our monthly league.</p>
+                        </div>
+                        <div class="premium-badge">Premium Event</div>
+                        <button class="join-tournament-btn disabled">Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rewards Tab Content -->
+        <div class="main-tab-content" id="rewards-tab">
+            <div class="glass-panel">
+                <div class="rewards-header">
+                    <h2>Your Rewards</h2>
+                    <div class="user-currency">
+                        <div class="currency-item">
+                            <span class="currency-icon">🥦</span>
+                            <span class="currency-amount">0</span>
+                            <span class="currency-name">Broccoli Coins</span>
+                        </div>
+                        <div class="currency-item">
+                            <span class="currency-icon">💎</span>
+                            <span class="currency-amount">0</span>
+                            <span class="currency-name">Premium Gems</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="daily-rewards">
+                    <h3>Daily Login Rewards</h3>
+                    <div class="daily-rewards-track">
+                        <div class="reward-day claimed">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">10</div>
+                            <div class="day-label">Day 1</div>
+                            <div class="claimed-badge">✓</div>
+                        </div>
+                        <div class="reward-day claimed">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">20</div>
+                            <div class="day-label">Day 2</div>
+                            <div class="claimed-badge">✓</div>
+                        </div>
+                        <div class="reward-day active">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">30</div>
+                            <div class="day-label">Day 3</div>
+                            <button class="claim-reward-btn">Claim</button>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">50</div>
+                            <div class="day-label">Day 4</div>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">75</div>
+                            <div class="day-label">Day 5</div>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">100</div>
+                            <div class="day-label">Day 6</div>
+                        </div>
+                        <div class="reward-day special">
+                            <div class="reward-icon">💎</div>
+                            <div class="reward-amount">1</div>
+                            <div class="day-label">Day 7</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Rewards Shop</h3>
+                <div class="rewards-categories">
+                    <button class="reward-category-btn active" data-category="all">All</button>
+                    <button class="reward-category-btn" data-category="avatars">Avatars</button>
+                    <button class="reward-category-btn" data-category="themes">Themes</button>
+                    <button class="reward-category-btn" data-category="effects">Effects</button>
+                    <button class="reward-category-btn" data-category="boosts">Boosts</button>
+                </div>
+                
+                <div class="rewards-grid">
+                    <!-- Avatars -->
+                    <div class="reward-item" data-category="avatars" data-id="ninja-avatar" data-price="100" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/8tBPYMa.png" alt="Ninja Avatar">
+                        </div>
+                        <h4>Ninja Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">100</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="avatars" data-id="robot-avatar" data-price="150" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/JzVjuOX.png" alt="Robot Avatar">
+                        </div>
+                        <h4>Robot Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">150</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="avatars" data-id="gamer-avatar" data-price="175" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/pSNBCDM.png" alt="Gamer Avatar">
+                        </div>
+                        <h4>Gamer Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">175</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="avatars" data-id="dragon-avatar" data-price="3" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/qHDGqCJ.png" alt="Dragon Avatar">
+                        </div>
+                        <h4>Dragon Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <!-- Themes -->
+                    <div class="reward-item" data-category="themes" data-id="neon-theme" data-price="200" data-currency="broccoli">
+                        <div class="reward-item-image theme-preview neon-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4>Neon Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">200</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="themes" data-id="retro-theme" data-price="225" data-currency="broccoli">
+                        <div class="reward-item-image theme-preview retro-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4>Retro Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">225</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="themes" data-id="galaxy-theme" data-price="2" data-currency="gems">
+                        <div class="reward-item-image theme-preview galaxy-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4>Galaxy Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">2</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="themes" data-id="hacker-theme" data-price="3" data-currency="gems">
+                        <div class="reward-item-image theme-preview hacker-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4>Hacker Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <!-- Effects -->
+                    <div class="reward-item" data-category="effects" data-id="fire-cursor" data-price="250" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/6PzOxS3.gif" alt="Fire Cursor">
+                        </div>
+                        <h4>Fire Cursor</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">250</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="effects" data-id="rainbow-trail" data-price="275" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/JYhGKzV.gif" alt="Rainbow Trail">
+                        </div>
+                        <h4>Rainbow Trail</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">275</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="effects" data-id="lightning-cursor" data-price="2" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/9qGH2JZ.gif" alt="Lightning Cursor">
+                        </div>
+                        <h4>Lightning Cursor</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">2</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <!-- Boosts -->
+                    <div class="reward-item" data-category="boosts" data-id="xp-boost-1h" data-price="300" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/QBuDriy.png" alt="2x XP Boost">
+                        </div>
+                        <h4>2x XP Boost (1 hour)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">300</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="boosts" data-id="coin-boost-1h" data-price="325" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/5VHXlul.png" alt="2x Coin Boost">
+                        </div>
+                        <h4>2x Coin Boost (1 hour)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">325</span>
+                        </div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="boosts" data-id="xp-boost-24h" data-price="3" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/QBuDriy.png" alt="2x XP Boost">
+                        </div>
+                        <h4>2x XP Boost (24 hours)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="boosts" data-id="vip-access" data-price="5" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/jtXrGtE.png" alt="VIP Access">
+                        </div>
+                        <h4>VIP Tournament Access (7 days)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">5</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn">Purchase</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-       
+        <!-- Cloaking Tab Content -->
+        <div class="main-tab-content" id="cloaking-tab">
+            <div class="glass-panel">
+                <h2>URL Cloaking</h2>
+                <div class="cloaking-container">
+                    <div class="url-input-section">
+                        <h3>Target URL</h3>
+                        <input type="url" id="target-url" placeholder="Enter URL to cloak" class="url-input">
+                    </div>
+                    
+                    <div class="cloaking-methods">
+                        <h3>Cloaking Methods</h3>
+                        <div class="method-grid">
+                            <div class="method-card" onclick="applyCloaking('about:blank')">
+                                <span class="method-icon">🔗</span>
+                                <span class="method-name">About:Blank</span>
+                                <span class="method-desc">Opens in about:blank frame</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('iframe')">
+                                <span class="method-icon">📑</span>
+                                <span class="method-name">iFrame Embed</span>
+                                <span class="method-desc">Embeds in invisible iframe</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('redirect')">
+                                <span class="method-icon">🔄</span>
+                                <span class="method-name">Redirect Chain</span>
+                                <span class="method-desc">Multiple redirect layers</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('proxy')">
+                                <span class="method-icon">🛡️</span>
+                                <span class="method-name">Proxy Server</span>
+                                <span class="method-desc">Routes through proxy</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('classroom')">
+                                <span class="method-icon">📚</span>
+                                <span class="method-name">Google Classroom</span>
+                                <span class="method-desc">Disguises as classroom</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('canvas')">
+                                <span class="method-icon">🎨</span>
+                                <span class="method-name">Canvas LMS</span>
+                                <span class="method-desc">Mimics Canvas interface</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('schoology')">
+                                <span class="method-icon">📝</span>
+                                <span class="method-name">Schoology</span>
+                                <span class="method-desc">Schoology look-alike</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('blackboard')">
+                                <span class="method-icon">📋</span>
+                                <span class="method-name">Blackboard</span>
+                                <span class="method-desc">Blackboard interface</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('moodle')">
+                                <span class="method-icon">📊</span>
+                                <span class="method-name">Moodle</span>
+                                <span class="method-desc">Moodle platform style</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('edmodo')">
+                                <span class="method-icon">📱</span>
+                                <span class="method-name">Edmodo</span>
+                                <span class="method-desc">Edmodo appearance</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('docs')">
+                                <span class="method-icon">📄</span>
+                                <span class="method-name">Google Docs</span>
+                                <span class="method-desc">Google Docs interface</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('slides')">
+                                <span class="method-icon">📑</span>
+                                <span class="method-name">Google Slides</span>
+                                <span class="method-desc">Slides presentation</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('sheets')">
+                                <span class="method-icon">📊</span>
+                                <span class="method-name">Google Sheets</span>
+                                <span class="method-desc">Spreadsheet view</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('forms')">
+                                <span class="method-icon">📝</span>
+                                <span class="method-name">Google Forms</span>
+                                <span class="method-desc">Survey form style</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('drive')">
+                                <span class="method-icon">📁</span>
+                                <span class="method-name">Google Drive</span>
+                                <span class="method-desc">Drive file view</span>
+                            </div>
+                            <div class="method-card" onclick="applyCloaking('blob')">
+                                <span class="method-icon">🔒</span>
+                                <span class="method-name">Blob URL</span>
+                                <span class="method-desc">Creates secure blob URL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Home Tab Content -->
-        <div class="main-tab-content active" id="home-tab">
+        <div class="main-tab-content" id="home-tab">
             <div class="glass-panel">
                 <h2>Welcome to Broccoli Unblocker</h2>
                 <div class="promo-text">
@@ -4364,8 +6792,20 @@
                     <div class="search-container">
                         <input type="text" id="gameSearch" placeholder="Search games..." onkeyup="searchGames()">
                     </div>
+                    <div class="game-categories">
+                        <button class="game-category-btn active" data-category="all">All Games</button>
+                        <button class="game-category-btn" data-category="action">Action</button>
+                        <button class="game-category-btn" data-category="arcade">Arcade</button>
+                        <button class="game-category-btn" data-category="puzzle">Puzzle</button>
+                        <button class="game-category-btn" data-category="racing">Racing</button>
+                        <button class="game-category-btn" data-category="sports">Sports</button>
+                        <button class="game-category-btn" data-category="strategy">Strategy</button>
+                        <button class="game-category-btn" data-category="multiplayer">Multiplayer</button>
+                        <button class="game-category-btn" data-category="sandbox">Sandbox</button>
+                        <button class="game-category-btn" data-category="horror">Horror</button>
+                    </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwiQgeRHVDP8wzJ_CeSE1LyaKCMu1qdlopwylhD4LdBvBVd2y36VjlWY0iyk38WH0JiJA/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Basketball Random">
+                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Basketball Random">
                         <h3>Basketball Random</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx63iRe5mtf5PQGIn_eGwKePxCA1iU6w-YApn57Mh4phi2ZB-G-GCJA1YTV9jKrwoqb/exec')">
@@ -4377,11 +6817,11 @@
                         <h3>Snow Rider 3D</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz6GTepbaULO9dEqHBzfb2Rm0C3pdSKcKnaOGr6qAWXxoppLkkA65v3vTgsDS4o7W56aQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Sky Car Rider">
+                        <img src="https://img.gamedistribution.com/f84a2f1c0a4e4bc3a2c0293e001c9eee-512x512.jpeg" alt="Sky Car Rider">
                         <h3>Sky Car Rider</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwqW4kBl41CHKxAW1aOCzUllnCGaK6LDmkZfAZH_dJzu646nns5bRfn0oqa5Zpq9zEI/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Death Run 3D">
+                        <img src="https://img.gamedistribution.com/7a3fd749f4d04da5b0d4c2e8bd7b5e7c-512x512.jpeg" alt="Death Run 3D">
                         <h3>Death Run 3D</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzi5I00V5E4UoWKNwYMpazWyXDs1J4m0hui0937lFzMRKs31QGZ3rcUHRroAt13wmc9tw/exec')">
@@ -4401,12 +6841,13 @@
                         <h3>Among Us</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx_sIQG2rUisJPhvCnaoOFGDwTou_89iDBoJTAB5RsdykYLw7IQF8vUYUKMBDoJDY0asQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Car Drawing">
+                        <img src="https://play-lh.googleusercontent.com/XgGc7Ew4eCQrHJ-c-2XVNbOjlYo0nxlKYT8mCsEOl0C_vUjEUAZXzOFNeBNxTEY1QBs" alt="Car Drawing">
                         <h3>Car Drawing</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxU6cZkUx_sDIJf4BqIMj7zkzzhbeEIr58TkysbYpIyy9y32zd8q-yVo1cf9td2b8TM/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Sprunki Clicker">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxU6cZkUx_sDIJf4BqIMj7zkzzhbeEIr58TkysbYpIyy9y32zd8q-yVo1cf9td2b8TM/exec')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Sprunki Clicker">
                         <h3>Sprunki Clicker</h3>
+                        <p>Addictive clicking game</p>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxeLEpzZpAIPrMSkB1dCTPkLcn8wcNTVCw0wfN2q_jOfXWQ3GhcrqygfgQq1t2yyK6tCQ/exec')">
                         <img src="https://play-lh.googleusercontent.com/U8M8P1nB8TUZw4GhQn3LwXpUo1Hhp1jPAOLcmBRzg0YhFKxeRgi5e9IgQBg-7lI_PA=w240-h480-rw" alt="Mr Racer">
@@ -4416,7 +6857,7 @@
                         <img src="https://assets.geometrydash.io/favicon.ico" alt="Geometry Dash">
                         <h3>Geometry Dash</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://googleusercontent.b-cdn.net/one/one.html')">
+                    <div class="game-card" onclick="openGame('https://firebasestorage.googleapis.com/v0/b/test-1e83a.appspot.com/o/1.html?alt=media&token=3542ede2-65da-4871-a64a-3494f448bb76')">
                         <img src="https://1v1.lol/assets/images/logo.png" alt="1v1.LOL">
                         <h3>1v1.LOL</h3>
                     </div>
@@ -4443,6 +6884,14 @@
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzwDflD6NVq9iPdEWsRyyI4iqR_k47P-BK4sn_vpYaZGsPJz3zDYRDy45azzYiPnYs/exec')">
                         <img src="https://play-lh.googleusercontent.com/4aznLu_JUWUKZBjCXtFAp8OjAU4Xp5N_kv3hD5mWCwZXvCdCFY8BfNfYg0QVqQIe1g=w240-h480-rw" alt="Bottle Flip 3D">
                         <h3>Bottle Flip 3D</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwAoTmRTzE6ydvLBsbUcwDvlzS36xbr263_ttMmz8pBgmf0ih3RHJNeYFe3-evGMeMF/exec')">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Stickman Duel">
+                        <h3>Stickman Duel</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwJTssMMKNaVKIN5DziU50WkntU7rRtW2mykA7X06II9r4Vn39dUtAVFpubU8lDHGQZ/exec')">
+                        <img src="https://play-lh.googleusercontent.com/ixVjFODKvUfLN7vO0qwUaVnrXGXL-PcDSxLi5m3YFOkgaWW-Cdv8LOwOlswW9KI9c9c" alt="Ski King">
+                        <h3>Ski King</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwgo9fzGlgbzqpBKfXrw7gGGvg8cYPPL-ycgd_y9jKePSDVnk_zr_keYn8v-0eUJQd5/exec')">
                         <img src="https://play2048.co/favicon.ico" alt="2048 Game">
@@ -4512,74 +6961,97 @@
                         <img src="https://play-lh.googleusercontent.com/fXQVXTmZHjy0M0vfXIBOogUA5tPm4b9k0YJUwwjpvlw6UQS8xj6MjLfKQP-so-Q-7g" alt="Parking Fury">
                         <h3>Parking Fury</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzRkRFh3xH_YzLqtvFVsKcPOdqkcps9umH96kwECqmzugE1XkxYo6ryhCKD1m7JkR0-rw/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 3">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzRkRFh3xH_YzLqtvFVsKcPOdqkcps9umH96kwECqmzugE1XkxYo6ryhCKD1m7JkR0-rw/exec')" data-category="strategy">
+                        <img src="https://play-lh.googleusercontent.com/YU-v5IxmRX4PlnLJ-LdIWkIaC1mx_dcXHXYgPRtUjknIZUVNQXVoP6M9F-8wB1SORjM" alt="Bloons TD 3">
                         <h3>Bloons TD 3</h3>
+                        <p>Tower defense with monkeys</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxeATXd8GtKmm7SabIq9L-KKLOeSpiiyroLLAYKhzDNmacYq52DkBZb_L2YHwupaOs/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 4 Expansion">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxeATXd8GtKmm7SabIq9L-KKLOeSpiiyroLLAYKhzDNmacYq52DkBZb_L2YHwupaOs/exec')" data-category="strategy">
+                        <img src="https://play-lh.googleusercontent.com/YU-v5IxmRX4PlnLJ-LdIWkIaC1mx_dcXHXYgPRtUjknIZUVNQXVoP6M9F-8wB1SORjM" alt="Bloons TD 4 Expansion">
                         <h3>Bloons TD 4 Expansion</h3>
+                        <p>Advanced tower defense</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzSjvvBl4oIbQbsdQ6wORkEPqBumZKhlNUW3FirGHuAIe6EPZ_QGuF4N0TqjL0ECFoo/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 5">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzSjvvBl4oIbQbsdQ6wORkEPqBumZKhlNUW3FirGHuAIe6EPZ_QGuF4N0TqjL0ECFoo/exec')" data-category="strategy">
+                        <img src="https://play-lh.googleusercontent.com/YU-v5IxmRX4PlnLJ-LdIWkIaC1mx_dcXHXYgPRtUjknIZUVNQXVoP6M9F-8wB1SORjM" alt="Bloons TD 5">
                         <h3>Bloons TD 5</h3>
+                        <p>Ultimate tower defense</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://storage.googleapis.com/test-41376.appspot.com/pubgmini.html')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="PUBG Mini">
+                    <div class="game-card" onclick="openGame('https://storage.googleapis.com/test-41376.appspot.com/pubgmini.html')" data-category="action">
+                        <img src="https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf6AEZ1tGIJ-weLOLFMb1CFaHjlE6JCLVs" alt="PUBG Mini">
                         <h3>PUBG Mini</h3>
+                        <p>Battle royale shooter</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyvVfKl6U8WIVvyCjiU0bTUncbb_pYAdYbJGrvPFL8g4H3brthvqFi2uKK6YW5nTJepcw/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Mario Run">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyvVfKl6U8WIVvyCjiU0bTUncbb_pYAdYbJGrvPFL8g4H3brthvqFi2uKK6YW5nTJepcw/exec')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/5LcxeECkuNBV-EvKfJxZwYTxFw5QjLXYEUXbGXlpR3CsCqDRnR_jA5uBYjPzYHAbzA" alt="Mario Run">
                         <h3>Mario Run</h3>
+                        <p>Classic platformer</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx88tZ42kElQx0zgLz43Yg0t6dSWzt5orHxO2NnPXcV2cJ-ZQSKzdAeuoEDjHufzXJF_Q/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Super Mario Sunshine 64 (Mod)">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx88tZ42kElQx0zgLz43Yg0t6dSWzt5orHxO2NnPXcV2cJ-ZQSKzdAeuoEDjHufzXJF_Q/exec')" data-category="arcade">
+                        <img src="https://mario.wiki.gallery/images/thumb/6/6a/SuperMarioSunshine_logo.png/1200px-SuperMarioSunshine_logo.png" alt="Super Mario Sunshine 64 (Mod)">
                         <h3>Super Mario Sunshine 64 (Mod)</h3>
+                        <p>Mario 64 mod</p>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwSQ0aXrXdz23Z0adlljZLtt6EGzD7max6U15OnUFBxhQmht6KK7l7RzsVo2wOdkoXR/exec')">
                         <img src="https://hole-io.com/images/hole-io-logo.png" alt="Hole.io">
                         <h3>Hole.io</h3>
                         <p>Swallow the city as a black hole</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbw8iHPqdVFEzquUYbNxFVAu1Tw4Nri5SWMRLdP_c7a84vCOHVG7YUWuhjSVptg1SVHr/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Drift Hunters">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbw8iHPqdVFEzquUYbNxFVAu1Tw4Nri5SWMRLdP_c7a84vCOHVG7YUWuhjSVptg1SVHr/exec')" data-category="racing">
+                        <img src="https://play-lh.googleusercontent.com/QqKDFt9_0dTZi4NvQkQxYqZWdZGJQmvL-QjxEWi3WYEbP88tLJxP0-XG3-FgXBxngA=w240-h480-rw" alt="Drift Hunters">
                         <h3>Drift Hunters</h3>
+                        <p>Realistic drift racing</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyJg41h2LSrrKUlNQaOTWWByT-xkFYWnYT7ze3t8V2GcKy2K5CIiYx_oogVcxWllIKL/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="NBA Jam">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyJg41h2LSrrKUlNQaOTWWByT-xkFYWnYT7ze3t8V2GcKy2K5CIiYx_oogVcxWllIKL/exec')" data-category="sports">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/NBA_Jam_Tournament_Edition_logo.png/220px-NBA_Jam_Tournament_Edition_logo.png" alt="NBA Jam">
                         <h3>NBA Jam</h3>
+                        <p>Arcade basketball</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwD4aYk8804rFEa2GleUacBH110qmzS8bz-wHnRTTigY2HkE3iafHYLRCkH0nUGc_oA/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Chess">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwD4aYk8804rFEa2GleUacBH110qmzS8bz-wHnRTTigY2HkE3iafHYLRCkH0nUGc_oA/exec')" data-category="strategy">
+                        <img src="https://play-lh.googleusercontent.com/bQJgXGfDpn7KBT32XaLCjTQQYQ-vVJCfqcvw0f3Y2YwQ6OtZ4-ZJQhbRmk9zZz4rDQ" alt="Chess">
                         <h3>Chess</h3>
+                        <p>Classic board game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwfchAHcT3pRY88_OkW8cVOHwip5j8SbD_7jhezDN5ZrZkQMUSqr7PlWNim0cW2JO8ibw/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Board Game Classics">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwfchAHcT3pRY88_OkW8cVOHwip5j8SbD_7jhezDN5ZrZkQMUSqr7PlWNim0cW2JO8ibw/exec')" data-category="strategy">
+                        <img src="https://play-lh.googleusercontent.com/5-4RqoZEGK_gXZmGpBWEeWLO3xGZZAf0GfUJSyzjZrUaOGSvYZJzlDSbXSHxJ6V-OA" alt="Board Game Classics">
                         <h3>Board Game Classics</h3>
+                        <p>Collection of board games</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxzGXZ-dYcADWPNv7OSO6OdaFl8sJtBNY8J1KO5EQ33_I37NN0nQkaej4HqNCAkvxHHqA/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Fall Guys">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzlI0f1-ecYPbzoBR3OvE5nBH-krlom4UKH28DjIm-f4FGM3nA5g__x1N-EGVph-M46YA/exec')">
+                        <img src="https://play-lh.googleusercontent.com/QqKDFt9_0dTZi4NvQkQxYqZWdZGJQmvL-QjxEWi3WYEbP88tLJxP0-XG3-FgXBxngA=w240-h480-rw" alt="Madalin Cars">
+                        <h3>Madalin Cars</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbykjXy8Fl2yrkwhRMc3n51g6bAoHAbpKMNy3x6KKMapMc5O2jbtSemWZ75EG-ybhBvNoQ/exec')">
+                        <img src="https://play-lh.googleusercontent.com/eSAJ16tVJYZx7UCF4VMPQ5QFYCfQQEPgbD0O56XRX1LcgL5F4HYM-nFgYiWXKXLvYn4=w240-h480-rw" alt="Drag Racing Club">
+                        <h3>Drag Racing Club</h3>
+                    </div>
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxzGXZ-dYcADWPNv7OSO6OdaFl8sJtBNY8J1KO5EQ33_I37NN0nQkaej4HqNCAkvxHHqA/exec')" data-category="multiplayer">
+                        <img src="https://play-lh.googleusercontent.com/V3M-ZVyu4NCOR8oxeH0R5-yw4tKUwVUUU-HbgUrsxLuQz_6xv0vVpS6WnkEJ4ID3YRjV" alt="Fall Guys">
                         <h3>Fall Guys</h3>
+                        <p>Multiplayer obstacle course</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxpNZjxFXfBnNFF3OhqKJCPOcCqq50UdU0-SjT4ZfIwmYSoy4pD2-Um2HDEVP27ADs6/exec')">
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Operious">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxpNZjxFXfBnNFF3OhqKJCPOcCqq50UdU0-SjT4ZfIwmYSoy4pD2-Um2HDEVP27ADs6/exec')" data-category="action">
+                        <img src="https://img.itch.zone/aW1nLzIyMTU3MDkucG5n/original/aE3bDk.png" alt="Operious">
                         <h3>Operious</h3>
+                        <p>Action adventure</p>
                     </div>
                     <div class="game-card" onclick="openGame('https://www.coolmathgames.com/0-the-impossible-quiz')">
                         <img src="https://www.coolmathgames.com/sites/default/files/games/icon/icon-impossible-quiz.png" alt="The Impossible Quiz">
                         <h3>The Impossible Quiz</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyoVKqSi44yCkcl01rp17c7Dluj_4Q9P5kSsqGcf02xgBTx_mT6jik17o2mhkGgd9Yj/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Rooftop Snipers">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyoVKqSi44yCkcl01rp17c7Dluj_4Q9P5kSsqGcf02xgBTx_mT6jik17o2mhkGgd9Yj/exec')" data-category="action">
+                        <img src="https://img.gamedistribution.com/d84c0fdb7c6e4582b6dabf74b1b8d1ed-512x512.jpeg" alt="Rooftop Snipers">
                         <h3>Rooftop Snipers</h3>
+                        <p>2-player shooting game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://storage.googleapis.com/test-41376.appspot.com/ts3.html')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Time Shooter 3">
+                    <div class="game-card" onclick="openGame('https://storage.googleapis.com/test-41376.appspot.com/ts3.html')" data-category="action">
+                        <img src="https://img.gamedistribution.com/c5eb4e8f1ecd4f5f9b7d67da2b330b57-512x512.jpeg" alt="Time Shooter 3">
                         <h3>Time Shooter 3</h3>
+                        <p>First-person shooter</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwr79gF5RqgUkBr0YEX16ayQF4aqdcHxaLRubcOggFvXqp-PiG7tw0uyvr3vlUEpDnC/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Soccar Random">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwr79gF5RqgUkBr0YEX16ayQF4aqdcHxaLRubcOggFvXqp-PiG7tw0uyvr3vlUEpDnC/exec')" data-category="sports">
+                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Soccar Random">
                         <h3>Soccar Random</h3>
+                        <p>Rocket League style game</p>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbygjC3zfZtvLnkZSdN0ZYEX2u1ZGEKeW6fP2y2SC0cJBvYVq7f_wZGbgbrFaq0iUhcNsA/exec')">
                         <img src="https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw" alt="Melon Playground">
@@ -4589,72 +7061,85 @@
                         <img src="https://www.sonicretro.org/wp-content/uploads/2019/06/sonic_mania_plus_art.jpg" alt="Sonic Revert">
                         <h3>Sonic Revert</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwWFVSflZjpFKgB73dzoNbl5d044y0_BcfrRyVqgfURdUZHpHJUDEeQS1ABGGqXmFoo/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Boxing Random">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwWFVSflZjpFKgB73dzoNbl5d044y0_BcfrRyVqgfURdUZHpHJUDEeQS1ABGGqXmFoo/exec')" data-category="sports">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Boxing Random">
                         <h3>Boxing Random</h3>
+                        <p>Physics-based boxing</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzDdetO4NX5twY1pU389ZUG2M9DERmoV0DeJNJS7SvzVIdA1WUaBeIeHo_CfQVNw2gq6g/exec')">
-                        <img src="https://ssl.gstatic.com/docs/spreadsheets/spreadsheets_2020q4_48dp.png" alt="Poop Clicker">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzDdetO4NX5twY1pU389ZUG2M9DERmoV0DeJNJS7SvzVIdA1WUaBeIeHo_CfQVNw2gq6g/exec')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Poop Clicker">
                         <h3>Poop Clicker</h3>
+                        <p>Silly clicker game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzZN3jRO2eOgcp622_W0GYAeArMio71AmlfRhF8yFucC5hEbRnDFZ3NLiN8peebEdlhWw/exec')">
-                        <img src="https://ssl.gstatic.com/docs/spreadsheets/spreadsheets_2020q4_48dp.png" alt="Spacebar Clicker">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzZN3jRO2eOgcp622_W0GYAeArMio71AmlfRhF8yFucC5hEbRnDFZ3NLiN8peebEdlhWw/exec')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Spacebar Clicker">
                         <h3>Spacebar Clicker</h3>
+                        <p>Simple clicker game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw')">
-                        <img src="https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw" alt="Melon Playground">
+                    <div class="game-card" onclick="openGame('https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw')" data-category="sandbox">
+                        <img src="https://play-lh.googleusercontent.com/N0UxhBVUmx8s7y3F7Kqre2AcpXyPDKAp8nHjiPPoOONc_sfugHCYMjBpbUKCMlZ43Q" alt="Melon Playground">
                         <h3>Melon Playground</h3>
+                        <p>Physics sandbox game</p>
                     </div>
                  
                     
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbxJNtrKTWPCSIo9tOqq53G2xqoQCIPDTYUsVOT79Eqk8I7C5cQkGdDnj0jzlNHa7bvs3g/exec', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="FNAF">
+                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbxJNtrKTWPCSIo9tOqq53G2xqoQCIPDTYUsVOT79Eqk8I7C5cQkGdDnj0jzlNHa7bvs3g/exec', '_blank')" data-category="horror">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Five_Nights_at_Freddy%27s_logo.png/1200px-Five_Nights_at_Freddy%27s_logo.png" alt="FNAF">
                         <h3>FNAF</h3>
+                        <p>Five Nights at Freddy's</p>
                     </div>
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbz9ZJCJhSWY_L-w8eDd3YKJVCPtmVikRpLFXZo9chsP9Ui1bASy8inKly0D7odsrgHbJw/exec', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="Doodle Jump">
+                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbz9ZJCJhSWY_L-w8eDd3YKJVCPtmVikRpLFXZo9chsP9Ui1bASy8inKly0D7odsrgHbJw/exec', '_blank')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/V1UdKLQgw0ltxXnUHYFRJUlJRCN_-quNHJJ7_jmeLcS_Y5wRVYAv8BgpUDpMDCvUf5I" alt="Doodle Jump">
                         <h3>Doodle Jump</h3>
+                        <p>Endless jumping game</p>
                     </div>
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbzjgnGGeTNL2DTjJzVx3WGvsLjEyA47O6xYss-ijTLWWwrQv9siK9Gn_QqNDlDkrc27/exec', '_blank')">
-                        <img src="https://img.gamedistribution.com/16cb204cf3a9d4d223a0a3fd8b0eec5d-512x512.jpeg" alt="Omega Clicker">
+                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbzjgnGGeTNL2DTjJzVx3WGvsLjEyA47O6xYss-ijTLWWwrQv9siK9Gn_QqNDlDkrc27/exec', '_blank')" data-category="arcade">
+                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Omega Clicker">
                         <h3>Omega Clicker</h3>
+                        <p>Advanced clicker game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxOdvIWKB1iyuZ7zwU0c45svNrf3GTGbiQp6mOxw-p8Bf-BbJ4m00fyTwjp3QeMuwCjmQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Baseball Blast">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxOdvIWKB1iyuZ7zwU0c45svNrf3GTGbiQp6mOxw-p8Bf-BbJ4m00fyTwjp3QeMuwCjmQ/exec')" data-category="sports">
+                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Baseball Blast">
                         <h3>Baseball Blast</h3>
+                        <p>Arcade baseball game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyVPz9wAXi5MOoN-W13DNHZB-mdu-B6MdRdvq6qPpC-cIYGU7RZggTJpPIZFDEA_XShlQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Call of Duty">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyVPz9wAXi5MOoN-W13DNHZB-mdu-B6MdRdvq6qPpC-cIYGU7RZggTJpPIZFDEA_XShlQ/exec')" data-category="action">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/CoD_Logo.svg/1200px-CoD_Logo.svg.png" alt="Call of Duty">
                         <h3>Call of Duty</h3>
+                        <p>First-person shooter</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxNbvNHQi6AaM1h7e1N4T2gkDUR3CMeqDfto6yUKf4DKrOELGCCT4maR8rwUvL3EAXg/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Ragdoll Archers">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxNbvNHQi6AaM1h7e1N4T2gkDUR3CMeqDfto6yUKf4DKrOELGCCT4maR8rwUvL3EAXg/exec')" data-category="action">
+                        <img src="https://img.gamedistribution.com/f5b2c2a0f3c04f9c9b3b180aec6a588c-512x512.jpeg" alt="Ragdoll Archers">
                         <h3>Ragdoll Archers</h3>
+                        <p>Physics-based archery</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxrcohnty6eZ9pRLd3O9NTBfaeZfD_45xKEbDZEc9cb5ThPg_GhxWUcPsHR5ESm_B_T/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Ragdoll.io">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxrcohnty6eZ9pRLd3O9NTBfaeZfD_45xKEbDZEc9cb5ThPg_GhxWUcPsHR5ESm_B_T/exec')" data-category="multiplayer">
+                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Ragdoll.io">
                         <h3>Ragdoll.io</h3>
+                        <p>Multiplayer physics game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyH49VkOeAqhb5hHEhZb1KC6dya9xUHJ6TRNkd9js1PEgzIKbjbQRnQ5-23QIWCLIxf/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Roblox Crush Staff">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyH49VkOeAqhb5hHEhZb1KC6dya9xUHJ6TRNkd9js1PEgzIKbjbQRnQ5-23QIWCLIxf/exec')" data-category="action">
+                        <img src="https://tr.rbxcdn.com/38c6edcb50652833822e2e8c9b59e987/150/150/Image/Png" alt="Roblox Crush Staff">
                         <h3>Roblox Crush Staff</h3>
+                        <p>Roblox-inspired game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzn00_F-70nwzrjSQTKLcrur8O4kPW_Bjzg9P905qRfcWHtMEVQ0MTnMzlH70WDpDnKEQ/exec')">
-                        <img src="https://i.ytimg.com/vi/8Q3XQqVQJ8M/maxresdefault.jpg" alt="Oregon Trail">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzn00_F-70nwzrjSQTKLcrur8O4kPW_Bjzg9P905qRfcWHtMEVQ0MTnMzlH70WDpDnKEQ/exec')" data-category="strategy">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/7/79/Oregon_Trail_Cover.jpg" alt="Oregon Trail">
                         <h3>Oregon Trail</h3>
+                        <p>Classic adventure game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyDlu_jOseVJ1vs-727rRdeIgvVzKkUFT9FwBsdsaLmMKt46TmNtM_jYrDJYvPQb0Y_Lw/exec', 'Bad Time Simulator')">
-                        <img src="https://i.ytimg.com/vi/1Hojv0m3TqA/maxresdefault.jpg" alt="Bad Time Simulator">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyDlu_jOseVJ1vs-727rRdeIgvVzKkUFT9FwBsdsaLmMKt46TmNtM_jYrDJYvPQb0Y_Lw/exec', 'Bad Time Simulator')" data-category="action">
+                        <img src="https://static.wikia.nocookie.net/undertale/images/c/c3/Spr_sansb_face_0.png" alt="Bad Time Simulator">
                         <h3>Bad Time Simulator</h3>
                         <p>Undertale battle simulator</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwv7qZupwIYCzZ2TjDEjxKzCupBLbbi6mZkec3Da7Nze-JEPYymNrWOq51z-ueVuEgQ/exec', 'Stumble Guys')">
-                        <img src="https://play-lh.googleusercontent.com/8U299jZ3XqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQZq8zZqQ=w240-h480-rw" alt="Stumble Guys">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwv7qZupwIYCzZ2TjDEjxKzCupBLbbi6mZkec3Da7Nze-JEPYymNrWOq51z-ueVuEgQ/exec', 'Stumble Guys')" data-category="multiplayer">
+                        <img src="https://play-lh.googleusercontent.com/V3M-ZVyu4NCOR8oxeH0R5-yw4tKUwVUUU-HbgUrsxLuQz_6xv0vVpS6WnkEJ4ID3YRjV" alt="Stumble Guys">
                         <h3>Stumble Guys</h3>
                         <p>Multiplayer obstacle course game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycby1HaNDGKwziSvZ_m-drF_v3AFw4E0gOvqn8Dx_9SSxXQrM3s0kFdZYrlPLcryYkPIb/exec', 'Friday Night Funkin')">
-                        <img src="https://i.ytimg.com/vi/1Hojv0m3TqA/maxresdefault.jpg" alt="Friday Night Funkin">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycby1HaNDGKwziSvZ_m-drF_v3AFw4E0gOvqn8Dx_9SSxXQrM3s0kFdZYrlPLcryYkPIb/exec', 'Friday Night Funkin')" data-category="arcade">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Friday_Night_Funkin%27_Logo.svg/1200px-Friday_Night_Funkin%27_Logo.svg.png" alt="Friday Night Funkin">
                         <h3>Friday Night Funkin</h3>
                         <p>Rhythm music battle game</p>
                     </div>
@@ -4663,8 +7148,8 @@
                         <h3>Tetris</h3>
                         <p>Classic block stacking puzzle game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxZXEDJOyPdjQNVM388Zn2oM16PwwJLd6UUO88mXvyCsNs39puoIAODiTRbXx9zO-k3/exec', 'Garfield Scary Scavenger Hunt')">
-                        <img src="https://i.ytimg.com/vi/1Hojv0m3TqA/maxresdefault.jpg" alt="Garfield Scary Scavenger Hunt">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxZXEDJOyPdjQNVM388Zn2oM16PwwJLd6UUO88mXvyCsNs39puoIAODiTRbXx9zO-k3/exec', 'Garfield Scary Scavenger Hunt')" data-category="puzzle">
+                        <img src="https://static.wikia.nocookie.net/garfield/images/e/e0/GSH.png" alt="Garfield Scary Scavenger Hunt">
                         <h3>Garfield Scary Scavenger Hunt</h3>
                         <p>Horror-themed Garfield adventure game</p>
                     </div>
@@ -4916,7 +7401,19 @@
     
     <script>
         // Update proxy servers list
-       
+        const proxyServers = [
+            { ip: '23.82.137.159', port: '80', type: 'http', country: 'US', speed: '5.2s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'Leaseweb USA, Inc' },
+            { ip: '115.106.173.107', port: '13001', type: 'http', country: 'US', speed: '5.0s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'AS132203' },
+            { ip: '43.153.21.13', port: '13001', type: 'http', country: 'US', speed: '6.8s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'Tencent Cloud Computing' },
+            { ip: '159.65.230.46', port: '8888', type: 'http', country: 'US', speed: '5.6s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'DigitalOcean, LLC' },
+            { ip: '65.49.2.199', port: '3128', type: 'http', country: 'US', speed: '6.5s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'Dynamic Internet Technology Inc' },
+            { ip: '43.135.147.75', port: '13001', type: 'http', country: 'US', speed: '8.1s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '93%', lastChecked: 'Just now', provider: 'Tencent Cloud Computing' },
+            { ip: '24.144.115.60', port: '8888', type: 'http', country: 'US', speed: '9.4s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'DigitalOcean, LLC' },
+            { ip: '43.130.61.237', port: '13001', type: 'http', country: 'US', speed: '10.9s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'Tencent Cloud Computing' },
+            { ip: '154.16.146.41', port: '80', type: 'http', country: 'US', speed: '13.4s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '81%', lastChecked: 'Just now', provider: 'OC1-HostForWeb, LLC' },
+            { ip: '43.153.23.242', port: '13001', type: 'http', country: 'US', speed: '12.2s', protocol: 'HTTP (Elite)', location: 'United States', reliability: '100%', lastChecked: 'Just now', provider: 'Tencent Cloud Computing' }
+        ];
+
         // Initialize UV configuration
         window.__uv$config = {
             prefix: '/uv/',
@@ -6407,18 +8904,56 @@
         function searchGames() {
             const input = document.getElementById('gameSearch');
             const filter = input.value.toUpperCase();
-            const gameCards = document.getElementsByClassName('game-card');
+            const gameCards = document.querySelectorAll('.game-card');
+            const activeCategory = document.querySelector('.game-category-btn.active');
+            const activeValue = activeCategory ? activeCategory.dataset.category : 'all';
             
-            for (let i = 0; i < gameCards.length; i++) {
-                const h3 = gameCards[i].getElementsByTagName('h3')[0];
-                const txtValue = h3.textContent || h3.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    gameCards[i].style.display = "";
+            gameCards.forEach(card => {
+                const title = card.querySelector('h3').textContent;
+                const matchesSearch = title.toUpperCase().indexOf(filter) > -1;
+                const matchesCategory = activeValue === 'all' || card.dataset.category === activeValue;
+                
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = "";
                 } else {
-                    gameCards[i].style.display = "none";
+                    card.style.display = "none";
                 }
-            }
+            });
         }
+        
+        // Initialize category buttons
+        window.addEventListener('load', function() {
+            console.log('Initializing game categories');
+            const categoryButtons = document.querySelectorAll('.game-category-btn');
+            
+            // Add data-category attributes to game cards that don't have them
+            document.querySelectorAll('.game-card:not([data-category])').forEach(card => {
+                card.setAttribute('data-category', 'arcade');
+            });
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Category clicked:', this.dataset.category);
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter games based on category
+                    const category = this.dataset.category;
+                    const gameCards = document.querySelectorAll('.game-card');
+                    
+                    gameCards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.style.display = "";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                });
+            });
+        });
 
         function loadGame(card, url) {
             // Check if URL is a Google Script URL
@@ -6435,13 +8970,15 @@
         // Theme customization
         const themeToggle = document.getElementById('theme-toggle');
         const colorOptions = document.querySelectorAll('.color-option');
-        
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        // Apply theme from local storage if available
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            document.documentElement.setAttribute('data-theme', storedTheme);
+        }
+        const themePreference = storedTheme || 'dark';
         const savedColor = localStorage.getItem('theme-color') || 'green';
         
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.checked = savedTheme === 'dark';
+        themeToggle.checked = themePreference === 'dark';
         updateThemeColor(savedColor);
         
         // Theme toggle
@@ -6929,6 +9466,158 @@
                 proxyContainer.msRequestFullscreen();
             }
         };
+
+        // Define openGame function
+        function openGame(url) {
+            const gameContainer = document.getElementById('gameContainer');
+            const gameFrame = document.getElementById('gameFrame');
+            const gameTitle = document.getElementById('gameTitle');
+            
+            if (gameContainer && gameFrame) {
+                // Set the game URL
+                gameFrame.src = url;
+                
+                // Extract game title from URL or use default
+                let title = 'Game';
+                try {
+                    const urlObj = new URL(url);
+                    const pathParts = urlObj.pathname.split('/');
+                    if (pathParts.length > 0) {
+                        const lastPart = pathParts[pathParts.length - 1];
+                        if (lastPart && lastPart !== '') {
+                            title = lastPart.replace(/\.[^/.]+$/, '').replace(/-/g, ' ');
+                            title = title.charAt(0).toUpperCase() + title.slice(1);
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing URL:', e);
+                }
+                
+                // Set the game title
+                if (gameTitle) {
+                    gameTitle.textContent = title;
+                }
+                
+                // Show the game container
+                gameContainer.style.display = 'block';
+                
+                // Track game play for stats
+                trackGamePlay(title);
+            }
+        }
+        
+        // Define toggleFullscreen function
+        function toggleFullscreen() {
+            const gameFrame = document.getElementById('gameFrame');
+            
+            if (!gameFrame) return;
+            
+            if (document.fullscreenElement) {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
+            } else {
+                // Enter fullscreen
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.mozRequestFullScreen) { // Firefox
+                    gameFrame.mozRequestFullScreen();
+                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
+                    gameFrame.msRequestFullscreen();
+                }
+            }
+        }
+        
+        // Function to track game play for statistics
+        function trackGamePlay(gameTitle) {
+            // Initialize gameStats if not already done
+            if (!window.gameStats) {
+                window.gameStats = JSON.parse(localStorage.getItem('gameStats') || '{"totalGames": 0, "recentGames": [], "favoriteGame": "", "mostPlayed": {}, "categories": {}}');
+            }
+            
+            // Update total games played
+            window.gameStats.totalGames++;
+            
+            // Update recent games list
+            const recentGame = {
+                name: gameTitle,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to beginning of array and limit to 5 recent games
+            window.gameStats.recentGames.unshift(recentGame);
+            if (window.gameStats.recentGames.length > 5) {
+                window.gameStats.recentGames.pop();
+            }
+            
+            // Update most played games
+            if (!window.gameStats.mostPlayed[gameTitle]) {
+                window.gameStats.mostPlayed[gameTitle] = 0;
+            }
+            window.gameStats.mostPlayed[gameTitle]++;
+            
+            // Determine favorite game
+            let maxPlays = 0;
+            let favoriteGame = '';
+            
+            for (const [game, plays] of Object.entries(window.gameStats.mostPlayed)) {
+                if (plays > maxPlays) {
+                    maxPlays = plays;
+                    favoriteGame = game;
+                }
+            }
+            
+            window.gameStats.favoriteGame = favoriteGame;
+            
+            // Save updated stats
+            localStorage.setItem('gameStats', JSON.stringify(window.gameStats));
+            
+            // Check for achievements
+            checkGameAchievements();
+        }
+        
+        // Function to check for game-related achievements
+        function checkGameAchievements() {
+            // Check if achievements object exists
+            if (!window.achievements) return;
+            
+            // First Game achievement
+            if (window.gameStats.totalGames >= 1 && !window.achievements['First Game'].earned) {
+                unlockAchievement('First Game');
+            }
+            
+            // Game Master achievement
+            const uniqueGames = Object.keys(window.gameStats.mostPlayed).length;
+            if (uniqueGames >= 10 && !window.achievements['Game Master'].earned) {
+                unlockAchievement('Game Master');
+            }
+            
+            // Arcade Regular achievement
+            if (window.gameStats.totalGames >= 50 && !window.achievements['Arcade Regular'].earned) {
+                unlockAchievement('Arcade Regular');
+            }
+        }
+        
+        // Function to close the game frame
+        function closeGameFrame() {
+            const iframeContainer = document.getElementById('iframeContainer');
+            if (iframeContainer) {
+                iframeContainer.style.display = 'none';
+                const gameFrame = document.querySelector('#iframeContainer iframe');
+                if (gameFrame) {
+                    gameFrame.src = '';
+                }
+            }
+        }
     </script>
 
     <div class="theme-selector">
