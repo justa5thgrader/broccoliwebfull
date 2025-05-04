@@ -306,135 +306,6 @@
             border-left: 4px solid var(--text-color-secondary);
         }
         
-        /* Tournaments Styles */
-        .tournaments-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .tournament-card {
-            background: rgba(30, 30, 40, 0.7);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tournament-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .tournament-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .tournament-header img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 2px solid var(--accent-color);
-        }
-        
-        .tournament-info {
-            flex-grow: 1;
-        }
-        
-        .tournament-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 20px;
-            color: var(--accent-color);
-        }
-        
-        .tournament-details {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .tournament-players, .tournament-time {
-            font-size: 14px;
-            color: var(--text-color-secondary);
-        }
-        
-        .tournament-prizes {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .prize {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px;
-            flex: 1;
-        }
-        
-        .prize-place {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: var(--accent-color);
-        }
-        
-        .prize-reward {
-            font-size: 14px;
-        }
-        
-        .tournament-description {
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: var(--text-color-secondary);
-            line-height: 1.5;
-        }
-        
-        .join-tournament-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            width: 100%;
-        }
-        
-        .join-tournament-btn:hover {
-            background: #3d8b40;
-        }
-        
-        .join-tournament-btn.disabled {
-            background: rgba(255, 255, 255, 0.2);
-            cursor: not-allowed;
-        }
-        
-        .tournament-card.upcoming {
-            opacity: 0.8;
-        }
-        
-        .tournament-card.premium {
-            border: 2px solid #ffee00;
-        }
-        
-        .premium-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ffee00;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
         /* Rewards Styles */
         .rewards-header {
             display: flex;
@@ -1471,11 +1342,6 @@
             color: var(--text-color);
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .tab.active {
-            background: var(--primary-color);
-            color: var(--background-color);
         }
 
         .tab-content {
@@ -4324,34 +4190,37 @@
             const today = new Date().toDateString();
             const lastClaim = userData.dailyRewards.lastClaim;
             
-            if (lastClaim !== today) {
-                // Check if this is a consecutive day
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                const yesterdayString = yesterday.toDateString();
-                
-                if (lastClaim === yesterdayString) {
-                    // Consecutive day, increase streak
-                    userData.dailyRewards.streak++;
-                } else {
-                    // Not consecutive, reset streak
-                    userData.dailyRewards.streak = 1;
-                }
-                
-                // Update max streak if needed
-                if (userData.dailyRewards.streak > userData.dailyRewards.maxStreak) {
-                    userData.dailyRewards.maxStreak = userData.dailyRewards.streak;
-                }
-                
-                // Update last claim date
-                userData.dailyRewards.lastClaim = today;
-                
-                // Save user data
-                saveUserData();
-                
-                // Update daily rewards UI
-                updateDailyRewardsUI();
+            // If reward was already claimed today, don't allow another claim
+            if (lastClaim === today) {
+                return;
             }
+            
+            // Check if this is a consecutive day
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayString = yesterday.toDateString();
+            
+            if (lastClaim === yesterdayString) {
+                // Consecutive day, increase streak
+                userData.dailyRewards.streak++;
+            } else {
+                // Not consecutive, reset streak
+                userData.dailyRewards.streak = 1;
+            }
+            
+            // Update max streak if needed
+            if (userData.dailyRewards.streak > userData.dailyRewards.maxStreak) {
+                userData.dailyRewards.maxStreak = userData.dailyRewards.streak;
+            }
+            
+            // Update last claim date
+            userData.dailyRewards.lastClaim = today;
+            
+            // Save user data
+            saveUserData();
+            
+            // Update daily rewards UI
+            updateDailyRewardsUI();
         }
         
         // Update daily rewards UI
@@ -4763,178 +4632,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             setTheme(savedTheme);
-            
-            // Initialize other components
-            initializeTabs();
-            initializeProxyList();
-            initializeBrowser();
-            initializeCloaking();
-            initializeMatrixRain();
-            initializeErrorHandling();
-            registerServiceWorker();
-            
-            // Add event listeners for background style changes
-            const bgStyleSelect = document.querySelector('.background-picker select');
-            if (bgStyleSelect) {
-                bgStyleSelect.addEventListener('change', function() {
-                    const style = this.value;
-                    if (!userStats.backgroundStylesUsed.includes(style)) {
-                        userStats.backgroundStylesUsed.push(style);
-                        saveStats();
-                        
-                        // Check for Customizer achievement
-                        if (userStats.backgroundStylesUsed.length >= 4) {
-                            unlockAchievement('Customizer');
-                        }
-                    }
-                });
-            }
-            
-            // Add event listeners for theme buttons
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const theme = this.getAttribute('data-theme');
-                    if (!userStats.themesUsed.includes(theme)) {
-                        userStats.themesUsed.push(theme);
-                        saveStats();
-                        
-                        // Check for Theme Master achievement
-                        if (userStats.themesUsed.includes('light') && userStats.themesUsed.includes('dark')) {
-                            unlockAchievement('Theme Master');
-                        }
-                        
-                        // Check for Color Expert achievement
-                        if (userStats.themesUsed.length >= 4) {
-                            unlockAchievement('Color Expert');
-                        }
-                    }
-                });
-            });
-            
-            // Initialize achievements and stats
-            setTimeout(() => {
-                initializeAchievements();
-                initializeStats();
-                
-                // Add a debug button to test achievements
-                addDebugButton();
-            }, 500);
-        
-        // Stats and Achievements System
-        let userStats = {
-            totalPlayTime: 0,  // in minutes
-            gamesPlayed: 0,
-            uniqueGamesPlayed: [],
-            highScores: {},
-            lastPlayed: null,
-            playTimeByDay: {
-                'Monday': 0,
-                'Tuesday': 0,
-                'Wednesday': 0,
-                'Thursday': 0,
-                'Friday': 0,
-                'Saturday': 0,
-                'Sunday': 0
-            },
-            statsViewCount: 0,
-            backgroundStylesUsed: [],
-            themesUsed: [],
-            tabsVisited: [],
-            cloakingMethodsUsed: [],
-            consecutiveWins: 0
-        };
-        
-        let achievements = {
-            'First Game': { earned: false, icon: '🎮', description: 'Play your first game' },
-            'Game Master': { earned: false, icon: '⭐', description: 'Play 10 different games' },
-            'Completionist': { earned: false, icon: '🏆', description: 'Play all available games' },
-            'Time Traveler': { earned: false, icon: '⏱️', description: 'Play for 24 hours total' },
-            'Sharpshooter': { earned: false, icon: '🎯', description: 'Get a perfect score in any game' },
-            'Customizer': { earned: false, icon: '🎨', description: 'Try all background styles' },
-            'Notified': { earned: false, icon: '🔔', description: 'Enable notifications' },
-            'DJ': { earned: false, icon: '🎵', description: 'Adjust game volume' },
-            'Explorer': { earned: false, icon: '🔍', description: 'Visit all tabs' },
-            'Saver': { earned: false, icon: '💾', description: 'Enable game progress saving' },
-            'Theme Master': { earned: false, icon: '🎭', description: 'Try both light and dark themes' },
-            'Mobile Gamer': { earned: false, icon: '📱', description: 'Play on a mobile device' },
-            'Lucky Roll': { earned: false, icon: '🎲', description: 'Win 3 games in a row' },
-            'Stat Master': { earned: false, icon: '📊', description: 'View stats 10 times' },
-            'Arcade Regular': { earned: false, icon: '🎪', description: 'Play 50 games total' },
-            'Precision Player': { earned: false, icon: '🎯', description: 'Get a high score in 5 different games' },
-            'Color Expert': { earned: false, icon: '🎨', description: 'Try all color themes' },
-            'Security Expert': { earned: false, icon: '🔒', description: 'Use all cloaking methods' },
-            'Pro Gamer': { earned: false, icon: '🎮', description: 'Play for 100 hours total' },
-            'Legend': { earned: false, icon: '🏅', description: 'Unlock all achievements' }
-        };
-        
-        function initializeAchievements() {
-            console.log('Initializing achievements');
-            
-            // Load achievements from localStorage if available
-            const savedAchievements = localStorage.getItem('achievements');
-            if (savedAchievements) {
-                try {
-                    const parsed = JSON.parse(savedAchievements);
-                    console.log('Loaded saved achievements:', parsed);
-                    
-                    // Merge saved achievements with default ones to ensure all achievements exist
-                    Object.keys(parsed).forEach(key => {
-                        if (achievements[key]) {
-                            achievements[key].earned = parsed[key].earned;
-                            achievements[key].dateEarned = parsed[key].dateEarned;
-                        }
-                    });
-                } catch (e) {
-                    console.error('Error parsing saved achievements:', e);
-                }
-            } else {
-                console.log('No saved achievements found');
-            }
-            
-            // Update the UI to reflect earned achievements
-            updateAchievementsUI();
-            
-            // Check for mobile device achievement
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                setTimeout(() => {
-                    unlockAchievement('Mobile Gamer');
-                }, 1500);
-            }
-            
-            // Check for time-based achievements
-            checkTimeAchievements();
-            
-            // Check for weekend warrior achievement
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            if (dayOfWeek === 0 || dayOfWeek === 6) { // 0 is Sunday, 6 is Saturday
-                setTimeout(() => {
-                    unlockAchievement('Weekend Warrior');
-                }, 2000);
-            }
-            
-            // Add achievement CSS if not already present
-            addAchievementStyles();
-        }
-        
-        function checkTimeAchievements() {
-            const now = new Date();
-            const hours = now.getHours();
-            
-            // Night Owl: after midnight and before 5 AM
-            if (hours >= 0 && hours < 5) {
-                setTimeout(() => {
-                    unlockAchievement('Night Owl');
-                }, 1000);
-            }
-            
-            // Early Bird: between 5 AM and 8 AM
-            if (hours >= 5 && hours < 8) {
-                setTimeout(() => {
-                    unlockAchievement('Early Bird');
-                }, 1000);
-            }
-        }
+        });
         
         function initializeStats() {
             console.log('Initializing stats');
@@ -5136,515 +4834,6 @@
                     categoryStats.appendChild(categoryDiv);
                 }
             });
-        }
-        
-        function initializePlayTimeChart() {
-            const ctx = document.getElementById('play-time-chart');
-            if (!ctx) return;
-            
-            // Check if Chart.js is loaded
-            if (typeof Chart === 'undefined') {
-                // Load Chart.js dynamically
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-                script.onload = function() {
-                    createPlayTimeChart(ctx);
-                };
-                document.head.appendChild(script);
-            } else {
-                createPlayTimeChart(ctx);
-            }
-        }
-        
-        function createPlayTimeChart(ctx) {
-            // Destroy existing chart if it exists
-            if (window.playTimeChart) {
-                window.playTimeChart.destroy();
-            }
-            
-            // Create new chart
-            window.playTimeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(userStats.playTimeByDay),
-                    datasets: [{
-                        label: 'Play Time (minutes)',
-                        data: Object.values(userStats.playTimeByDay),
-                        backgroundColor: 'rgba(76, 175, 80, 0.6)',
-                        borderColor: 'rgba(76, 175, 80, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        function unlockAchievement(achievementName) {
-            console.log('Trying to unlock achievement:', achievementName);
-            if (achievements[achievementName] && !achievements[achievementName].earned) {
-                console.log('Achievement unlocked:', achievementName);
-                achievements[achievementName].earned = true;
-                achievements[achievementName].dateEarned = new Date().toISOString();
-                
-                // Show notification
-                showAchievementNotification(achievementName);
-                
-                // Save achievements
-                try {
-                    localStorage.setItem('achievements', JSON.stringify(achievements));
-                    console.log('Achievements saved to localStorage');
-                } catch (e) {
-                    console.error('Error saving achievements:', e);
-                }
-                
-                // Update UI
-                updateAchievementsUI();
-                
-                // Check if all achievements are earned
-                const allEarned = Object.values(achievements).every(a => a.earned);
-                if (allEarned && achievementName !== 'Legend') {
-                    setTimeout(() => unlockAchievement('Legend'), 1000);
-                }
-                
-                return true;
-            }
-            return false;
-        }
-        
-        function showAchievementNotification(achievementName) {
-            console.log('Showing notification for:', achievementName);
-            
-            // Remove any existing notifications
-            const existingNotifications = document.querySelectorAll('.achievement-notification');
-            existingNotifications.forEach(n => n.remove());
-            
-            // Create new notification
-            const notification = document.createElement('div');
-            notification.className = 'achievement-notification';
-            
-            const icon = document.createElement('span');
-            icon.className = 'notification-icon';
-            icon.textContent = achievements[achievementName].icon;
-            
-            const content = document.createElement('div');
-            content.className = 'notification-content';
-            
-            const title = document.createElement('div');
-            title.className = 'notification-title';
-            title.textContent = 'Achievement Unlocked!';
-            
-            const name = document.createElement('div');
-            name.className = 'notification-name';
-            name.textContent = achievementName;
-            
-            const desc = document.createElement('div');
-            desc.className = 'notification-desc';
-            desc.textContent = achievements[achievementName].description;
-            
-            content.appendChild(title);
-            content.appendChild(name);
-            content.appendChild(desc);
-            
-            notification.appendChild(icon);
-            notification.appendChild(content);
-            
-            document.body.appendChild(notification);
-            
-            // Play sound if available
-            try {
-                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3');
-                audio.volume = 0.5;
-                audio.play();
-            } catch (e) {
-                console.error('Could not play achievement sound:', e);
-            }
-            
-            // Animate in
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-            
-            // Remove after 5 seconds
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 500);
-            }, 5000);
-        }
-        
-        function saveStats() {
-            localStorage.setItem('userStats', JSON.stringify(userStats));
-        }
-        
-        // Enhanced openGame function to track stats and achievements
-        function openGame(url, title) {
-            console.log('Opening game:', url, title);
-            const loadingScreen = document.querySelector('.loading-screen');
-            const gameTitle = title || url.split('/').pop().split('.')[0];
-            
-            // Track game start time
-            const gameStartTime = new Date();
-            
-            // Update stats
-            userStats.gamesPlayed++;
-            userStats.lastPlayed = gameTitle;
-            console.log('Updated games played:', userStats.gamesPlayed);
-            
-            // Check if this is a unique game
-            if (!userStats.uniqueGamesPlayed.includes(gameTitle)) {
-                userStats.uniqueGamesPlayed.push(gameTitle);
-                console.log('Added unique game:', gameTitle);
-                console.log('Unique games count:', userStats.uniqueGamesPlayed.length);
-                
-                // Check for achievements
-                if (userStats.uniqueGamesPlayed.length === 1) {
-                    unlockAchievement('First Game');
-                }
-                if (userStats.uniqueGamesPlayed.length >= 10) {
-                    unlockAchievement('Game Master');
-                }
-                
-                // Count total games in the system
-                const totalGames = document.querySelectorAll('.game-card').length;
-                if (userStats.uniqueGamesPlayed.length >= totalGames) {
-                    unlockAchievement('Completionist');
-                }
-            }
-            
-            // Check for Arcade Regular achievement
-            if (userStats.gamesPlayed >= 50) {
-                unlockAchievement('Arcade Regular');
-            }
-            
-            // Update day of week stats
-            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][gameStartTime.getDay()];
-            
-            // Increment play time immediately to show some stats
-            userStats.totalPlayTime += 5; // Add 5 minutes right away
-            userStats.playTimeByDay[dayOfWeek] += 5;
-            
-            // Update the UI if the stats tab is visible
-            updateStatsUI();
-            
-            // Save stats
-            saveStats();
-            
-            // Show loading screen
-            if (loadingScreen) {
-                loadingScreen.style.display = 'flex';
-                document.querySelector('.loading-text').textContent = `Loading ${gameTitle}...`;
-            }
-            
-            // Create or show iframe container
-            let iframeContainer = document.querySelector('.iframe-container');
-            if (!iframeContainer) {
-                iframeContainer = document.createElement('div');
-                iframeContainer.className = 'iframe-container';
-                document.body.appendChild(iframeContainer);
-            }
-            
-            // Set up iframe content
-            iframeContainer.innerHTML = `
-                <div class="iframe-content">
-                    <button class="close-button" onclick="closeGame()">Close Game</button>
-                    <button class="fullscreen-button" onclick="toggleFullscreen()">Fullscreen</button>
-                    <iframe src="${url}" id="gameFrame" class="game-frame" allowfullscreen></iframe>
-                </div>
-            `;
-            
-            // Show iframe container after loading
-            setTimeout(() => {
-                if (loadingScreen) {
-                    loadingScreen.classList.add('fade-out');
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        loadingScreen.classList.remove('fade-out');
-                    }, 500);
-                }
-                iframeContainer.style.display = 'block';
-                
-                // Start tracking play time
-                window.gameInterval = setInterval(() => {
-                    // Update play time every minute
-                    userStats.totalPlayTime++;
-                    userStats.playTimeByDay[dayOfWeek]++;
-                    
-                    // Check for time-based achievements
-                    if (userStats.totalPlayTime >= 24 * 60) { // 24 hours in minutes
-                        unlockAchievement('Time Traveler');
-                    }
-                    if (userStats.totalPlayTime >= 100 * 60) { // 100 hours in minutes
-                        unlockAchievement('Pro Gamer');
-                    }
-                    
-                    // Save updated stats
-                    saveStats();
-                }, 60000); // Update every minute
-            }, 2000);
-        }
-        
-        // Enhanced closeGame function to update stats
-        function closeGame() {
-            const iframeContainer = document.querySelector('.iframe-container');
-            if (iframeContainer) {
-                iframeContainer.style.display = 'none';
-            }
-            
-            // Stop tracking play time
-            if (window.gameInterval) {
-                clearInterval(window.gameInterval);
-            }
-            
-            // Save final stats
-            saveStats();
-            
-            // Update UI if stats tab is active
-            if (document.getElementById('stats-tab').classList.contains('active')) {
-                updateStatsUI();
-                initializePlayTimeChart();
-            }
-        }
-        
-        // Track theme changes
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            
-            // Update active state of theme buttons
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === theme);
-            });
-            
-            // Track for achievements
-            if (!userStats.themesUsed.includes(theme)) {
-                userStats.themesUsed.push(theme);
-                saveStats();
-                
-                // Check for Theme Master achievement
-                if (userStats.themesUsed.includes('light') && userStats.themesUsed.includes('dark')) {
-                    unlockAchievement('Theme Master');
-                }
-                
-                // Check for Color Expert achievement (assuming there are 4 themes)
-                if (userStats.themesUsed.length >= 4) {
-                    unlockAchievement('Color Expert');
-                }
-            }
-        }
-        
-        // Track background style changes
-        function setBackgroundStyle(style) {
-            const body = document.body;
-            // Remove all existing background classes
-            body.classList.remove('matrix-rain', 'particles', 'gradient', 'solid-color');
-            // Add the selected style
-            body.classList.add(style);
-            // Save the preference
-            localStorage.setItem('bgStyle', style);
-        
-            // Update the select element to reflect current style
-            const bgStyleSelect = document.querySelector('.background-picker select');
-            if (bgStyleSelect) {
-                bgStyleSelect.value = style;
-            }
-            
-            // Track for achievements
-            if (!userStats.backgroundStylesUsed.includes(style)) {
-                userStats.backgroundStylesUsed.push(style);
-                saveStats();
-                
-                // Check for Customizer achievement (assuming there are 4 background styles)
-                if (userStats.backgroundStylesUsed.length >= 4) {
-                    unlockAchievement('Customizer');
-                }
-            }
-        }
-        
-        // Track tab visits
-        function initializeTabs() {
-            console.log('Initializing tabs');
-            const mainTabs = document.querySelectorAll('.main-tab');
-            const mainTabContents = document.querySelectorAll('.main-tab-content');
-            
-            mainTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    console.log('Tab clicked:', tabId);
-                    
-                    // Remove active class from all tabs and contents
-                    mainTabs.forEach(t => t.classList.remove('active'));
-                    mainTabContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to current tab and content
-                    tab.classList.add('active');
-                    const tabContent = document.getElementById(`${tabId}-tab`);
-                    if (tabContent) {
-                        tabContent.classList.add('active');
-                        console.log('Activated tab content:', tabId);
-                    } else {
-                        console.error('Could not find tab content:', tabId);
-                    }
-                    
-                    // Track tab visit for achievements
-                    if (!userStats.tabsVisited.includes(tabId)) {
-                        userStats.tabsVisited.push(tabId);
-                        saveStats();
-                        console.log('Added tab to visited:', tabId);
-                        
-                        // Check for Explorer achievement (assuming there are 7 tabs)
-                        if (userStats.tabsVisited.length >= 7) {
-                            unlockAchievement('Explorer');
-                        }
-                    }
-                    
-                    // If visiting stats tab, update the UI
-                    if (tabId === 'stats') {
-                        console.log('Stats tab selected, updating UI');
-                        setTimeout(() => {
-                            updateStatsUI();
-                            initializePlayTimeChart();
-                            
-                            // Unlock the Stat Master achievement if viewed enough times
-                            userStats.statsViewCount++;
-                            if (userStats.statsViewCount >= 10) {
-                                unlockAchievement('Stat Master');
-                            }
-                            saveStats();
-                        }, 100);
-                    }
-                });
-            });
-            
-            // Add a direct click handler for the stats tab
-            const statsTab = document.querySelector('.main-tab[data-tab="stats"]');
-            if (statsTab) {
-                console.log('Adding special handler for stats tab');
-                statsTab.addEventListener('click', function() {
-                    setTimeout(() => {
-                        console.log('Stats tab clicked, forcing update');
-                        updateStatsUI();
-                        initializePlayTimeChart();
-                    }, 200);
-                });
-            }
-            
-            // Add click handlers for volume control to unlock DJ achievement
-            const volumeSlider = document.querySelector('input[type="range"][onchange="changeVolume(this.value)"]');
-            if (volumeSlider) {
-                volumeSlider.addEventListener('change', function() {
-                    unlockAchievement('DJ');
-                });
-            }
-            
-            // Add click handler for save progress checkbox to unlock Saver achievement
-            const saveProgressCheckbox = document.querySelector('input[type="checkbox"][onchange="toggleSaveProgress()"]');
-            if (saveProgressCheckbox) {
-                saveProgressCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        unlockAchievement('Saver');
-                    }
-                });
-            }
-            
-            // Add click handler for notifications checkbox to unlock Notified achievement
-            const notificationsCheckbox = document.querySelector('input[type="checkbox"][onchange="toggleNotifications()"]');
-            if (notificationsCheckbox) {
-                notificationsCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        unlockAchievement('Notified');
-                    }
-                });
-            }
-        }
-        
-        // Track cloaking methods
-        function applyCloaking(method) {
-            // Track for achievements
-            if (!userStats.cloakingMethodsUsed.includes(method)) {
-                userStats.cloakingMethodsUsed.push(method);
-                saveStats();
-                
-                // Check for Security Expert achievement (assuming there are 4 cloaking methods)
-                if (userStats.cloakingMethodsUsed.length >= 4) {
-                    unlockAchievement('Security Expert');
-                }
-            }
-            
-            // Existing cloaking logic here...
-        }
-        
-        function addDebugButton() {
-            // Only add in development mode
-            const debugDiv = document.createElement('div');
-            debugDiv.style.position = 'fixed';
-            debugDiv.style.bottom = '10px';
-            debugDiv.style.left = '10px';
-            debugDiv.style.zIndex = '9999';
-            debugDiv.style.background = 'rgba(0,0,0,0.7)';
-            debugDiv.style.padding = '10px';
-            debugDiv.style.borderRadius = '5px';
-            
-            const unlockButton = document.createElement('button');
-            unlockButton.textContent = 'Unlock All Achievements';
-            unlockButton.style.padding = '5px 10px';
-            unlockButton.style.cursor = 'pointer';
-            unlockButton.addEventListener('click', function() {
-                unlockAllAchievements();
-            });
-            
-           
-            
-            debugDiv.appendChild(unlockButton);
-            debugDiv.appendChild(resetButton);
-            document.body.appendChild(debugDiv);
-        }
-        
-        function unlockAllAchievements() {
-            console.log('Unlocking all achievements');
-            Object.keys(achievements).forEach(name => {
-                setTimeout(() => {
-                    unlockAchievement(name);
-                }, Math.random() * 1000);
-            });
-        }
-        
-        function resetAchievements() {
-            console.log('Resetting all achievements');
-            Object.keys(achievements).forEach(name => {
-                achievements[name].earned = false;
-                achievements[name].dateEarned = null;
-            });
-            localStorage.setItem('achievements', JSON.stringify(achievements));
-            updateAchievementsUI();
         }
         
         function addAchievementStyles() {
@@ -5876,7 +5065,6 @@
             <button class="main-tab" data-tab="apps">Apps</button>
             <button class="main-tab" data-tab="gfn-setup">GeForce Now Setup</button>
             <button class="main-tab" data-tab="challenges">Challenges</button>
-            <button class="main-tab" data-tab="tournaments">Tournaments</button>
             <button class="main-tab" data-tab="rewards">Rewards</button>
         </div>
 
@@ -5978,114 +5166,6 @@
                         </div>
                         <div class="challenge-description">Unlocks at Level 5</div>
                         <button class="claim-btn disabled">Locked</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Tournaments Tab Content -->
-        <div class="main-tab-content" id="tournaments-tab">
-            <div class="glass-panel">
-                <h2>Active Tournaments</h2>
-                <div class="tournaments-container">
-                    <div class="tournament-card">
-                        <div class="tournament-header">
-                            <img src="https://img.gamedistribution.com/7a3fd749f4d04da5b0d4c2e8bd7b5e7c-512x512.jpeg" alt="Death Run 3D Tournament">
-                            <div class="tournament-info">
-                                <h3>Death Run 3D Championship</h3>
-                                <div class="tournament-details">
-                                    <span class="tournament-players">🎮 128 Players</span>
-                                    <span class="tournament-time">⏱️ Ends in 2d 5h</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tournament-prizes">
-                            <div class="prize">
-                                <span class="prize-place">1st</span>
-                                <span class="prize-reward">500 Coins + Exclusive Skin</span>
-                            </div>
-                            <div class="prize">
-                                <span class="prize-place">2nd</span>
-                                <span class="prize-reward">250 Coins</span>
-                            </div>
-                            <div class="prize">
-                                <span class="prize-place">3rd</span>
-                                <span class="prize-reward">100 Coins</span>
-                            </div>
-                        </div>
-                        <div class="tournament-description">
-                            <p>Get the highest score in Death Run 3D to win amazing prizes! Top 10 players will be featured on the leaderboard.</p>
-                        </div>
-                        <button class="join-tournament-btn">Join Tournament</button>
-                    </div>
-                    
-                    <div class="tournament-card">
-                        <div class="tournament-header">
-                            <img src="https://play-lh.googleusercontent.com/QqKDFt9_0dTZi4NvQkQxYqZWdZGJQmvL-QjxEWi3WYEbP88tLJxP0-XG3-FgXBxngA=w240-h480-rw" alt="Drift Hunters Tournament">
-                            <div class="tournament-info">
-                                <h3>Drift Kings Competition</h3>
-                                <div class="tournament-details">
-                                    <span class="tournament-players">🎮 64 Players</span>
-                                    <span class="tournament-time">⏱️ Starts in 12h</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tournament-prizes">
-                            <div class="prize">
-                                <span class="prize-place">1st</span>
-                                <span class="prize-reward">400 Coins + Rare Car</span>
-                            </div>
-                            <div class="prize">
-                                <span class="prize-place">2nd</span>
-                                <span class="prize-reward">200 Coins</span>
-                            </div>
-                            <div class="prize">
-                                <span class="prize-place">3rd</span>
-                                <span class="prize-reward">75 Coins</span>
-                            </div>
-                        </div>
-                        <div class="tournament-description">
-                            <p>Show off your drifting skills in this weekend tournament! Highest drift score wins.</p>
-                        </div>
-                        <button class="join-tournament-btn">Pre-Register</button>
-                    </div>
-                </div>
-                
-                <h2>Upcoming Tournaments</h2>
-                <div class="tournaments-container">
-                    <div class="tournament-card upcoming">
-                        <div class="tournament-header">
-                            <img src="https://play-lh.googleusercontent.com/V3M-ZVyu4NCOR8oxeH0R5-yw4tKUwVUUU-HbgUrsxLuQz_6xv0vVpS6WnkEJ4ID3YRjV" alt="Fall Guys Tournament">
-                            <div class="tournament-info">
-                                <h3>Fall Guys Weekly Challenge</h3>
-                                <div class="tournament-details">
-                                    <span class="tournament-players">🎮 Unlimited Entries</span>
-                                    <span class="tournament-time">⏱️ Starts in 3d</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tournament-description">
-                            <p>Weekly tournament with new challenges every week. Stay tuned for details!</p>
-                        </div>
-                        <button class="join-tournament-btn disabled">Coming Soon</button>
-                    </div>
-                    
-                    <div class="tournament-card upcoming premium">
-                        <div class="tournament-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/CoD_Logo.svg/1200px-CoD_Logo.svg.png" alt="Call of Duty Tournament">
-                            <div class="tournament-info">
-                                <h3>Call of Duty Pro League</h3>
-                                <div class="tournament-details">
-                                    <span class="tournament-players">🎮 32 Teams</span>
-                                    <span class="tournament-time">⏱️ Starts in 5d</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tournament-description">
-                            <p>Premium tournament with real prizes! Form a team of 4 and compete in our monthly league.</p>
-                        </div>
-                        <div class="premium-badge">Premium Event</div>
-                        <button class="join-tournament-btn disabled">Coming Soon</button>
                     </div>
                 </div>
             </div>
@@ -6698,11 +5778,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="play-time">
-                            <h3>Play Time Distribution</h3>
-                            <canvas id="play-time-chart"></canvas>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -6850,20 +5925,12 @@
                         <p>Addictive clicking game</p>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxeLEpzZpAIPrMSkB1dCTPkLcn8wcNTVCw0wfN2q_jOfXWQ3GhcrqygfgQq1t2yyK6tCQ/exec')">
-                        <img src="https://play-lh.googleusercontent.com/U8M8P1nB8TUZw4GhQn3LwXpUo1Hhp1jPAOLcmBRzg0YhFKxeRgi5e9IgQBg-7lI_PA=w240-h480-rw" alt="Mr Racer">
+                        <img src="https://play-lh.googleusercontent.com/U8M8P1nB8TUZw4GhQn3z8NGFpJ1qhxGWmxwwa1t5oGtFhc6DYUMlbV6JUHxHLQOzk9rd=w240-h480-rw" alt="Mr Racer">
                         <h3>Mr Racer</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://scratch.mit.edu/projects/105500895/embed')">
                         <img src="https://assets.geometrydash.io/favicon.ico" alt="Geometry Dash">
                         <h3>Geometry Dash</h3>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://firebasestorage.googleapis.com/v0/b/test-1e83a.appspot.com/o/1.html?alt=media&token=3542ede2-65da-4871-a64a-3494f448bb76')">
-                        <img src="https://1v1.lol/assets/images/logo.png" alt="1v1.LOL">
-                        <h3>1v1.LOL</h3>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxUirOvda1cK6lygKXhf6KU-fXxCw2oBnggnBCSH7A3tU8cyIgjoLGJNWUs3HtDootq/exec')">
-                        <img src="https://motox3m.co/assets/images/logo.png" alt="Moto X3M">
-                        <h3>Moto X3M</h3>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwOs-SsYeiN758I5eVCPGl7YW-IpawaSbapsKt3NUZwWLSpC8fZfDH7wqeQE1hGBiSZ/exec')">
                         <img src="https://mario.nintendo.com/static/d783068682f98d6cfec666c747a27793/d6e64/mario-pose.png" alt="Super Mario">
@@ -7081,38 +6148,6 @@
                         <h3>Melon Playground</h3>
                         <p>Physics sandbox game</p>
                     </div>
-                 
-                    
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbxJNtrKTWPCSIo9tOqq53G2xqoQCIPDTYUsVOT79Eqk8I7C5cQkGdDnj0jzlNHa7bvs3g/exec', '_blank')" data-category="horror">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Five_Nights_at_Freddy%27s_logo.png/1200px-Five_Nights_at_Freddy%27s_logo.png" alt="FNAF">
-                        <h3>FNAF</h3>
-                        <p>Five Nights at Freddy's</p>
-                    </div>
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbz9ZJCJhSWY_L-w8eDd3YKJVCPtmVikRpLFXZo9chsP9Ui1bASy8inKly0D7odsrgHbJw/exec', '_blank')" data-category="arcade">
-                        <img src="https://play-lh.googleusercontent.com/V1UdKLQgw0ltxXnUHYFRJUlJRCN_-quNHJJ7_jmeLcS_Y5wRVYAv8BgpUDpMDCvUf5I" alt="Doodle Jump">
-                        <h3>Doodle Jump</h3>
-                        <p>Endless jumping game</p>
-                    </div>
-                    <div class="game-card" onclick="window.open('https://script.google.com/macros/s/AKfycbzjgnGGeTNL2DTjJzVx3WGvsLjEyA47O6xYss-ijTLWWwrQv9siK9Gn_QqNDlDkrc27/exec', '_blank')" data-category="arcade">
-                        <img src="https://play-lh.googleusercontent.com/5LIMaa7WTNy34bzdFhBETa2MRj7mFJZWb8gCn_uyxQkUvFx_uOFDdKjj2V8kX_aPrg" alt="Omega Clicker">
-                        <h3>Omega Clicker</h3>
-                        <p>Advanced clicker game</p>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxOdvIWKB1iyuZ7zwU0c45svNrf3GTGbiQp6mOxw-p8Bf-BbJ4m00fyTwjp3QeMuwCjmQ/exec')" data-category="sports">
-                        <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Baseball Blast">
-                        <h3>Baseball Blast</h3>
-                        <p>Arcade baseball game</p>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbyVPz9wAXi5MOoN-W13DNHZB-mdu-B6MdRdvq6qPpC-cIYGU7RZggTJpPIZFDEA_XShlQ/exec')" data-category="action">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/CoD_Logo.svg/1200px-CoD_Logo.svg.png" alt="Call of Duty">
-                        <h3>Call of Duty</h3>
-                        <p>First-person shooter</p>
-                    </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxNbvNHQi6AaM1h7e1N4T2gkDUR3CMeqDfto6yUKf4DKrOELGCCT4maR8rwUvL3EAXg/exec')" data-category="action">
-                        <img src="https://img.gamedistribution.com/f5b2c2a0f3c04f9c9b3b180aec6a588c-512x512.jpeg" alt="Ragdoll Archers">
-                        <h3>Ragdoll Archers</h3>
-                        <p>Physics-based archery</p>
-                    </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxrcohnty6eZ9pRLd3O9NTBfaeZfD_45xKEbDZEc9cb5ThPg_GhxWUcPsHR5ESm_B_T/exec')" data-category="multiplayer">
                         <img src="https://play-lh.googleusercontent.com/WRM5Y1xZmzcCP1YtO5zl6G2g7CU5c5ZfjX4UVrgi1bpNgkfy-wuB-bQx3kkeRfaGYQ" alt="Ragdoll.io">
                         <h3>Ragdoll.io</h3>
@@ -7183,7 +6218,7 @@
                         <h3>Riddle School</h3>
                         <p>Classic Flash puzzle game</p>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxAxmSYav_FxW2KK6Uq4gGNAkqUdVghvBbB7RGGp94sgFIyB0zaNQwMmtyXUrA7Uh80yQ/exec', 'Riddle School 2')">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxa3OjBw8KWer3YhEXl1wxoe1uQKNo-wgGuqPO3NTndX566TTs10-ioXopEPitTvE-B/exec', 'Riddle School 2')">
                         <img src="https://i.ytimg.com/vi/S8LM0mYMI9w/maxresdefault.jpg" alt="Riddle School 2">
                         <h3>Riddle School 2</h3>
                         <p>Escape school sequel</p>
@@ -7256,10 +6291,6 @@
                         <img src="https://play-lh.googleusercontent.com/NiKTaYYaep7sX9jY9QA8Kg-21iFJQp_ZlM4jNqRMMUgyw-H5Bq_90LsVBQ6C50FCrQ=w240-h480-rw" alt="Eggy Car">
                         <h3>Eggy Car</h3>
                     </div>
-                    <div class="game-card" onclick="openGame('https://storage.googleapis.com/test-41376.appspot.com/rvsb.html')">
-                        <img src="https://play-lh.googleusercontent.com/TLUeNHaqNR1S9tJ8ghjdJQ0eOjQhvQ3RdS-jFQyP7AxS-UWIG_XxJYHcGKuJmnL2tQ=w240-h480-rw" alt="Red vs Blue">
-                        <h3>Red vs Blue</h3>
-                    </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwHsn7X7mDgpugXiHqqAjQvQCgvg7zf-f1Z1o4rrHnrOmS6EGPVodCyAoNMdA90UXs/exec')">
                         <img src="https://play-lh.googleusercontent.com/eU95cKGvW6YhWwX0wxoNOjJ1fxSoQVs8Ho8csaA6_1gXqiLm0pjbNk_DF0e0QUY3Jlw=w240-h480-rw" alt="Gunspin">
                         <h3>Gunspin</h3>
@@ -7283,11 +6314,20 @@
         <!-- Proxy Tab Content -->
         <div class="main-tab-content" id="proxy-tab">
             <div class="glass-panel">
-                <div class="proxy-container">
-                    <iframe src="https://00.adenny.net" frameborder="0" style="width: 100%; height: 100vh;" allowfullscreen></iframe>
-                    <button class="themed-fullscreen-btn" onclick="toggleProxyFullscreen()">
+                <div class="proxy-header">
+                    <h2>Web Proxy</h2>
+                    <p>Enter any URL to browse securely</p>
+                </div>
+                <div class="proxy-input-container">
+                    <input type="text" id="proxy-url" placeholder="https://example.com" class="proxy-input">
+                    <button class="proxy-go-btn" onclick="navigateToProxiedUrl()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="proxy-frame-container">
+                    <iframe id="proxy-frame" src="" frameborder="0"></iframe>
+                    <button class="proxy-fullscreen-btn" onclick="toggleProxyFullscreen()">
                         <i class="fas fa-expand"></i>
-                        Fullscreen
                     </button>
                 </div>
             </div>
@@ -7313,7 +6353,7 @@
                         <h3>YouTube</h3>
                         <p>Video platform</p>
                     </div>
-                    <div class="app-card" onclick="openGame('https://108.181.11.137/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9Lb0I2Z2NpaUR6RHBUZEF3UEhKcHZXbzdBMUFSUGpBU2ErbUFTYTZBdldGVElvQ3dzY2hkd1BPTElMelVscHNXMmF3czgvalJDc0dFN2t3YUEzNXIyWWs9&r=aHR0cHM6Ly8xMDguMTgxLjExLjEzNy8%2FX19jcG89YUhSMGNITTZMeTkzZDNjdVkyOXZiRzFhZEdobllXMWxjeTVqYjIw&__cpo=1', 'ChatGPT')">
+                    <div class="app-card" onclick="openGame('https://108.181.11.137/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9Lb0I2Z2NpaUR6RHBUZEF3UEhKcHZXbzdBMUFSUGpBU2ErbUFTYTZBdldGVElvQ3dzY2hkd1BPTElMelVscHNXMmF3czhvalJDc0dFN2t3YUEzNXIyWWs9&r=aHR0cHM6Ly8xMDguMTgxLjExLjEzNy8%2FX19jcG89YUhSMGNITTZMeTkzZDNjdVkyOXZiRzFhZEdobllXMWxjeTVqYjIw&__cpo=1', 'ChatGPT')">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/256px-ChatGPT_logo.svg.png" alt="ChatGPT">
                         <h3>ChatGPT</h3>
                         <p>AI chat platform</p>
@@ -7323,7 +6363,7 @@
                         <h3>Paramount Plus</h3>
                         <p>Streaming service</p>
                     </div>
-                    <div class="app-card" onclick="openGame('https://108.181.5.29/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9LbGVNSDM4bm9MZVdXczZqYnEveFh2bWp2b0FRZ1FxalhjakpRU1RNdmFrMEd0U29hYUpEUThqaHlEekhtenNBTEJHYjRVdFVCN1ZCTFNJd2JTSi95Z3M9&r=aHR0cHM6Ly8xMDguMTgxLjUuMjkvP19fY3BvPWFIUjBjSE02THk5emRHOXlaUzV6ZEdWaGJYQnZkMlZ5WldRdVkyOXQ%3D&__cpo=1', 'Steam')">
+                    <div class="app-card" onclick="openGame('https://108.181.5.29/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9LbGVNSDM4bm9MZVdXczZqYnEveFh2bWp2b0FRZ1FxalhjakpRU1RNdmFrMEd0U29hYUpEUThqaHlEekhtenNBTEJHYjRVdFVCN1ZCRFNJd2JTSi95Z3M9&r=aHR0cHM6Ly8xMDguMTgxLjUuMjkvP19fY3BvPWFIUjBjSE02THk5emRHOXlaUzV6ZEdWaGJYQnZkMlZ5WldRdVkyOXQ%3D&__cpo=1', 'Steam')">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/256px-Steam_icon_logo.svg.png" alt="Steam">
                         <h3>Steam</h3>
                         <p>PC gaming platform</p>
@@ -7347,38 +6387,24 @@
             </div>
         </div>
 
-        <!-- GeForce Now Setup Tab Content -->
-        <div class="main-tab-content" id="gfn-setup-tab">
+        <!-- Proxy Tab Content -->
+        <div class="main-tab-content" id="proxy-tab">
             <div class="glass-panel">
-                <h2>GeForce Now Setup Guide</h2>
-                <div class="setup-container">
-                    <div class="setup-step">
-                        <h3>Step 1: Get a Temporary Email</h3>
-                        <p>First, you'll need a temporary email for registration:</p>
-                        <div class="app-card" onclick="window.open('about:blank').document.write('<iframe src=\'https://tempmailo.com/\' style=\'width:100%;height:100vh;border:none;\'></iframe>')">
-                            <img src="https://tempmailo.com/favicon.ico" alt="TempMailo">
-                            <h3>TempMailo</h3>
-                            <p>Get your temporary email</p>
-                        </div>
-                    </div>
-                    <div class="setup-step">
-                        <h3>Step 2: Register for GeForce Now</h3>
-                        <p>Use your temporary email to create a GeForce Now account:</p>
-                        <div class="app-card" onclick="window.open('about:blank').document.write('<iframe src=\'https://108.181.11.175/__cpi.php?s=UkQ2YXlSaWJuc3ZoeGR2dG04WW9LblI5NHRkdE54R1ZqZUVOT2txMzdOVHJ6ZXJaRThGaGg5MWhHU3ZGbElycGtaNFFKb2w3VmhUN3I2RjMzdWxKNHl3WkYrZ0ExQXZzMnFBVWVyU1YvMUE9&r=aHR0cHM6Ly8xMDguMTgxLjExLjE3NS9tYWxsLz9fX2Nwbz1hSFIwY0hNNkx5OXdiR0Y1TG1kbFptOXlZMlZ1YjNjdVkyOXQ%3D&__cpo=1\' style=\'width:100%;height:100vh;border:none;\'></iframe>')">
-                            <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/gfn/webassets/gfn-share-image.jpg" alt="GeForce Now">
-                            <h3>GeForce Now</h3>
-                            <p>Cloud gaming service</p>
-                        </div>
-                    </div>
-                    <div class="setup-step">
-                        <h3>Important Notes:</h3>
-                        <ul>
-                            <li>The temporary email is valid for 2 days</li>
-                            <li>Make sure to save your login credentials</li>
-                            <li>You can create multiple accounts if needed</li>
-                            <li>Free tier available with 1-hour session limit</li>
-                        </ul>
-                    </div>
+                <div class="proxy-header">
+                    <h2>Web Proxy</h2>
+                    <p>Enter any URL to browse securely</p>
+                </div>
+                <div class="proxy-input-container">
+                    <input type="text" id="proxy-url" placeholder="https://example.com" class="proxy-input">
+                    <button class="proxy-go-btn" onclick="navigateToProxiedUrl()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="proxy-frame-container">
+                    <iframe id="proxy-frame" src="" frameborder="0"></iframe>
+                    <button class="proxy-fullscreen-btn" onclick="toggleProxyFullscreen()">
+                        <i class="fas fa-expand"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -8895,9 +7921,6 @@
             if (gameContainer && gameFrame) {
                 gameContainer.style.display = 'none';
                 gameFrame.src = 'about:blank';
-                
-                // Show the apps tab
-                document.getElementById('apps').style.display = 'block';
             }
         }
 
