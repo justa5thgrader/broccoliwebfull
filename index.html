@@ -49,8 +49,6 @@
         /* Cyberpunk theme */
         [data-theme="cyberpunk"] {
             --primary-color: #ff00ff;
-        }
-        :root {
             --bg-color: #0a0a12;
             --text-color: #ffffff;
             --accent-color: #ff00ff;
@@ -6051,8 +6049,65 @@
         }
         
         function searchGames() {
-            // Apply both category filter and search filter
-            applyFilters();
+            const searchTerm = document.getElementById('game-search').value.toLowerCase();
+            const currentCategory = document.querySelector('.game-category-btn.active')?.getAttribute('data-category') || 'all';
+            const gameCards = document.querySelectorAll('.games-grid .game-card');
+            const noResultsMessage = document.getElementById('no-results-message');
+            
+            let visibleCount = 0;
+            
+            gameCards.forEach(card => {
+                try {
+                    // Get game title
+                    const titleElement = card.querySelector('h3');
+                    const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                    
+                    // Get game tags
+                    const tagElements = card.querySelectorAll('.game-tag');
+                    const tags = tagElements.length > 0 ? Array.from(tagElements).map(tag => tag.textContent.toLowerCase()) : [];
+                    
+                    // Get game category
+                    const category = card.getAttribute('data-category') || '';
+                    
+                    // Get image alt text
+                const altText = card.querySelector('img').getAttribute('alt').toLowerCase();
+                    
+                    // Check if the game matches the search term
+                    const matchesSearch = searchTerm === '' || 
+                                         title.includes(searchTerm) || 
+                                         tags.some(tag => tag.includes(searchTerm)) || 
+                                         altText.includes(searchTerm);
+                    
+                    // Check if the game matches the selected category
+                    const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                    
+                    // Show or hide the game card
+                    if (matchesSearch && matchesCategory) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error('Error processing game card:', error);
+                    // Show the card if there's an error to avoid hiding content
+                    card.style.display = 'block';
+                    visibleCount++;
+                }
+            });
+            
+            // Show or hide the no results message
+            if (visibleCount === 0 && noResultsMessage) {
+                noResultsMessage.style.display = 'block';
+                const messageElement = noResultsMessage.querySelector('p');
+                if (messageElement) {
+                    messageElement.textContent = `No games found matching "${searchTerm}". Try a different search term or category.`;
+                }
+            } else if (noResultsMessage) {
+                noResultsMessage.style.display = 'none';
+            }
+            
+            return false; // Prevent form submission
         }
         
         function applyFilters() {
@@ -7182,10 +7237,19 @@
 
         <!-- Proxy Tab Content -->
         <div class="main-tab-content" id="proxy-tab">
-            <div class="glass-panel">
-                <h2>Proxy Browser</h2>
-                <div class="proxy-container" style="width: 100%; height: 80vh;">
-                    <iframe src="https://00.adenny.net" style="width: 100%; height: 100%; border: none; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);"></iframe>
+            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
+                <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif;">PROXY BROWSER</h2>
+                
+                <!-- Fullscreen Controls -->
+                <div class="proxy-controls" style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+                    <button id="proxy-fullscreen-btn" onclick="toggleProxyFullscreen()" style="background: linear-gradient(45deg, #ff00ff, #00ffff); border: none; color: #000000; padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);">
+                        <i class="fas fa-expand" style="margin-right: 10px; font-size: 18px;"></i>
+                        FULLSCREEN
+                    </button>
+                </div>
+                
+                <div class="proxy-container" style="width: 100%; height: 80vh; position: relative; border-radius: 8px; overflow: hidden; border: 2px solid #ff00ff; box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);">
+                    <iframe id="proxy-frame" src="https://00.adenny.net" style="width: 100%; height: 100%; border: none; position: relative; z-index: 1;" allowfullscreen="true" allow="fullscreen" webkitallowfullscreen="true" mozallowfullscreen="true" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads allow-presentation"></iframe>
                 </div>
             </div>
         </div>
@@ -7639,9 +7703,16 @@
                     <button class="game-category-btn" data-category="clicker" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">CLICKER</button>
                 </div>
                 
-                <div class="game-search" style="margin-bottom: 20px; display: flex; gap: 10px;">
-                    <input type="text" id="game-search" placeholder="Search cyber games..." style="flex: 1; background: rgba(0, 0, 0, 0.5); border: 1px solid #00ffff; color: #fff; padding: 10px 15px; border-radius: 20px; font-family: 'Orbitron', sans-serif;">
-                    <button onclick="searchGames()" style="background: #00ffff; color: #1a1a2e; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif; box-shadow: 0 0 10px #00ffff;"><i class="fas fa-search"></i> SEARCH</button>
+                <form onsubmit="return searchGames();" class="game-search" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                    <input type="text" id="game-search" placeholder="Search cyber games..." style="flex: 1; background: rgba(0, 0, 0, 0.5); border: 1px solid #ff00ff; color: #fff; padding: 10px 15px; border-radius: 20px; font-family: 'Orbitron', sans-serif;" oninput="searchGames()">
+                    <button type="submit" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);"><i class="fas fa-search"></i> SEARCH</button>
+                </form>
+                
+                <!-- No results message -->
+                <div id="no-results-message" style="display: none; text-align: center; margin: 30px 0; padding: 20px; background: rgba(0, 0, 0, 0.5); border: 1px solid #ff00ff; border-radius: 10px; color: #ff00ff; font-family: 'Orbitron', sans-serif;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                    <h3>No games found</h3>
+                    <p>Try a different search term or category</p>
                 </div>
                 
                 <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
@@ -8625,26 +8696,6 @@
                         </div>
                     </div>
                     
-               
-                    
-                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/superhot/index.html')" data-category="action">
-                        <div class="game-card-overlay">
-                            <button class="play-now-btn">PLAY NOW</button>
-                        </div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Superhot_logo.png" alt="Super Hot" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3>Super Hot</h3>
-                            <div class="game-tags">
-                                <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FPS</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-               
-                    
-                 
-                    
                     <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/policecarsimulator/index.html')" data-category="racing">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
@@ -8659,7 +8710,7 @@
                         </div>
                     </div>
                     
-                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/policecarsimulator/index.html')" data-category="racing">
+                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/tanukisunset/index.html')" data-category="racing">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
@@ -10913,10 +10964,19 @@
             });
         }
         
-        // Initialize category buttons
+        // Initialize category buttons and search functionality
         window.addEventListener('load', function() {
-            console.log('Initializing game categories');
+            console.log('Initializing game categories and search');
             const categoryButtons = document.querySelectorAll('.game-category-btn');
+            
+            // Initialize search input
+            const searchInput = document.getElementById('game-search');
+            if (searchInput) {
+                // Clear search when clicking the X button in the search field
+                searchInput.addEventListener('search', function() {
+                    searchGames();
+                });
+            }
             
             // Add data-category attributes to game cards that don't have them
             document.querySelectorAll('.game-card:not([data-category])').forEach(card => {
@@ -12532,5 +12592,80 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code can go here
+            console.log('Application initialized');
+            
+            // Initialize proxy frame if it exists
+            const proxyFrame = document.getElementById('proxy-frame');
+            if (proxyFrame) {
+                // Make sure the iframe is interactive
+                proxyFrame.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-downloads');
+                proxyFrame.setAttribute('allowfullscreen', 'true');
+            }
+        });
+        
+        // Function to toggle fullscreen for the proxy iframe
+        function toggleProxyFullscreen() {
+            console.log('Toggling fullscreen');
+            const proxyFrame = document.getElementById('proxy-frame');
+            
+            if (!proxyFrame) {
+                console.error('Proxy frame not found');
+                return;
+            }
+            
+            try {
+                if (!document.fullscreenElement) {
+                    console.log('Entering fullscreen mode');
+                    // Try using the container instead of the iframe directly
+                    if (proxyFrame.requestFullscreen) {
+                        proxyFrame.requestFullscreen();
+                    } else if (proxyFrame.mozRequestFullScreen) { // Firefox
+                        proxyFrame.mozRequestFullScreen();
+                    } else if (proxyFrame.webkitRequestFullscreen) { // Chrome, Safari
+                        proxyFrame.webkitRequestFullscreen();
+                    } else if (proxyFrame.msRequestFullscreen) { // IE/Edge
+                        proxyFrame.msRequestFullscreen();
+                    } else {
+                        console.error('Fullscreen API not supported');
+                    }
+                } else {
+                    console.log('Exiting fullscreen mode');
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) { // Firefox
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) { // Chrome, Safari
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { // IE/Edge
+                        document.msExitFullscreen();
+                    }
+                }
+            } catch (error) {
+                console.error('Error toggling fullscreen:', error);
+            }
+        }
+        
+        // Listen for fullscreen change events
+        document.addEventListener('fullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('mozfullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('MSFullscreenChange', updateFullscreenButtonText);
+        
+        function updateFullscreenButtonText() {
+            const fullscreenBtn = document.getElementById('proxy-fullscreen-btn');
+            if (!fullscreenBtn) return;
+            
+            if (document.fullscreenElement) {
+                fullscreenBtn.innerHTML = '<i class="fas fa-compress" style="margin-right: 10px; font-size: 18px;"></i> EXIT FULLSCREEN';
+            } else {
+                fullscreenBtn.innerHTML = '<i class="fas fa-expand" style="margin-right: 10px; font-size: 18px;"></i> FULLSCREEN';
+            }
+        }
+    </script>
 </body>
 </html>
