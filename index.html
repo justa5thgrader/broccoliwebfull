@@ -3,11 +3,469 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Tab</title>
+    <title>My.PPS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://sso.canvaslms.com/login/canvas/favicon.ico">
+    <link rel="icon" href="https://myapps.classlink.com/favicon.ico">
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
+    
+    <!-- Game Functionality: Search and Organization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== GAME SEARCH FUNCTIONALITY =====
+            // Find the search input
+            const searchInput = document.getElementById('game-search-input');
+            
+            if (!searchInput) {
+                console.error('Search input not found');
+                return;
+            }
+            
+            // Find all game elements in the games tab
+            const gamesTab = document.getElementById('games-tab');
+            
+            if (!gamesTab) {
+                console.error('Games tab not found');
+                return;
+            }
+            
+            // Find all game cards/elements in the games tab
+            const gameElements = findGameElements(gamesTab);
+            
+            // Store all game elements for filtering
+            let allGameElements = gameElements;
+            
+            // Add event listener for search input
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                // Filter games based on search term
+                filterGames(searchTerm);
+            });
+            
+            // Function to filter games based on search term
+            function filterGames(searchTerm) {
+                // If search term is empty, show all games
+                if (!searchTerm) {
+                    allGameElements.forEach(element => {
+                        element.style.display = '';
+                    });
+                    return;
+                }
+                
+                // Filter games based on search term
+                allGameElements.forEach(element => {
+                    // Get all text content from the element
+                    const allText = element.textContent.toLowerCase();
+                    
+                    // Get game title specifically
+                    const titleElement = element.querySelector('h2, h3, h4, .title, .game-title, strong, b');
+                    const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                    
+                    // Check if search term matches any text in the element or specifically the title
+                    const matchesText = allText.includes(searchTerm);
+                    const matchesTitle = title.includes(searchTerm);
+                    
+                    // Show or hide game element based on search match
+                    if (matchesText || matchesTitle) {
+                        element.style.display = '';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Function to find all game elements in the games tab
+            function findGameElements(container) {
+                const gameElements = [];
+                
+                // Find all potential game elements
+                // 1. Look for elements with game-related classes
+                const elementsWithGameClasses = container.querySelectorAll('.game-card, .game, .game-container');
+                elementsWithGameClasses.forEach(el => gameElements.push(el));
+                
+                // 2. Look for elements with game-related attributes (href, src)
+                const elementsWithGameAttributes = container.querySelectorAll('a[href*="game"], a[href*="play"], iframe[src*="game"]');
+                elementsWithGameAttributes.forEach(el => {
+                    // Find the closest parent that might be a game container
+                    const parent = findGameElementParent(el);
+                    if (parent && !gameElements.includes(parent)) {
+                        gameElements.push(parent);
+                    }
+                });
+                
+                // 3. Look for elements with PLAY NOW text or buttons
+                const playNowElements = Array.from(container.querySelectorAll('*')).filter(el => {
+                    const text = el.textContent.trim().toUpperCase();
+                    return text === 'PLAY NOW' || text === 'PLAY';
+                });
+                
+                playNowElements.forEach(el => {
+                    const parent = findGameElementParent(el);
+                    if (parent && !gameElements.includes(parent)) {
+                        gameElements.push(parent);
+                    }
+                });
+                
+                // 4. If we still don't have any game elements, look for divs with certain styling
+                if (gameElements.length === 0) {
+                    const styledDivs = Array.from(container.querySelectorAll('div')).filter(div => {
+                        const style = window.getComputedStyle(div);
+                        return (style.borderRadius && style.borderRadius !== '0px') || 
+                               (style.boxShadow && style.boxShadow !== 'none') || 
+                               div.querySelector('img') !== null;
+                    });
+                    
+                    styledDivs.forEach(div => {
+                        if (!gameElements.includes(div) && div.querySelector('a') !== null) {
+                            gameElements.push(div);
+                        }
+                    });
+                }
+                
+                // 5. If we still don't have game elements, look for any elements with links
+                if (gameElements.length === 0) {
+                    const elementsWithLinks = container.querySelectorAll('a[href]');
+                    elementsWithLinks.forEach(el => {
+                        const parent = findGameElementParent(el);
+                        if (parent && !gameElements.includes(parent)) {
+                            gameElements.push(parent);
+                        }
+                    });
+                }
+                
+                // If we still don't have any game elements, create a fallback
+                if (gameElements.length === 0) {
+                    console.warn('No game elements found. Creating fallback for all elements in the games tab.');
+                    
+                    // Get all direct children of the games tab that might be game elements
+                    const directChildren = Array.from(container.children);
+                    directChildren.forEach(child => {
+                        // Skip elements that are likely not game elements
+                        if (child.id === 'game-search-input' || 
+                            child.classList.contains('game-search-container') || 
+                            child.id === 'game-of-hour') {
+                            return;
+                        }
+                        
+                        gameElements.push(child);
+                    });
+                }
+                
+                return gameElements;
+            }
+            
+            // Helper function to find the parent element that represents a game container
+            function findGameElementParent(element) {
+                let current = element;
+                const maxLevels = 5; // Look up to 5 levels up
+                
+                for (let i = 0; i < maxLevels; i++) {
+                    if (!current.parentElement) break;
+                    current = current.parentElement;
+                    
+                    // Check if this element looks like a game container
+                    if (current.classList.contains('game-card') || 
+                        current.classList.contains('game') || 
+                        current.classList.contains('card') || 
+                        current.style.borderRadius || 
+                        current.style.boxShadow) {
+                        return current;
+                    }
+                }
+                
+                return element.parentElement; // Return immediate parent if no better match
+            }
+            
+            // Function to refresh game elements (useful if games are added dynamically)
+            function refreshGameElements() {
+                const newGameElements = findGameElements(gamesTab);
+                allGameElements = newGameElements;
+                
+                // Apply current search filter
+                filterGames(searchInput.value.toLowerCase().trim());
+            }
+            
+            // Add focus styles to search input
+            searchInput.addEventListener('focus', function() {
+                this.style.boxShadow = '0 0 15px rgba(255, 0, 255, 0.5)';
+                this.style.borderColor = '#00ffff';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.style.boxShadow = '0 0 10px rgba(255, 0, 255, 0.3)';
+                this.style.borderColor = '#ff00ff';
+            });
+            
+            // Add mutation observer to handle dynamically added games
+            const observer = new MutationObserver(function(mutations) {
+                let shouldRefresh = false;
+                
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                        shouldRefresh = true;
+                    }
+                });
+                
+                if (shouldRefresh) {
+                    // Refresh game elements
+                    refreshGameElements();
+                }
+            });
+            
+            // Start observing the games tab for changes
+            observer.observe(gamesTab, { childList: true, subtree: true });
+            
+            // Initial refresh to find all game elements
+            refreshGameElements();
+            
+            // ===== GAME ORGANIZATION FUNCTIONALITY =====
+            // Function to organize games - move all games to the games tab and ensure consistent formatting
+            function organizeGames() {
+                // Step 1: Find all game elements across different tabs
+                const allTabs = document.querySelectorAll('.main-tab-content');
+                const gamesGrid = document.querySelector('#games-tab .games-grid') || createGamesGrid();
+                
+                // Find all game cards across all tabs
+                const gameCards = [];
+                const processedGameUrls = new Set(); // Track URLs to avoid duplicates
+                
+                // Step 2: Process each tab to find games
+                allTabs.forEach(tab => {
+                    if (tab.id !== 'games-tab') {
+                        // Find all game elements in non-games tabs
+                        const tabGameElements = findGameElementsInTab(tab);
+                        
+                        tabGameElements.forEach(gameElement => {
+                            // Extract game information
+                            const gameInfo = extractGameInfo(gameElement);
+                            
+                            // Check if this game URL is already processed
+                            if (gameInfo.url && !processedGameUrls.has(gameInfo.url)) {
+                                processedGameUrls.add(gameInfo.url);
+                                gameCards.push(gameInfo);
+                                
+                                // Remove the game from its original tab
+                                gameElement.remove();
+                            }
+                        });
+                    }
+                });
+                
+                // Step 3: Find games in the games tab to avoid duplicates
+                const existingGamesInGamesTab = findGameElementsInTab(gamesTab);
+                existingGamesInGamesTab.forEach(gameElement => {
+                    const gameInfo = extractGameInfo(gameElement);
+                    if (gameInfo.url) {
+                        processedGameUrls.add(gameInfo.url);
+                    }
+                });
+                
+                // Step 4: Create new game cards with consistent formatting and add to games tab
+                gameCards.forEach(gameInfo => {
+                    // Skip if this URL is already in the games tab
+                    if (processedGameUrls.has(gameInfo.url) && existingGamesInGamesTab.some(el => extractGameInfo(el).url === gameInfo.url)) {
+                        return;
+                    }
+                    
+                    // Create a new game card with consistent formatting
+                    const newGameCard = createGameCard(gameInfo);
+                    
+                    // Add to games grid
+                    gamesGrid.appendChild(newGameCard);
+                });
+                
+                // Step 5: Alphabetize all games in the games tab
+                alphabetizeGames(gamesGrid);
+            }
+            
+            // Helper function to create games grid if it doesn't exist
+            function createGamesGrid() {
+                const grid = document.createElement('div');
+                grid.className = 'games-grid';
+                grid.style.display = 'grid';
+                grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(250px, 1fr))';
+                grid.style.gap = '20px';
+                grid.style.marginTop = '30px';
+                
+                // Add the grid to the games tab
+                const gameOfHourSection = document.getElementById('game-of-hour');
+                if (gameOfHourSection && gameOfHourSection.nextElementSibling) {
+                    gamesTab.insertBefore(grid, gameOfHourSection.nextElementSibling);
+                } else {
+                    gamesTab.appendChild(grid);
+                }
+                
+                return grid;
+            }
+            
+            // Helper function to find game elements in a tab
+            function findGameElementsInTab(tab) {
+                // Look for elements that are likely to be games
+                // This includes elements with game-related classes, attributes, or content
+                const possibleGameElements = [];
+                
+                // Look for elements with game-card class
+                const gameCards = tab.querySelectorAll('.game-card');
+                gameCards.forEach(card => possibleGameElements.push(card));
+                
+                // Look for elements with game-related attributes
+                const elementsWithGameHref = tab.querySelectorAll('a[href*="game"], a[href*="play"], iframe[src*="game"]');
+                elementsWithGameHref.forEach(el => {
+                    // Find the closest parent that might be a game card
+                    const parent = findGameCardParent(el);
+                    if (parent && !possibleGameElements.includes(parent)) {
+                        possibleGameElements.push(parent);
+                    }
+                });
+                
+                // Look for elements with game-related text content
+                const elementsWithGameText = Array.from(tab.querySelectorAll('*')).filter(el => {
+                    const text = el.textContent.toLowerCase();
+                    return (text.includes('play') || text.includes('game')) && 
+                           !possibleGameElements.includes(el) && 
+                           !el.querySelector('*'); // Only leaf nodes
+                });
+                
+                elementsWithGameText.forEach(el => {
+                    const parent = findGameCardParent(el);
+                    if (parent && !possibleGameElements.includes(parent)) {
+                        possibleGameElements.push(parent);
+                    }
+                });
+                
+                return possibleGameElements;
+            }
+            
+            // Helper function to find the parent element that represents a game card
+            function findGameCardParent(element) {
+                let current = element;
+                for (let i = 0; i < 5; i++) { // Look up to 5 levels up
+                    if (!current.parentElement) break;
+                    current = current.parentElement;
+                    
+                    // Check if this element looks like a game card
+                    if (current.classList.contains('game-card') || 
+                        current.classList.contains('card') || 
+                        current.style.borderRadius || 
+                        current.style.boxShadow) {
+                        return current;
+                    }
+                }
+                return element.parentElement; // Return immediate parent if no better match
+            }
+            
+            // Helper function to extract game information from an element
+            function extractGameInfo(element) {
+                const gameInfo = {
+                    title: '',
+                    url: '',
+                    imageUrl: '',
+                    tags: []
+                };
+                
+                // Try to find the title
+                const titleElement = element.querySelector('h3, h4, h2, .title, .game-title');
+                if (titleElement) {
+                    gameInfo.title = titleElement.textContent.trim();
+                }
+                
+                // Try to find the URL
+                const linkElement = element.querySelector('a[href]');
+                if (linkElement) {
+                    gameInfo.url = linkElement.getAttribute('href');
+                }
+                
+                // Try to find the image
+                const imageElement = element.querySelector('img');
+                if (imageElement) {
+                    gameInfo.imageUrl = imageElement.getAttribute('src');
+                }
+                
+                // Try to find tags
+                const tagElements = element.querySelectorAll('.tag, .game-tag, .category');
+                tagElements.forEach(tag => {
+                    gameInfo.tags.push(tag.textContent.trim());
+                });
+                
+                return gameInfo;
+            }
+            
+            // Helper function to create a new game card with consistent formatting
+            function createGameCard(gameInfo) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.style.backgroundColor = 'rgba(26, 26, 46, 0.8)';
+                card.style.borderRadius = '15px';
+                card.style.overflow = 'hidden';
+                card.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.3)';
+                card.style.transition = 'all 0.3s ease';
+                card.style.position = 'relative';
+                
+                // Create card content
+                card.innerHTML = `
+                    <div style="position: relative; overflow: hidden; height: 150px;">
+                        <img src="${gameInfo.imageUrl || 'https://via.placeholder.com/300x150?text=Game+Image'}" 
+                             alt="${gameInfo.title}" 
+                             style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 15px;">
+                        <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                            ${gameInfo.title || 'Untitled Game'}
+                        </h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+                            ${gameInfo.tags.map(tag => `
+                                <span style="background: rgba(0, 255, 255, 0.2); color: #00ffff; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-family: 'Exo 2', sans-serif;">
+                                    ${tag}
+                                </span>
+                            `).join('')}
+                        </div>
+                        <a href="${gameInfo.url}" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                            PLAY NOW
+                        </a>
+                    </div>
+                `;
+                
+                // Add hover effects
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 0 30px rgba(255, 0, 255, 0.5)';
+                    const img = this.querySelector('img');
+                    if (img) img.style.transform = 'scale(1.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.3)';
+                    const img = this.querySelector('img');
+                    if (img) img.style.transform = 'scale(1)';
+                });
+                
+                return card;
+            }
+            
+            // Helper function to alphabetize games in the games grid
+            function alphabetizeGames(gamesGrid) {
+                const gameCards = Array.from(gamesGrid.children);
+                
+                // Sort game cards alphabetically by title
+                gameCards.sort((a, b) => {
+                    const titleA = a.querySelector('h3')?.textContent.trim().toLowerCase() || '';
+                    const titleB = b.querySelector('h3')?.textContent.trim().toLowerCase() || '';
+                    return titleA.localeCompare(titleB);
+                });
+                
+                // Clear the grid and add sorted cards
+                gamesGrid.innerHTML = '';
+                gameCards.forEach(card => gamesGrid.appendChild(card));
+            }
+            
+            // Run the organize games function when the page loads
+            organizeGames();
+        });
+    </script>
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/slides_black_48dp.png">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/sheets_black_48dp.png">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/forms_black_48dp.png">
@@ -7903,6 +8361,14 @@
                     <div class="autoclicker-toggle" style="display: flex; align-items: center; background: rgba(255, 0, 255, 0.2); padding: 8px 15px; border-radius: 20px; border: 1px solid #ff00ff;">
                         <span style="color: #00ffff; margin-right: 10px; font-family: 'Orbitron', sans-serif; font-size: 14px;">AUTO CLICKER:</span>
                         <button id="game-autoclicker-toggle" style="background: #00ffff; color: #1a1a2e; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px #00ffff;">ACTIVATE</button>
+                    </div>
+                </div>
+                
+                <!-- Game Search Input -->
+                <div style="margin-bottom: 20px; position: relative;">
+                    <input id="game-search-input" type="text" placeholder="Search games..." style="width: 100%; padding: 10px 15px 10px 45px; border-radius: 20px; border: 2px solid #ff00ff; background-color: rgba(26, 26, 46, 0.8); color: white; font-family: 'Orbitron', sans-serif; box-shadow: 0 0 10px rgba(255, 0, 255, 0.3); outline: none; transition: all 0.3s ease;">
+                    <div style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ff00ff;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
                     </div>
                 </div>
                 
