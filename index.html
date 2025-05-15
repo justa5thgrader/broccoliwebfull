@@ -12,424 +12,10 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
     <link rel="stylesheet" href="game-animations.css">
     <link rel="stylesheet" href="request-tab-styles.css">
+    <link rel="stylesheet" href="network-background.css">
     <link rel="stylesheet" href="loading-screen.css">
     <script src="game-enhancements.js"></script>
-    
-    <!-- Network Background CSS (Integrated) -->
-    <style>
-        /* Network Background Animation */
-        body {
-            position: relative;
-            background-color: #0a1550 !important; /* Dark blue background */
-        }
-        
-        /* Game Interface Button Styles - Enhanced Size */
-        .close-button, .fullscreen-button {
-            background-color: rgba(255, 0, 255, 0.3);
-            color: #ffffff;
-            border: 2px solid #ff00ff;
-            border-radius: 8px;
-            padding: 12px 24px; /* Increased padding for larger buttons */
-            margin: 10px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 0 0 5px #ff00ff;
-            transition: all 0.3s ease;
-            min-width: 150px; /* Ensure minimum width */
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
-        }
-        
-        .close-button:hover, .fullscreen-button:hover {
-            background-color: rgba(255, 0, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
-            transform: translateY(-2px);
-        }
-        
-        /* Tab Button Styles - Enhanced Size */
-        .tab-button {
-            background-color: rgba(255, 0, 255, 0.2);
-            color: #ffffff;
-            border: 2px solid #ff00ff;
-            border-radius: 8px;
-            padding: 12px 24px; /* Increased padding for larger buttons */
-            margin: 8px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 0 0 5px #ff00ff;
-            transition: all 0.3s ease;
-            min-width: 120px; /* Ensure minimum width */
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-        }
-        
-        .tab-button:hover {
-            background-color: rgba(255, 0, 255, 0.4);
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-        }
-        
-        .tab-button.active {
-            background-color: rgba(255, 0, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
-            border-color: #00ffff;
-            text-shadow: 0 0 8px #00ffff;
-        }
-        
-        /* Iframe Container Styles */
-        .iframe-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 999;
-            display: none;
-        }
-        
-        .iframe-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .game-frame {
-            flex: 1;
-            border: none;
-            width: 100%;
-            height: calc(100% - 70px); /* Adjust for button height */
-            margin-top: 60px; /* Space for buttons */
-        }
-        
-        /* Game control buttons container */
-        .game-controls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-            z-index: 1000;
-        }
-        
-        /* Make sure the close-button and fullscreen-button are visible in the iframe-content */
-        .iframe-content .close-button,
-        .iframe-content .fullscreen-button {
-            position: absolute;
-            top: 10px;
-            z-index: 1001;
-        }
-        
-        .iframe-content .close-button {
-            left: 10px;
-        }
-        
-        .iframe-content .fullscreen-button {
-            right: 10px;
-        }
-
-        .network-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .network-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Ensure content is visible over background */
-        .container, .header, .tabs, .tab-content, .footer {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Adjust other elements to work with the new background */
-        .tab-pane {
-            background-color: rgba(10, 21, 80, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .game-card {
-            background-color: rgba(20, 30, 90, 0.8);
-            backdrop-filter: blur(3px);
-        }
-
-        .search-container {
-            background-color: rgba(20, 30, 90, 0.8);
-            backdrop-filter: blur(3px);
-        }
-
-        /* Fix for footer */
-        .footer {
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            background-color: rgba(10, 21, 80, 0.9);
-            backdrop-filter: blur(5px);
-            padding: 15px 0;
-            margin-top: 50px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: #fff;
-        }
-
-        /* Fix for any broken elements at the bottom */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            margin-bottom: 50px; /* Add space before footer */
-        }
-
-        /* Make sure all content is contained properly */
-        .tab-content {
-            min-height: calc(100vh - 200px);
-            padding-bottom: 50px;
-        }
-    </style>
-    
-    <!-- Game Functionality: Ensure Game Cards Call openGame Function -->
-    <script>
-        // Fix for game cards to ensure they call openGame function when clicked
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to attach click handlers to all game cards
-            function attachGameCardHandlers() {
-                console.log('Attaching click handlers to game cards...');
-                const gameCards = document.querySelectorAll('.game-card');
-                
-                gameCards.forEach(card => {
-                    // Remove any existing click handlers to avoid duplicates
-                    card.removeEventListener('click', gameCardClickHandler);
-                    
-                    // Add click handler
-                    card.addEventListener('click', gameCardClickHandler);
-                    
-                    // Make sure the cursor shows it's clickable
-                    card.style.cursor = 'pointer';
-                });
-                
-                console.log(`Attached handlers to ${gameCards.length} game cards`);
-            }
-            
-            // Click handler for game cards
-            function gameCardClickHandler(event) {
-                // Prevent default if it's a link
-                if (event.target.tagName === 'A') {
-                    event.preventDefault();
-                }
-                
-                // Find the game URL
-                let gameUrl = '';
-                let gameTitle = '';
-                
-                // Check if the card has a data-url attribute
-                if (this.dataset.url) {
-                    gameUrl = this.dataset.url;
-                } else {
-                    // Look for a link inside the card
-                    const link = this.querySelector('a[href]');
-                    if (link) {
-                        gameUrl = link.getAttribute('href');
-                    }
-                }
-                
-                // Get the game title
-                const titleElement = this.querySelector('h2, h3, h4, .title, .game-title');
-                if (titleElement) {
-                    gameTitle = titleElement.textContent.trim();
-                }
-                
-                // If we found a URL, open the game
-                if (gameUrl) {
-                    console.log('Opening game:', gameUrl, gameTitle);
-                    openGame(gameUrl, gameTitle);
-                } else {
-                    console.error('No game URL found for this card');
-                }
-            }
-            
-            // Initial attachment
-            attachGameCardHandlers();
-            
-            // Set up a mutation observer to attach handlers to new game cards
-            const observer = new MutationObserver(function(mutations) {
-                let shouldAttach = false;
-                
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                        // Check if any added nodes are game cards or contain game cards
-                        mutation.addedNodes.forEach(node => {
-                            if (node.classList && node.classList.contains('game-card')) {
-                                shouldAttach = true;
-                            } else if (node.querySelectorAll) {
-                                const hasGameCards = node.querySelectorAll('.game-card').length > 0;
-                                if (hasGameCards) {
-                                    shouldAttach = true;
-                                }
-                            }
-                        });
-                    }
-                });
-                
-                if (shouldAttach) {
-                    // Reattach handlers to all game cards
-                    attachGameCardHandlers();
-                }
-            });
-            
-            // Start observing the document body for changes
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-    </script>
-    
-    <!-- Network Background JavaScript (Integrated) -->
-    <script>
-        // Network Background Animation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create the network background container and canvas
-            const createNetworkBackground = () => {
-                const body = document.body;
-                
-                // Create container
-                const networkContainer = document.createElement('div');
-                networkContainer.className = 'network-background';
-                
-                // Create canvas
-                const canvas = document.createElement('canvas');
-                canvas.className = 'network-canvas';
-                canvas.id = 'network-canvas';
-                
-                // Add to DOM
-                networkContainer.appendChild(canvas);
-                body.insertBefore(networkContainer, body.firstChild);
-                
-                // Initialize the animation
-                initNetworkAnimation();
-            };
-            
-            // Initialize the network animation
-            const initNetworkAnimation = () => {
-                const canvas = document.getElementById('network-canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // Set canvas size
-                const resizeCanvas = () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                };
-                
-                // Call resize initially and on window resize
-                resizeCanvas();
-                window.addEventListener('resize', resizeCanvas);
-                
-                // Network nodes and connections
-                const nodes = [];
-                const maxNodes = 120; // Increased number of nodes from 50 to 120
-                const connectionDistance = 150; // Maximum distance for connections
-                
-                // Create initial nodes with much larger sizes
-                for (let i = 0; i < maxNodes; i++) {
-                    nodes.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        radius: Math.random() * 4 + 3, // Much larger radius (3-7 pixels instead of 1-2.5)
-                        vx: Math.random() * 0.5 - 0.25,
-                        vy: Math.random() * 0.5 - 0.25
-                    });
-                }
-                
-                // Animation loop
-                const animate = () => {
-                    // Clear canvas
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Update and draw nodes
-                    for (let i = 0; i < nodes.length; i++) {
-                        const node = nodes[i];
-                        
-                        // Move node
-                        node.x += node.vx;
-                        node.y += node.vy;
-                        
-                        // Bounce off edges
-                        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-                        
-                        // Draw node with cyberpunk glow effect
-                        ctx.beginPath();
-                        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                        
-                        // Create a gradient for a glowing effect
-                        const gradient = ctx.createRadialGradient(
-                            node.x, node.y, 0,
-                            node.x, node.y, node.radius * 1.5
-                        );
-                        gradient.addColorStop(0, 'rgba(255, 0, 255, 0.9)'); // Bright pink center
-                        gradient.addColorStop(0.6, 'rgba(0, 255, 255, 0.7)'); // Cyan mid
-                        gradient.addColorStop(1, 'rgba(0, 0, 255, 0)'); // Transparent blue edge
-                        
-                        ctx.fillStyle = gradient;
-                        ctx.fill();
-                        
-                        // Add a bright border for extra visibility
-                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                        
-                        // Draw connections
-                        for (let j = i + 1; j < nodes.length; j++) {
-                            const node2 = nodes[j];
-                            const dx = node.x - node2.x;
-                            const dy = node.y - node2.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            
-                            if (distance < connectionDistance) {
-                                // Calculate opacity based on distance
-                                const opacity = 1 - (distance / connectionDistance);
-                                
-                                // Draw line with gradient for cyberpunk effect
-                                ctx.beginPath();
-                                ctx.moveTo(node.x, node.y);
-                                ctx.lineTo(node2.x, node2.y);
-                                
-                                // Create gradient for the line
-                                const gradient = ctx.createLinearGradient(node.x, node.y, node2.x, node2.y);
-                                gradient.addColorStop(0, `rgba(255, 0, 255, ${opacity * 0.7})`);
-                                gradient.addColorStop(1, `rgba(0, 255, 255, ${opacity * 0.7})`);
-                                
-                                ctx.strokeStyle = gradient;
-                                ctx.lineWidth = 1.5; // Thicker lines for better visibility
-                                ctx.stroke();
-                            }
-                        }
-                    }
-                    
-                    // Continue animation
-                    requestAnimationFrame(animate);
-                };
-                
-                // Start animation
-                animate();
-            };
-            
-            // Call the function to create the network background
-            createNetworkBackground();
-        });
-    </script>
+    <script src="network-background.js"></script>
     
     <!-- Game Functionality: Search and Organization -->
     <script>
@@ -1518,7 +1104,529 @@
             font-size: 12px;
         }
         
-       
+        /* Tools Tab Styles */
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover);
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tool-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .tool-header h3 {
+            margin: 0;
+            color: var(--accent-color);
+        }
+        
+        .tool-content {
+            padding: 15px;
+        }
+        
+        .tool-controls {
+            margin-top: 15px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .control-group input[type="number"],
+        .control-group input[type="text"],
+        .control-group select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .primary-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .primary-btn:hover {
+            background: #3d8b40;
+        }
+        
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .secondary-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .status-display {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        /* Text Formatter Styles */
+        #format-input, #format-output {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+        
+        .format-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .format-options button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .format-options button:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .output-container {
+            position: relative;
+        }
+        
+        .output-container button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            padding: 5px 10px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        /* Color Picker Styles */
+        .color-preview {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .color-sample {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            margin-right: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .color-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .color-history {
+            margin-bottom: 15px;
+        }
+        
+        .color-swatches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .color-swatch {
+            width: 25px;
+            height: 25px;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+        
+        .tool-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+        
+        /* Password Generator Styles */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .password-output {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .password-output input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .password-output button {
+            border-radius: 0 5px 5px 0;
+            border: 1px solid var(--border-color);
+            border-left: none;
+        }
+        
+        .password-strength {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .strength-meter {
+            height: 10px;
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 75%;
+            background: #4CAF50;
+            border-radius: 5px;
+        }
+        
+        .claim-reward-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .claim-reward-btn:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .rewards-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .reward-category-btn {
+            background: rgba(0, 20, 0, 0.7);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            padding: 8px 15px;
+            color: #0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 5px;
+        }
+        
+        .reward-category-btn:hover, .reward-category-btn.active {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .reward-item {
+            background: rgba(0, 20, 0, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+        }
+        
+        .reward-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            border-color: #0f0;
+        }
+        
+        .reward-item-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .reward-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .theme-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-sample {
+            width: 80%;
+            height: 80%;
+            border-radius: 8px;
+        }
+        
+        .neon-theme .theme-sample {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .galaxy-theme .theme-sample {
+            background: url('https://i.imgur.com/vYE3Pju.jpg');
+            background-size: cover;
+        }
+        
+        .reward-item h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #0f0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .reward-item-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .price-amount {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .buy-reward-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .buy-reward-btn:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .reward-item.premium {
+            border: 2px solid #ff0;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+        }
+        
+        .premium-item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff0;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+        
+        /* Notification Styles */
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+        
+        .notification {
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slide-in 0.3s ease;
+            position: relative;
+        }
+        
+        .notification.info {
+            background: #2196F3;
+        }
+        
+        .notification.success {
+            background: #4CAF50;
+        }
+        
+        .notification.error {
+            background: #F44336;
+        }
+        
+        .notification.warning {
+            background: #FF9800;
+        }
+        
+        .notification.fade-out {
+            animation: fade-out 0.5s ease forwards;
+        }
+        
+        @keyframes slide-in {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fade-out {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Cursor Effects */
+        .effect-fire-cursor {
+            cursor: url('https://i.imgur.com/6PzOxS3.gif'), auto;
+        }
+        
+        .effect-rainbow-trail {
+            cursor: url('https://i.imgur.com/JYhGKzV.gif'), auto;
+        }
+        
+        .effect-lightning-cursor {
+            cursor: url('https://i.imgur.com/9qGH2JZ.gif'), auto;
+        }
+        
+        /* Owned item styles */
+        .buy-reward-btn.owned {
+            background: #888;
+            cursor: default;
+        }
+        
+        /* Additional Theme Styles */
+        .retro-theme .theme-sample {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            box-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .hacker-theme .theme-sample {
+            background: linear-gradient(45deg, #00ff00, #003300);
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        /* Login/Signup Styles */
         .user-actions {
             display: flex;
             align-items: center;
@@ -6384,11 +6492,6 @@
                 iframeContainer.style.display = 'none';
             }
             
-            const whiteCanvas = document.getElementById('game-white-canvas');
-            if (whiteCanvas) {
-                whiteCanvas.style.display = 'none';
-            }
-            
             // Stop tracking play time
             if (window.gameInterval) {
                 clearInterval(window.gameInterval);
@@ -6398,43 +6501,9 @@
             saveStats();
             
             // Update UI if stats tab is active
-            if (document.getElementById('stats-tab') && document.getElementById('stats-tab').classList.contains('active')) {
+            if (document.getElementById('stats-tab').classList.contains('active')) {
                 updateStatsUI();
                 initializePlayTimeChart();
-            }
-        }
-        
-        // Function to toggle fullscreen for the game iframe
-        function toggleFullscreen() {
-            const gameFrame = document.getElementById('gameFrame');
-            
-            if (!gameFrame) {
-                console.error('Game frame not found');
-                return;
-            }
-            
-            if (!document.fullscreenElement) {
-                // Enter fullscreen
-                if (gameFrame.requestFullscreen) {
-                    gameFrame.requestFullscreen();
-                } else if (gameFrame.mozRequestFullScreen) { // Firefox
-                    gameFrame.mozRequestFullScreen();
-                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                    gameFrame.webkitRequestFullscreen();
-                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
-                    gameFrame.msRequestFullscreen();
-                }
-            } else {
-                // Exit fullscreen
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.mozCancelFullScreen) { // Firefox
-                    document.mozCancelFullScreen();
-                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { // IE/Edge
-                    document.msExitFullscreen();
-                }
             }
         }
         
@@ -7184,17 +7253,656 @@
         <div class="main-tabs">
             <button class="main-tab active" data-tab="home">Home</button>
             <button class="main-tab" data-tab="games">Games</button>
-           
+            <button class="main-tab" data-tab="tools">Tools</button>
             <button class="main-tab" data-tab="proxy">Proxy</button>
-
+            <button class="main-tab" data-tab="challenges">Challenges</button>
+            <button class="main-tab" data-tab="tournaments">Tournaments</button>
+            <button class="main-tab" data-tab="rewards">Rewards</button>
             <button class="main-tab" data-tab="apps">Apps</button>
         </div>
 
         <!-- Browser Tab Content -->
         
-        
+        <!-- Tools Tab Content -->
+        <div class="main-tab-content" id="tools-tab">
+            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
+                <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif;">CYBER TOOLS</h2>
+                <div class="tools-container" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                    <!-- Auto Clicker Tool -->
+                    <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
+                        <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 24px; margin-right: 10px;">🖱️</span>
+                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">AUTO CLICKER</h3>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
+                        <div class="tool-content" style="font-size: 12px;">
+                            <div class="form-group" style="margin-bottom: 8px;">
+                                <label for="click-interval" style="color: #ff00ff; display: block; margin-bottom: 4px;">CLICK SPEED (MS):</label>
+                                <input type="number" id="click-interval" min="50" value="500" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; color: #ffffff; padding: 4px 8px; border-radius: 4px; width: 100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 8px;">
+                                <label for="click-target" style="color: #ff00ff; display: block; margin-bottom: 4px;">TARGET:</label>
+                                <select id="click-target" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; color: #ffffff; padding: 4px 8px; border-radius: 4px; width: 100%;">
+                                    <option value="button">Click Counter Button</option>
+                                    <option value="custom">Custom Element</option>
+                                </select>
+                            </div>
+                            <div class="form-group custom-target" style="display: none; margin-bottom: 8px;">
+                                <label for="target-selector" style="color: #ff00ff; display: block; margin-bottom: 4px;">CSS SELECTOR:</label>
+                                <input type="text" id="target-selector" placeholder=".class-name or #element-id" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; color: #ffffff; padding: 4px 8px; border-radius: 4px; width: 100%;">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 8px; display: flex; gap: 8px;">
+                                <button id="start-autoclicker" class="btn" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; flex: 1; text-shadow: 0 0 5px #ff00ff;">START</button>
+                                <button id="stop-autoclicker" class="btn" disabled style="background-color: rgba(10, 10, 20, 0.5); color: #888888; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; flex: 1;">STOP</button>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <p id="click-status" style="color: #00ffff; margin: 4px 0; font-size: 11px;">Status: Stopped</p>
+                                <p id="click-counter" style="color: #00ffff; margin: 4px 0; font-size: 11px;">Clicks: 0</p>
+                                <p style="color: #ff00ff; margin: 4px 0; font-size: 10px;">Press F6 to start/stop</p>
+                            </div>
+                        </div>
+                    </div>
                     
-                  
+                    <!-- Text Formatter Tool -->
+                    <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
+                        <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 24px; margin-right: 10px;">📝</span>
+                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">TEXT HACKER</h3>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
+                        <div class="tool-content" style="font-size: 12px;">
+                            <div class="form-group" style="margin-bottom: 8px;">
+                                <textarea id="format-input" placeholder="Enter text to hack..." style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; color: #ffffff; padding: 4px 8px; border-radius: 4px; width: 100%; height: 60px; resize: none; font-family: 'Orbitron', sans-serif;"></textarea>
+                            </div>
+                            <div class="format-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 8px;">
+                                <button data-format="uppercase" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">UPPERCASE</button>
+                                <button data-format="lowercase" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">lowercase</button>
+                                <button data-format="capitalize" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">Capitalize</button>
+                                <button data-format="reverse" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">esreveR</button>
+                                <button data-format="zalgo" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">Z̸a̸l̸g̸o̸</button>
+                                <button data-format="vaporwave" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">ｖａｐｏｒｗａｖｅ</button>
+                            </div>
+                            <div class="output-container">
+                                <textarea id="format-output" readonly style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #00ffff; color: #00ffff; padding: 4px 8px; border-radius: 4px; width: 100%; height: 60px; resize: none; font-family: 'Orbitron', sans-serif; margin-bottom: 8px;"></textarea>
+                                <button id="copy-formatted" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #00ffff;">COPY HACKED TEXT</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Color Picker Tool -->
+                    <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
+                        <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 24px; margin-right: 10px;">🎨</span>
+                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">NEON PICKER</h3>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
+                        <div class="tool-content" style="font-size: 12px;">
+                            <div class="color-preview" id="color-preview" style="display: flex; align-items: center; margin-bottom: 8px; background-color: rgba(0, 0, 0, 0.3); border: 1px solid #ff00ff; border-radius: 4px; padding: 8px;">
+                                <div class="color-sample" id="color-sample" style="width: 40px; height: 40px; border-radius: 4px; background-color: #ff00ff; margin-right: 10px; box-shadow: 0 0 10px #ff00ff;"></div>
+                                <div class="color-info" style="font-family: 'Orbitron', sans-serif;">
+                                    <span id="color-hex" style="display: block; color: #ff00ff; text-shadow: 0 0 5px #ff00ff;">#FF00FF</span>
+                                    <span id="color-rgb" style="display: block; color: #00ffff; font-size: 10px;">RGB: 255, 0, 255</span>
+                                </div>
+                            </div>
+                            <div class="color-history" style="margin-bottom: 8px;">
+                                <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0 0 5px 0; font-size: 12px; font-family: 'Orbitron', sans-serif;">CYBER PALETTE</h4>
+                                <div class="color-swatches" id="color-history" style="display: flex; flex-wrap: wrap; gap: 5px; background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; border-radius: 4px; padding: 5px;"></div>
+                            </div>
+                            <button id="start-picker" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-bottom: 5px;">CAPTURE COLORS</button>
+                            <p style="color: #00ffff; margin: 0; font-size: 10px; text-align: center;">Press ESC to capture neon colors</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Password Generator Tool -->
+                    <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
+                        <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 24px; margin-right: 10px;">🔐</span>
+                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">CRYPTO KEY</h3>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
+                        <div class="tool-content" style="font-size: 12px;">
+                            <div style="margin-bottom: 8px;">
+                                <label for="password-length" style="color: #ff00ff; display: block; margin-bottom: 4px; font-family: 'Orbitron', sans-serif;">KEY LENGTH:</label>
+                                <input type="range" id="password-length" min="4" max="32" value="12" style="width: 100%; background: #ff00ff; height: 4px; -webkit-appearance: none; appearance: none; outline: none;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #00ffff; font-size: 10px;">4</span>
+                                    <span id="length-value" style="color: #ff00ff; font-size: 12px;">12</span>
+                                    <span style="color: #00ffff; font-size: 10px;">32</span>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                    <input type="checkbox" id="include-uppercase" checked style="margin-right: 5px;"> UPPERCASE
+                                </label>
+                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                    <input type="checkbox" id="include-lowercase" checked style="margin-right: 5px;"> lowercase
+                                </label>
+                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                    <input type="checkbox" id="include-numbers" checked style="margin-right: 5px;"> NUMBERS
+                                </label>
+                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                    <input type="checkbox" id="include-symbols" style="margin-right: 5px;"> SYMBOLS
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <input type="text" id="generated-password" readonly style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #00ffff; padding: 8px; border-radius: 4px; width: 100%; font-family: 'Orbitron', sans-serif; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">
+                                <div style="height: 5px; background-color: rgba(0, 0, 0, 0.3); border-radius: 2px; margin-bottom: 5px; overflow: hidden;">
+                                    <div id="strength-bar" style="height: 100%; width: 50%; background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00); border-radius: 2px;"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="color: #ff0000; font-size: 10px;">WEAK</span>
+                                    <span id="strength-text" style="color: #ffff00; font-size: 10px;">MEDIUM</span>
+                                    <span style="color: #00ff00; font-size: 10px;">STRONG</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button id="generate-password" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; flex: 1; text-shadow: 0 0 5px #ff00ff;">GENERATE</button>
+                                <button id="copy-password" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; flex: 1; text-shadow: 0 0 5px #00ffff;">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Glitch Text Generator Tool (New Cool Tool) -->
+                    <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
+                        <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 24px; margin-right: 10px;">👾</span>
+                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">GLITCH TEXT</h3>
+                        </div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
+                        <div class="tool-content" style="font-size: 12px;">
+                            <div class="form-group" style="margin-bottom: 8px;">
+                                <textarea id="glitch-input" placeholder="Enter text to glitch..." style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; color: #ffffff; padding: 4px 8px; border-radius: 4px; width: 100%; height: 60px; resize: none; font-family: 'Orbitron', sans-serif;"></textarea>
+                            </div>
+                            <div class="glitch-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 8px;">
+                                <button data-glitch="matrix" style="background-color: rgba(0, 255, 0, 0.3); color: #ffffff; border: 1px solid #00ff00; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #00ff00;">MATRIX</button>
+                                <button data-glitch="cyber" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">CYBER</button>
+                                <button data-glitch="hacker" style="background-color: rgba(255, 0, 0, 0.3); color: #ffffff; border: 1px solid #ff0000; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff0000;">HACKER</button>
+                                <button data-glitch="alien" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #00ffff;">ALIEN</button>
+                            </div>
+                            <div class="output-container">
+                                <div id="glitch-output" style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #00ffff; padding: 8px; border-radius: 4px; width: 100%; height: 60px; font-family: 'Orbitron', sans-serif; margin-bottom: 8px; overflow: hidden; position: relative;"></div>
+                                <button id="copy-glitch" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #00ffff;">COPY GLITCHED TEXT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Challenges Tab Content -->
+        <div class="main-tab-content" id="challenges-tab">
+            <div class="glass-panel">
+                <h2>Daily Challenges</h2>
+                <div class="challenges-container">
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🔥</span>
+                            <h3>3-Day Streak</h3>
+                            <span class="challenge-xp">+50 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 66%;"></div>
+                            </div>
+                            <span class="progress-text">2/3 days</span>
+                        </div>
+                        <div class="challenge-description">Play games 3 days in a row</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🎮</span>
+                            <h3>Game Explorer</h3>
+                            <span class="challenge-xp">+30 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%;"></div>
+                            </div>
+                            <span class="progress-text">2/5 games</span>
+                        </div>
+                        <div class="challenge-description">Play 5 different games today</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card completed-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">⭐</span>
+                            <h3>First Win</h3>
+                            <span class="challenge-xp">+20 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-text">1/1 wins</span>
+                        </div>
+                        <div class="challenge-description">Win your first game today</div>
+                        <button class="claim-btn">Claim Reward</button>
+                    </div>
+                </div>
+                
+                <h2>Weekly Challenges</h2>
+                <div class="challenges-container">
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🏆</span>
+                            <h3>Victory Royale</h3>
+                            <span class="challenge-xp">+100 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 30%;"></div>
+                            </div>
+                            <span class="progress-text">3/10 wins</span>
+                        </div>
+                        <div class="challenge-description">Win 10 games this week</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card active-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">⏱️</span>
+                            <h3>Time Master</h3>
+                            <span class="challenge-xp">+150 XP</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 25%;"></div>
+                            </div>
+                            <span class="progress-text">1h 15m / 5h</span>
+                        </div>
+                        <div class="challenge-description">Play for 5 hours this week</div>
+                        <button class="claim-btn disabled">In Progress</button>
+                    </div>
+                    
+                    <div class="challenge-card locked-challenge">
+                        <div class="challenge-header">
+                            <span class="challenge-icon">🔒</span>
+                            <h3>Mystery Challenge</h3>
+                            <span class="challenge-xp">+200 XP</span>
+                        </div>
+                        <div class="challenge-description">Unlocks at Level 5</div>
+                        <button class="claim-btn disabled">Locked</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tournaments Tab Content -->
+        <div class="main-tab-content" id="tournaments-tab">
+            <div class="glass-panel">
+                <h2>Active Tournaments</h2>
+                <div class="tournaments-container">
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <img src="https://img.gamedistribution.com/7a3fd749f4d04da5b0d4c2e8bd7b5e7c-512x512.jpeg" alt=" 3D Tournament">
+                            <div class="tournament-info">Death Run
+                                <h3>Death Run 3D Championship</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 128 Players</span>
+                                    <span class="tournament-time">⏱️ Ends in 2d 5h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-prizes">
+                            <div class="prize">
+                                <span class="prize-place">1st</span>
+                                <span class="prize-reward">500 Coins + Exclusive Skin</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">2nd</span>
+                                <span class="prize-reward">250 Coins</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">3rd</span>
+                                <span class="prize-reward">100 Coins</span>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Get the highest score in Death Run 3D to win amazing prizes! Top 10 players will be featured on the leaderboard.</p>
+                        </div>
+                        <button class="join-tournament-btn">Join Tournament</button>
+                    </div>
+                    
+                    <div class="tournament-card">
+                        <div class="tournament-header">
+                            <img src="https://play-lh.googleusercontent.com/QqKDFt9_0dTZi4NvQkQxYqZWdZGJQmvL-QjxEWi3WYEbP88tLJxP0-XG3-FgXBxngA=w240-h480-rw" alt="Drift Hunters Tournament">
+                            <div class="tournament-info">
+                                <h3>Drift Kings Competition</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 64 Players</span>
+                                    <span class="tournament-time">⏱️ Starts in 12h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-prizes">
+                            <div class="prize">
+                                <span class="prize-place">1st</span>
+                                <span class="prize-reward">400 Coins + Rare Car</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">2nd</span>
+                                <span class="prize-reward">200 Coins</span>
+                            </div>
+                            <div class="prize">
+                                <span class="prize-place">3rd</span>
+                                <span class="prize-reward">75 Coins</span>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Show off your drifting skills in this weekend tournament! Highest drift score wins.</p>
+                        </div>
+                        <button class="join-tournament-btn">Pre-Register</button>
+                    </div>
+                </div>
+                
+                <h2>Upcoming Tournaments</h2>
+                <div class="tournaments-container">
+                    <div class="tournament-card upcoming">
+                        <div class="tournament-header">
+                            <img src="https://play-lh.googleusercontent.com/V3M-ZVyu4NCOR8oxeH0R5-yw4tKUwVUUU-HbgUrsxLuQz_6xv0vVpS6WnkEJ4ID3YRjV" alt="Fall Guys Tournament">
+                            <div class="tournament-info">
+                                <h3>Fall Guys Weekly Challenge</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 Unlimited Entries</span>
+                                    <span class="tournament-time">⏱️ Starts in 3d</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Weekly tournament with new challenges every week. Stay tuned for details!</p>
+                        </div>
+                        <button class="join-tournament-btn disabled">Coming Soon</button>
+                    </div>
+                    
+                    <div class="tournament-card upcoming premium">
+                        <div class="tournament-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/CoD_Logo.svg/1200px-CoD_Logo.svg.png" alt="Call of Duty Tournament">
+                            <div class="tournament-info">
+                                <h3>Call of Duty Pro League</h3>
+                                <div class="tournament-details">
+                                    <span class="tournament-players">🎮 32 Teams</span>
+                                    <span class="tournament-time">⏱️ Starts in 5d</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tournament-description">
+                            <p>Premium tournament with real prizes! Form a team of 4 and compete in our monthly league.</p>
+                        </div>
+                        <div class="premium-badge">Premium Event</div>
+                        <button class="join-tournament-btn disabled">Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rewards Tab Content -->
+        <div class="main-tab-content" id="rewards-tab">
+            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
+                <div class="rewards-header">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif;">YOUR REWARDS</h2>
+                    <div class="user-currency" style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <div class="currency-item">
+                            <span class="currency-icon" style="font-size: 24px; margin-right: 10px;">🥦</span>
+                            <span class="currency-amount" style="font-size: 20px; color: #ff00ff; font-weight: bold; margin-right: 5px; text-shadow: 0 0 5px #ff00ff;">0</span>
+                            <span class="currency-name" style="color: #ffffff; font-family: 'Orbitron', sans-serif;">Broccoli Coins</span>
+                        </div>
+                        <div class="currency-item">
+                            <span class="currency-icon" style="font-size: 24px; margin-right: 10px;">💎</span>
+                            <span class="currency-amount" style="font-size: 20px; color: #00ffff; font-weight: bold; margin-right: 5px; text-shadow: 0 0 5px #00ffff;">0</span>
+                            <span class="currency-name" style="color: #ffffff; font-family: 'Orbitron', sans-serif;">Premium Gems</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="daily-rewards">
+                    <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">DAILY LOGIN REWARDS</h3>
+                    <div class="daily-rewards-track" style="display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px;">
+                        <div class="reward-day claimed">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">10</div>
+                            <div class="day-label">Day 1</div>
+                            <div class="claimed-badge">✓</div>
+                        </div>
+                        <div class="reward-day claimed">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">20</div>
+                            <div class="day-label">Day 2</div>
+                            <div class="claimed-badge">✓</div>
+                        </div>
+                        <div class="reward-day active" style="background: rgba(10, 10, 20, 0.7); border: 2px solid #ff00ff; border-radius: 8px; padding: 15px; min-width: 100px; text-align: center; position: relative; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">30</div>
+                            <div class="day-label">Day 3</div>
+                            <button class="claim-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; margin-top: 5px; text-shadow: 0 0 5px #ff00ff;">CLAIM</button>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">50</div>
+                            <div class="day-label">Day 4</div>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">75</div>
+                            <div class="day-label">Day 5</div>
+                        </div>
+                        <div class="reward-day">
+                            <div class="reward-icon">🥦</div>
+                            <div class="reward-amount">100</div>
+                            <div class="day-label">Day 6</div>
+                        </div>
+                        <div class="reward-day special" style="background: rgba(10, 10, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 15px; min-width: 100px; text-align: center; position: relative; opacity: 0.7; background: linear-gradient(135deg, rgba(10, 10, 20, 0.7), rgba(255, 0, 255, 0.1));">
+                            <div class="reward-icon">💎</div>
+                            <div class="reward-amount">1</div>
+                            <div class="day-label">Day 7</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">REWARDS SHOP</h3>
+                <div class="rewards-categories" style="display: flex; gap: 10px; margin: 15px 0;">
+                    <button class="reward-category-btn active" data-category="all" style="background: rgba(255, 0, 255, 0.3); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">ALL</button>
+                    <button class="reward-category-btn" data-category="avatars" style="background: rgba(10, 10, 20, 0.5); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease;">AVATARS</button>
+                    <button class="reward-category-btn" data-category="themes" style="background: rgba(10, 10, 20, 0.5); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease;">THEMES</button>
+                    <button class="reward-category-btn" data-category="effects" style="background: rgba(10, 10, 20, 0.5); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease;">EFFECTS</button>
+                    <button class="reward-category-btn" data-category="boosts" style="background: rgba(10, 10, 20, 0.5); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease;">BOOSTS</button>
+                </div>
+                
+                <div class="rewards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    <!-- Avatars -->
+                    <div class="reward-item" data-category="avatars" data-id="ninja-avatar" data-price="100" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/8tBPYMa.png" alt="Ninja Avatar">
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Ninja Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">100</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="avatars" data-id="robot-avatar" data-price="150" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/JzVjuOX.png" alt="Robot Avatar">
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Robot Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">150</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="avatars" data-id="gamer-avatar" data-price="175" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/pSNBCDM.png" alt="Gamer Avatar">
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Gamer Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">175</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="avatars" data-id="dragon-avatar" data-price="3" data-currency="gems" style="background-color: rgba(10, 10, 20, 0.8); border: 2px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/qHDGqCJ.png" alt="Dragon Avatar">
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Dragon Avatar</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <!-- Themes -->
+                    <div class="reward-item" data-category="themes" data-id="neon-theme" data-price="200" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image theme-preview neon-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Neon Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">200</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="themes" data-id="retro-theme" data-price="225" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image theme-preview retro-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Retro Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">225</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="themes" data-id="galaxy-theme" data-price="2" data-currency="gems" style="background-color: rgba(10, 10, 20, 0.8); border: 2px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image theme-preview galaxy-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Galaxy Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">2</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="themes" data-id="hacker-theme" data-price="3" data-currency="gems" style="background-color: rgba(10, 10, 20, 0.8); border: 2px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image theme-preview hacker-theme">
+                            <div class="theme-sample"></div>
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Hacker Theme</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <!-- Effects -->
+                    <div class="reward-item" data-category="effects" data-id="fire-cursor" data-price="250" data-currency="broccoli" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/6PzOxS3.gif" alt="Fire Cursor">
+                        </div>
+                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Fire Cursor</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">250</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="effects" data-id="rainbow-trail" data-price="275" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/JYhGKzV.gif" alt="Rainbow Trail">
+                        </div>
+                        <h4>Rainbow Trail</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">275</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="effects" data-id="lightning-cursor" data-price="2" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/9qGH2JZ.gif" alt="Lightning Cursor">
+                        </div>
+                        <h4>Lightning Cursor</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">2</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <!-- Boosts -->
+                    <div class="reward-item" data-category="boosts" data-id="xp-boost-1h" data-price="300" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/QBuDriy.png" alt="2x XP Boost">
+                        </div>
+                        <h4>2x XP Boost (1 hour)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">300</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item" data-category="boosts" data-id="coin-boost-1h" data-price="325" data-currency="broccoli">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/5VHXlul.png" alt="2x Coin Boost">
+                        </div>
+                        <h4>2x Coin Boost (1 hour)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">🥦</span>
+                            <span class="price-amount">325</span>
+                        </div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="boosts" data-id="xp-boost-24h" data-price="3" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/QBuDriy.png" alt="2x XP Boost">
+                        </div>
+                        <h4>2x XP Boost (24 hours)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">3</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                    
+                    <div class="reward-item premium" data-category="boosts" data-id="vip-access" data-price="5" data-currency="gems">
+                        <div class="reward-item-image">
+                            <img src="https://i.imgur.com/jtXrGtE.png" alt="VIP Access">
+                        </div>
+                        <h4>VIP Tournament Access (7 days)</h4>
+                        <div class="reward-item-price">
+                            <span class="currency-icon">💎</span>
+                            <span class="price-amount">5</span>
+                        </div>
+                        <div class="premium-item-badge">Premium</div>
+                        <button class="buy-reward-btn" style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">PURCHASE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Proxy Tab Content -->
         <div class="main-tab-content" id="proxy-tab">
@@ -9788,7 +10496,7 @@
             
             <div class="apps-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
                 <!-- Windows 11 -->
-                <div class="game-card" onclick="openGame('https://scienceguide.wiki.gd/apps/win11/index1.html')">
+                <div class="game-card" onclick="openGame('https://study.ebookswest.com.au/apps/win11/index1.html')">
                     <div class="game-card-overlay">
                         <button class="play-now-btn">LAUNCH APP</button>
                     </div>
@@ -9804,7 +10512,7 @@
                 </div>
                 
                 <!-- Gemini AI -->
-                <div class="game-card" onclick="openGame('https://scienceguide.wiki.gd/apps/ai/indexone.html')">
+                <div class="game-card" onclick="openGame('https://study.ebookswest.com.au/apps/ai/indexone.html')">
                     <div class="game-card-overlay">
                         <button class="play-now-btn">LAUNCH APP</button>
                     </div>
@@ -9819,6 +10527,25 @@
                     </div>
                 </div>
                 
+                <!-- ChatGPT -->
+                <div class="game-card" onclick="openGame('https://chatgpt.com')">
+                    <div class="game-card-overlay">
+                        <button class="play-now-btn">LAUNCH APP</button>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="ChatGPT" class="game-thumbnail" style="background-color: #10a37f;">
+                    <div class="game-info">
+                        <h3>ChatGPT</h3>
+                        <div class="game-tags">
+                            <span class="game-tag">AI</span>
+                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ASSISTANT</span>
+                        </div>
+                        <p style="font-size: 12px; color: #ccc; margin-top: 5px;">OpenAI's powerful AI chat assistant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
         <!-- Educational Resources Tab Content (Proxy Links) -->
         <div class="main-tab-content" id="educational-resources-tab">
             <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
