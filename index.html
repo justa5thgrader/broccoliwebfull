@@ -12,10 +12,424 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
     <link rel="stylesheet" href="game-animations.css">
     <link rel="stylesheet" href="request-tab-styles.css">
-    <link rel="stylesheet" href="network-background.css">
     <link rel="stylesheet" href="loading-screen.css">
     <script src="game-enhancements.js"></script>
-    <script src="network-background.js"></script>
+    
+    <!-- Network Background CSS (Integrated) -->
+    <style>
+        /* Network Background Animation */
+        body {
+            position: relative;
+            background-color: #0a1550 !important; /* Dark blue background */
+        }
+        
+        /* Game Interface Button Styles - Enhanced Size */
+        .close-button, .fullscreen-button {
+            background-color: rgba(255, 0, 255, 0.3);
+            color: #ffffff;
+            border: 2px solid #ff00ff;
+            border-radius: 8px;
+            padding: 12px 24px; /* Increased padding for larger buttons */
+            margin: 10px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff00ff;
+            transition: all 0.3s ease;
+            min-width: 150px; /* Ensure minimum width */
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        
+        .close-button:hover, .fullscreen-button:hover {
+            background-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        /* Tab Button Styles - Enhanced Size */
+        .tab-button {
+            background-color: rgba(255, 0, 255, 0.2);
+            color: #ffffff;
+            border: 2px solid #ff00ff;
+            border-radius: 8px;
+            padding: 12px 24px; /* Increased padding for larger buttons */
+            margin: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff00ff;
+            transition: all 0.3s ease;
+            min-width: 120px; /* Ensure minimum width */
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+        }
+        
+        .tab-button:hover {
+            background-color: rgba(255, 0, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        .tab-button.active {
+            background-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+            border-color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+        }
+        
+        /* Iframe Container Styles */
+        .iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none;
+        }
+        
+        .iframe-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: calc(100% - 70px); /* Adjust for button height */
+            margin-top: 60px; /* Space for buttons */
+        }
+        
+        /* Game control buttons container */
+        .game-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        /* Make sure the close-button and fullscreen-button are visible in the iframe-content */
+        .iframe-content .close-button,
+        .iframe-content .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            z-index: 1001;
+        }
+        
+        .iframe-content .close-button {
+            left: 10px;
+        }
+        
+        .iframe-content .fullscreen-button {
+            right: 10px;
+        }
+
+        .network-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .network-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Ensure content is visible over background */
+        .container, .header, .tabs, .tab-content, .footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Adjust other elements to work with the new background */
+        .tab-pane {
+            background-color: rgba(10, 21, 80, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background-color: rgba(20, 30, 90, 0.8);
+            backdrop-filter: blur(3px);
+        }
+
+        .search-container {
+            background-color: rgba(20, 30, 90, 0.8);
+            backdrop-filter: blur(3px);
+        }
+
+        /* Fix for footer */
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(10, 21, 80, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 15px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Fix for any broken elements at the bottom */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: 50px; /* Add space before footer */
+        }
+
+        /* Make sure all content is contained properly */
+        .tab-content {
+            min-height: calc(100vh - 200px);
+            padding-bottom: 50px;
+        }
+    </style>
+    
+    <!-- Game Functionality: Ensure Game Cards Call openGame Function -->
+    <script>
+        // Fix for game cards to ensure they call openGame function when clicked
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to attach click handlers to all game cards
+            function attachGameCardHandlers() {
+                console.log('Attaching click handlers to game cards...');
+                const gameCards = document.querySelectorAll('.game-card');
+                
+                gameCards.forEach(card => {
+                    // Remove any existing click handlers to avoid duplicates
+                    card.removeEventListener('click', gameCardClickHandler);
+                    
+                    // Add click handler
+                    card.addEventListener('click', gameCardClickHandler);
+                    
+                    // Make sure the cursor shows it's clickable
+                    card.style.cursor = 'pointer';
+                });
+                
+                console.log(`Attached handlers to ${gameCards.length} game cards`);
+            }
+            
+            // Click handler for game cards
+            function gameCardClickHandler(event) {
+                // Prevent default if it's a link
+                if (event.target.tagName === 'A') {
+                    event.preventDefault();
+                }
+                
+                // Find the game URL
+                let gameUrl = '';
+                let gameTitle = '';
+                
+                // Check if the card has a data-url attribute
+                if (this.dataset.url) {
+                    gameUrl = this.dataset.url;
+                } else {
+                    // Look for a link inside the card
+                    const link = this.querySelector('a[href]');
+                    if (link) {
+                        gameUrl = link.getAttribute('href');
+                    }
+                }
+                
+                // Get the game title
+                const titleElement = this.querySelector('h2, h3, h4, .title, .game-title');
+                if (titleElement) {
+                    gameTitle = titleElement.textContent.trim();
+                }
+                
+                // If we found a URL, open the game
+                if (gameUrl) {
+                    console.log('Opening game:', gameUrl, gameTitle);
+                    openGame(gameUrl, gameTitle);
+                } else {
+                    console.error('No game URL found for this card');
+                }
+            }
+            
+            // Initial attachment
+            attachGameCardHandlers();
+            
+            // Set up a mutation observer to attach handlers to new game cards
+            const observer = new MutationObserver(function(mutations) {
+                let shouldAttach = false;
+                
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                        // Check if any added nodes are game cards or contain game cards
+                        mutation.addedNodes.forEach(node => {
+                            if (node.classList && node.classList.contains('game-card')) {
+                                shouldAttach = true;
+                            } else if (node.querySelectorAll) {
+                                const hasGameCards = node.querySelectorAll('.game-card').length > 0;
+                                if (hasGameCards) {
+                                    shouldAttach = true;
+                                }
+                            }
+                        });
+                    }
+                });
+                
+                if (shouldAttach) {
+                    // Reattach handlers to all game cards
+                    attachGameCardHandlers();
+                }
+            });
+            
+            // Start observing the document body for changes
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+    
+    <!-- Network Background JavaScript (Integrated) -->
+    <script>
+        // Network Background Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create the network background container and canvas
+            const createNetworkBackground = () => {
+                const body = document.body;
+                
+                // Create container
+                const networkContainer = document.createElement('div');
+                networkContainer.className = 'network-background';
+                
+                // Create canvas
+                const canvas = document.createElement('canvas');
+                canvas.className = 'network-canvas';
+                canvas.id = 'network-canvas';
+                
+                // Add to DOM
+                networkContainer.appendChild(canvas);
+                body.insertBefore(networkContainer, body.firstChild);
+                
+                // Initialize the animation
+                initNetworkAnimation();
+            };
+            
+            // Initialize the network animation
+            const initNetworkAnimation = () => {
+                const canvas = document.getElementById('network-canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size
+                const resizeCanvas = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                
+                // Call resize initially and on window resize
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                // Network nodes and connections
+                const nodes = [];
+                const maxNodes = 120; // Increased number of nodes from 50 to 120
+                const connectionDistance = 150; // Maximum distance for connections
+                
+                // Create initial nodes with much larger sizes
+                for (let i = 0; i < maxNodes; i++) {
+                    nodes.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 4 + 3, // Much larger radius (3-7 pixels instead of 1-2.5)
+                        vx: Math.random() * 0.5 - 0.25,
+                        vy: Math.random() * 0.5 - 0.25
+                    });
+                }
+                
+                // Animation loop
+                const animate = () => {
+                    // Clear canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Update and draw nodes
+                    for (let i = 0; i < nodes.length; i++) {
+                        const node = nodes[i];
+                        
+                        // Move node
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        
+                        // Bounce off edges
+                        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                        
+                        // Draw node with cyberpunk glow effect
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                        
+                        // Create a gradient for a glowing effect
+                        const gradient = ctx.createRadialGradient(
+                            node.x, node.y, 0,
+                            node.x, node.y, node.radius * 1.5
+                        );
+                        gradient.addColorStop(0, 'rgba(255, 0, 255, 0.9)'); // Bright pink center
+                        gradient.addColorStop(0.6, 'rgba(0, 255, 255, 0.7)'); // Cyan mid
+                        gradient.addColorStop(1, 'rgba(0, 0, 255, 0)'); // Transparent blue edge
+                        
+                        ctx.fillStyle = gradient;
+                        ctx.fill();
+                        
+                        // Add a bright border for extra visibility
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        
+                        // Draw connections
+                        for (let j = i + 1; j < nodes.length; j++) {
+                            const node2 = nodes[j];
+                            const dx = node.x - node2.x;
+                            const dy = node.y - node2.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < connectionDistance) {
+                                // Calculate opacity based on distance
+                                const opacity = 1 - (distance / connectionDistance);
+                                
+                                // Draw line with gradient for cyberpunk effect
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(node2.x, node2.y);
+                                
+                                // Create gradient for the line
+                                const gradient = ctx.createLinearGradient(node.x, node.y, node2.x, node2.y);
+                                gradient.addColorStop(0, `rgba(255, 0, 255, ${opacity * 0.7})`);
+                                gradient.addColorStop(1, `rgba(0, 255, 255, ${opacity * 0.7})`);
+                                
+                                ctx.strokeStyle = gradient;
+                                ctx.lineWidth = 1.5; // Thicker lines for better visibility
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                    
+                    // Continue animation
+                    requestAnimationFrame(animate);
+                };
+                
+                // Start animation
+                animate();
+            };
+            
+            // Call the function to create the network background
+            createNetworkBackground();
+        });
+    </script>
     
     <!-- Game Functionality: Search and Organization -->
     <script>
@@ -5970,6 +6384,11 @@
                 iframeContainer.style.display = 'none';
             }
             
+            const whiteCanvas = document.getElementById('game-white-canvas');
+            if (whiteCanvas) {
+                whiteCanvas.style.display = 'none';
+            }
+            
             // Stop tracking play time
             if (window.gameInterval) {
                 clearInterval(window.gameInterval);
@@ -5979,9 +6398,43 @@
             saveStats();
             
             // Update UI if stats tab is active
-            if (document.getElementById('stats-tab').classList.contains('active')) {
+            if (document.getElementById('stats-tab') && document.getElementById('stats-tab').classList.contains('active')) {
                 updateStatsUI();
                 initializePlayTimeChart();
+            }
+        }
+        
+        // Function to toggle fullscreen for the game iframe
+        function toggleFullscreen() {
+            const gameFrame = document.getElementById('gameFrame');
+            
+            if (!gameFrame) {
+                console.error('Game frame not found');
+                return;
+            }
+            
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.mozRequestFullScreen) { // Firefox
+                    gameFrame.mozRequestFullScreen();
+                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
+                    gameFrame.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
             }
         }
         
