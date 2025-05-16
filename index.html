@@ -10,12 +10,639 @@
     <link rel="icon" href="https://myapps.classlink.com/favicon.ico">
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
-    <link rel="stylesheet" href="game-animations.css">
-    <link rel="stylesheet" href="request-tab-styles.css">
-    <link rel="stylesheet" href="network-background.css">
-    <link rel="stylesheet" href="loading-screen.css">
-    <script src="game-enhancements.js"></script>
-    <script src="network-background.js"></script>
+    <style>
+/* Cool Smooth Game Card Animations for 6th Graders */
+
+/* Basic card setup */
+.game-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    will-change: transform, box-shadow;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cool hover effect */
+.game-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.2);
+    border-color: rgba(255, 0, 255, 0.6);
+    z-index: 10;
+}
+
+/* Add subtle glow animation that's still smooth */
+@keyframes subtle-glow {
+    0% { box-shadow: 0 15px 30px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.2); }
+    50% { box-shadow: 0 15px 30px rgba(0, 255, 255, 0.4), 0 0 20px rgba(255, 0, 255, 0.2); }
+    100% { box-shadow: 0 15px 30px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.2); }
+}
+
+.game-card:hover {
+    animation: subtle-glow 3s infinite ease-in-out;
+}
+
+/* Cool image effect with subtle zoom and brightness */
+.game-card .game-thumbnail {
+    transition: transform 0.4s ease-out, filter 0.4s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.95) saturate(0.9);
+    will-change: transform, filter;
+}
+
+.game-card:hover .game-thumbnail {
+    transform: scale(1.08);
+    filter: brightness(1.1) saturate(1.1);
+}
+
+/* Cool play button effect with gradient and pulse */
+.play-now-btn {
+    transition: all 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.play-now-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.4s ease;
+}
+
+.game-card:hover .play-now-btn {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+    transform: scale(1.08);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.game-card:hover .play-now-btn::before {
+    left: 100%;
+    transition: all 0.6s ease;
+}
+
+/* Add subtle pulse animation to button */
+@keyframes subtle-pulse {
+    0% { transform: scale(1.08); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1.08); }
+}
+
+.game-card:hover .play-now-btn {
+    animation: subtle-pulse 2s infinite ease-in-out;
+}
+
+/* Cool game tag effect with glow */
+.game-tag {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card:hover .game-tag {
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Add a cool shine effect to game tags */
+.game-tag::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.game-card:hover .game-tag::after {
+    opacity: 1;
+    transform: rotate(45deg) translateX(100%);
+    transition: transform 0.7s ease;
+}
+    </style>
+    <style>
+/* Styles for Request Changes Tab */
+.request-changes-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: var(--text-primary);
+}
+
+.request-changes-container h2 {
+    color: var(--accent-color);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: var(--neon-text-shadow);
+}
+
+.request-changes-container p {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    color: var(--text-secondary);
+}
+
+.form-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.form-container:hover {
+    box-shadow: var(--card-hover);
+}
+
+.form-container iframe {
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Tab button styling */
+.tab-btn[data-tab="request-tab"] {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    background-size: 200% 200%;
+    animation: gradient-shift 5s ease infinite;
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.tab-btn[data-tab="request-tab"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+}
+
+.tab-btn[data-tab="request-tab"].active {
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .form-container iframe {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container iframe {
+        height: 400px;
+    }
+}
+    </style>
+    <style>
+/* Network Background Animation */
+body {
+    position: relative;
+    background-color: #0a0a1a !important; /* Darker background to make nodes more visible */
+}
+
+.network-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.network-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Ensure content is visible over background */
+.container, .header, .tabs, .tab-content, .footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* Adjust other elements to work with the new background */
+.tab-pane {
+    background-color: rgba(10, 21, 80, 0.7);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.game-card {
+    background-color: rgba(20, 30, 90, 0.8);
+    backdrop-filter: blur(3px);
+}
+
+.search-container {
+    background-color: rgba(20, 30, 90, 0.8);
+    backdrop-filter: blur(3px);
+}
+
+/* Fix for footer */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(10, 21, 80, 0.9);
+    backdrop-filter: blur(5px);
+    padding: 15px 0;
+    margin-top: 50px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: #fff;
+}
+
+/* Fix for any broken elements at the bottom */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 50px; /* Add space before footer */
+}
+
+/* Make sure all content is contained properly */
+.tab-content {
+    min-height: calc(100vh - 200px);
+    padding-bottom: 50px;
+}
+    </style>
+    <style>
+/* Blue Network-themed Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a1550;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.network-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+.loading-text {
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(74, 144, 226, 0.8);
+}
+
+.loading-bar {
+    width: 300px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #00bfff);
+    width: 0%;
+    border-radius: 5px;
+    animation: loading 2s infinite ease-in-out;
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* Hide loading screen when content is loaded */
+body.loaded .loading-screen {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+    </style>
+    <script>
+// Game enhancements for My.PPS
+document.addEventListener('DOMContentLoaded', function() {
+    // Add Request Changes tab
+    const addRequestChangesTab = () => {
+        // Find the tabs container
+        const tabsContainer = document.querySelector('.tabs');
+        const contentContainer = document.querySelector('.tab-content');
+        
+        if (!tabsContainer || !contentContainer) return;
+        
+        // Create the new tab button
+        const requestTab = document.createElement('button');
+        requestTab.className = 'tab-btn';
+        requestTab.setAttribute('data-tab', 'request-tab');
+        requestTab.innerHTML = '<i class="fas fa-edit"></i> Request Changes';
+        
+        // Create the new tab content
+        const requestContent = document.createElement('div');
+        requestContent.className = 'tab-pane';
+        requestContent.id = 'request-tab';
+        requestContent.innerHTML = `
+            <div class="request-changes-container">
+                <h2>Request Changes or New Games</h2>
+                <p>Use this form to request new games or changes to the website.</p>
+                <div class="form-container">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfHRFsUhua4JpZspqw3h-RLbo26MoRi2EuIIodTQOCsPly0UA/viewform?embedded=true" 
+                            width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">
+                        Loading form...
+                    </iframe>
+                </div>
+            </div>
+        `;
+        
+        // Add the new tab and content
+        tabsContainer.appendChild(requestTab);
+        contentContainer.appendChild(requestContent);
+        
+        // Add click event for the new tab
+        requestTab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Hide all tab content
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab and show its content
+            this.classList.add('active');
+            document.getElementById('request-tab').classList.add('active');
+        });
+    };
+    
+    // Call the function to add the Request Changes tab
+    addRequestChangesTab();
+    // Sort all games alphabetically
+    const gamesContainer = document.querySelector('.games-grid');
+    if (gamesContainer) {
+        console.log('Sorting games alphabetically...');
+        const gameElements = Array.from(gamesContainer.children);
+        gameElements.sort((a, b) => {
+            const titleA = a.querySelector('h3')?.textContent.toLowerCase() || '';
+            const titleB = b.querySelector('h3')?.textContent.toLowerCase() || '';
+            return titleA.localeCompare(titleB);
+        });
+        // Clear the container and re-append in sorted order
+        while (gamesContainer.firstChild) {
+            gamesContainer.removeChild(gamesContainer.firstChild);
+        }
+        gameElements.forEach(game => gamesContainer.appendChild(game));
+        console.log('Games sorted successfully!');
+    }
+    
+    // Fix game thumbnails that might be showing controllers
+    const gameImages = document.querySelectorAll('.game-thumbnail');
+    const gameIconMap = {
+        // Map game titles to better icons
+        'UZG': 'https://img.itch.zone/aW1nLzY3NjM5NzEucG5n/original/Ij%2FHtZ.png',
+        'BuildNow.gg': 'https://play-lh.googleusercontent.com/X8FEOENa_t5mlRllBh2RRLc6sMnPIq56Wxa2ywoWJYGjWB0IrjR8zdcPh_qnBPhy7F0',
+        'Minecraft Motorcycle Obby': 'https://play-lh.googleusercontent.com/aDX4QRdSBZ8AXqxaCEFKNrHUZP5N3-7BFGp7qa_Sq5UVq9GYwY19qKL-Lqh4_fI7ug',
+        'Squid Game': 'https://play-lh.googleusercontent.com/zVcAwsEJcxgYkWKLGC5qmgFQbXNKGpD1JGMW94nOi2CXvp-KxDwwkQ-LNdBXGnGI9A',
+        'Chick End': 'https://play-lh.googleusercontent.com/5LIMaa1WMwYbeeM1wGX_g-F3wFcEP-OfEgjNt9YhzOcGsf0fjgkLCrS_OMHm1dkgYg',
+        'Save My Pet': 'https://play-lh.googleusercontent.com/LByrURPOf_DTB-mGECBNRH3XLveHvQhX8TAEFSJxnZ7OYgKNkjd-aygmDHrWi9ahEg',
+        'SUPERHOT': 'https://cdn.cloudflare.steamstatic.com/steam/apps/322500/header.jpg',
+        'Super Star Car': 'https://img.gamedistribution.com/a1f1d94d6c6e4a1d8c35e9e5c5c3b02d-512x384.jpeg',
+        'Mario 64': 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000038693/c42553b4fd0312c31e70ec7468c6c9bccd739f340152925b9600631f2d29f8b5',
+        'Galaga': 'https://assets-prd.ignimgs.com/2022/01/05/galaga-1641423325086.jpg',
+        'UNO': 'https://play-lh.googleusercontent.com/0wGQJJtKdBVVyaQEWWRLB-VLWvL3xcJV4MiXnpMwFSnszpT-vMCXYKXYWj1QVMlEBw',
+        'Candy Crush': 'https://play-lh.googleusercontent.com/TLUeelx8wcpEkf3TP_ggGQvcnTlBK8GUjFK3kJqJYc8GBQbfNkQQDzXe2f5YJJsRTpVO',
+        'Car Park Master': 'https://play-lh.googleusercontent.com/6OqXJYHN4QKjMEzjFkXnuYFwLpkdxSECDKO8wJe_bX0Oe7jRCcq5wgGsv9eeWH1r7A',
+        'Tall Man Run': 'https://play-lh.googleusercontent.com/NO7rNNKCJa-qcxginCmUQwGTQQ7QZcPQI-OOIVt0Vw0VZJP4HZIhLfKRIQgPfaQJ7Q',
+        'Plants vs Zombies': 'https://play-lh.googleusercontent.com/QaUzYmhP5mHNZpOOohv6RqYCgG_cLPkmFfFaGXwBnAaxt9Lfsy-6U5KcYKlkbhpuLQ',
+        'Poop Clicker': 'https://lh3.googleusercontent.com/Tktak9qtRm9u4BNEqavCBid669hnkuljFzKAu7YZdWGSLwDs12bP3jdTnbzRUzu_szHy540SqtNdF6RTmNWmctNJMh0=s1280-w1280-h800',
+        '1v1.LOL': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvi6zSLzmwHdNSh4WPEqPstBltJR_4P9qbkQ&s'
+    };
+    
+    // Default high-quality game icons for any missing thumbnails
+    const defaultGameIcons = [
+        'https://play-lh.googleusercontent.com/TLUeelx8wcpEkf3TP_ggGQvcnTlBK8GUjFK3kJqJYc8GBQbfNkQQDzXe2f5YJJsRTpVO',
+        'https://play-lh.googleusercontent.com/zVcAwsEJcxgYkWKLGC5qmgFQbXNKGpD1JGMW94nOi2CXvp-KxDwwkQ-LNdBXGnGI9A',
+        'https://play-lh.googleusercontent.com/6OqXJYHN4QKjMEzjFkXnuYFwLpkdxSECDKO8wJe_bX0Oe7jRCcq5wgGsv9eeWH1r7A',
+        'https://play-lh.googleusercontent.com/NO7rNNKCJa-qcxginCmUQwGTQQ7QZcPQI-OOIVt0Vw0VZJP4HZIhLfKRIQgPfaQJ7Q'
+    ];
+    
+    // Fix all game thumbnails
+    gameImages.forEach(img => {
+        const gameCard = img.closest('.game-card');
+        const gameTitle = gameCard.querySelector('h3')?.textContent.trim();
+        
+        // Check if this game has a specific icon in our map
+        if (gameTitle && gameIconMap[gameTitle]) {
+            img.src = gameIconMap[gameTitle];
+        }
+        
+        // Handle broken images
+        img.onerror = function() {
+            // Get a random default icon
+            const randomIcon = defaultGameIcons[Math.floor(Math.random() * defaultGameIcons.length)];
+            this.src = randomIcon;
+            this.onerror = null; // Prevent infinite loop
+        };
+    });
+});
+    </script>
+    <script>
+// Network Background Animation
+document.addEventListener('DOMContentLoaded', function() {
+    // Create the network background container and canvas
+    const createNetworkBackground = () => {
+        const body = document.body;
+        
+        // Create container
+        const networkContainer = document.createElement('div');
+        networkContainer.className = 'network-background';
+        
+        // Create canvas
+        const canvas = document.createElement('canvas');
+        canvas.className = 'network-canvas';
+        canvas.id = 'network-canvas';
+        
+        // Add to DOM
+        networkContainer.appendChild(canvas);
+        body.insertBefore(networkContainer, body.firstChild);
+        
+        // Initialize the animation
+        initNetworkAnimation();
+    };
+    
+    // Initialize the network animation
+    const initNetworkAnimation = () => {
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        
+        // Call resize initially and on window resize
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Network nodes and connections
+        const nodes = [];
+        const maxNodes = 300; // Increased number of nodes (was 50)
+        const connectionDistance = 120; // Maximum distance for connections (slightly reduced for better performance)
+        
+        // Create initial nodes
+        for (let i = 0; i < maxNodes; i++) {
+            nodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 0.8 + 0.4, // Smaller dots (was 1.5 + 1)
+                vx: Math.random() * 0.4 - 0.2,
+                vy: Math.random() * 0.4 - 0.2
+            });
+        }
+        
+        // Animation loop
+        const animate = () => {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update and draw nodes
+            for (let i = 0; i < nodes.length; i++) {
+                const node = nodes[i];
+                
+                // Move node
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                // Bounce off edges
+                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                
+                // Draw node
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)'; // Slightly more transparent
+                ctx.fill();
+                
+                // Draw connections
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const node2 = nodes[j];
+                    const dx = node.x - node2.x;
+                    const dy = node.y - node2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < connectionDistance) {
+                        // Calculate opacity based on distance
+                        const opacity = 1 - (distance / connectionDistance);
+                        
+                        // Draw line
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(node2.x, node2.y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Continue animation
+            requestAnimationFrame(animate);
+        };
+        
+        // Start animation
+        animate();
+    };
+    
+    // Call the function to create the network background
+    createNetworkBackground();
+});
+    </script>
+    <script>
+// Simple global openGame function
+function openGame(url) {
+    console.log('Opening game:', url);
+    
+    // Create or get iframe container
+    let iframeContainer = document.querySelector('.iframe-container');
+    if (!iframeContainer) {
+        iframeContainer = document.createElement('div');
+        iframeContainer.className = 'iframe-container';
+        iframeContainer.style.position = 'fixed';
+        iframeContainer.style.top = '0';
+        iframeContainer.style.left = '0';
+        iframeContainer.style.width = '100%';
+        iframeContainer.style.height = '100%';
+        iframeContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+        iframeContainer.style.zIndex = '9999';
+        document.body.appendChild(iframeContainer);
+    }
+    
+
+// Close game function
+function closeGame() {
+    const iframeContainer = document.querySelector('.iframe-container');
+    if (iframeContainer) {
+        iframeContainer.style.display = 'none';
+        iframeContainer.innerHTML = '';
+    }
+}
+
+// Fullscreen toggle function
+function toggleFullscreen() {
+    const gameFrame = document.getElementById('gameFrame');
+    if (!gameFrame) return;
+    
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        gameFrame.requestFullscreen().catch(err => {
+            console.error('Error attempting to enable fullscreen:', err);
+        });
+    }
+}
+    </script>
     
     <!-- Game Functionality: Search and Organization -->
     <script>
@@ -424,7 +1051,7 @@
                         </h3>
                         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
                             ${gameInfo.tags.map(tag => `
-                                <span style="background: rgba(0, 255, 255, 0.2); color: #00ffff; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-family: 'Exo 2', sans-serif;">
+                                <span style="background: rgba(0, 255, 255, 0.2); color: #ff00ff; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-family: 'Exo 2', sans-serif;">
                                     ${tag}
                                 </span>
                             `).join('')}
@@ -518,7 +1145,7 @@
             --bg-color: #0a0a12;
             --text-color: #ffffff;
             --accent-color: #ff00ff;
-            --secondary-color: #00ffff;
+            --secondary-color: #ff00ff;
             --button-bg: rgba(255, 0, 255, 0.3);
             --button-hover: rgba(255, 0, 255, 0.6);
             --glass-bg: rgba(10, 10, 18, 0.8);
@@ -1439,9 +2066,9 @@
         }
         
         .reward-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            border-color: #0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 50px rgba(255, 0, 255, 0.4);
+            border-color: #ff00ff;
         }
         
         .reward-item-image {
@@ -2422,7 +3049,7 @@
         .reliability-good { color: #aaff00; }
         .reliability-medium { color: #ffff00; }
         .reliability-poor { color: #ff6600; }
-        .reliability-new { color: #00ffff; }
+        .reliability-new { color: #ff00ff; }
 
         @media (max-width: 768px) {
             .container {
@@ -4263,17 +4890,20 @@
             }
 
         .game-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
+            animation: pulse-border 1.5s infinite;
         }
         
         .game-card:hover .game-card-overlay {
             opacity: 1;
+            background: linear-gradient(135deg, rgba(10,10,18,0.7) 0%, rgba(255,0,255,0.6) 50%, rgba(0,255,255,0.6) 100%);
         }
         
         .game-card:hover .play-now-btn {
-            transform: translateY(0);
+            transform: translateY(0) scale(1.1);
             opacity: 1;
+            animation: glow-button 1.5s infinite alternate;
         }
         
         .game-card-overlay {
@@ -4301,6 +4931,11 @@
             transform: translateY(20px);
             opacity: 0;
             transition: transform 0.3s, opacity 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4);
         }
         
         .game-info {
@@ -4308,7 +4943,7 @@
         }
         
         .game-card h3 {
-            color: #00ffff;
+            color: #ff00ff;
             text-shadow: 0 0 5px #00ffff;
             margin: 0 0 5px 0;
             font-family: 'Orbitron', sans-serif;
@@ -4451,10 +5086,13 @@
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
             margin-top: 20px;
-            padding: 15px;
+            padding: 20px;
+            position: relative;
+            clear: both;
+            overflow: visible;
         }
 
         .game-card {
@@ -4470,8 +5108,10 @@
             height: 260px;
             display: flex;
             flex-direction: column;
-            margin-bottom: 20px;
             min-width: 200px;
+            z-index: 1;
+            margin: 0;
+            transform-origin: center center;
         }
         
         .game-card img {
@@ -4511,6 +5151,7 @@
             z-index: 1;
             pointer-events: none;
             border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.5);
         }
         
         .game-card-overlay::after {
@@ -4527,17 +5168,19 @@
         
         .game-card:hover img {
             transform: scale(1.05);
+            filter: brightness(1.2) contrast(1.1);
         }
         
         .game-card:hover .game-card-overlay {
             opacity: 1;
+            background: linear-gradient(135deg, rgba(10,10,18,0.7) 0%, rgba(255,0,255,0.6) 50%, rgba(0,255,255,0.6) 100%);
         }
 
         .play-now-btn {
             position: absolute;
             bottom: 15px;
             left: 50%;
-            transform: translateX(-50%) translateY(20px);
+            transform: translateX(-50%);
             background: linear-gradient(135deg, #ff00ff, #cc00cc);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -4571,16 +5214,17 @@
         .play-now-btn:hover {
             background: #ff33ff;
             box-shadow: 0 0 15px rgba(255, 0, 255, 1);
-            transform: translateX(-50%) translateY(0) scale(1.05);
+            transform: translateX(-50%) scale(1.05);
         }
         
         .game-card:hover .play-now-btn {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%);
         }
 
         .game-card:hover .game-card-overlay {
             opacity: 1;
+            background: linear-gradient(135deg, rgba(10,10,18,0.7) 0%, rgba(255,0,255,0.6) 50%, rgba(0,255,255,0.6) 100%);
         }
 
         .game-card:hover .play-now-btn {
@@ -5050,6 +5694,57 @@
             align-items: center;
             gap: 8px;
             z-index: 10;
+        }
+    /* Cool animations for game cards */
+        @keyframes pulse-border {
+            0% { border: 2px solid rgba(255, 0, 255, 0.7); }
+            50% { border: 2px solid rgba(0, 255, 255, 0.7); }
+            100% { border: 2px solid rgba(255, 0, 255, 0.7); }
+        }
+        
+        @keyframes floating {
+            0% { transform: scale(1.1) translateY(-5px); }
+            50% { transform: scale(1.15) translateY(-10px); }
+            100% { transform: scale(1.1) translateY(-5px); }
+        }
+        
+        @keyframes glow-button {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 0, 255, 0.9), 0 0 50px rgba(0, 255, 255, 0.6); }
+        }
+        
+        /* 3D effect for game cards */
+        .game-card {
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 
@@ -6776,7 +7471,7 @@
                     message.style.color = '#ff00ff';
                     message.style.fontFamily = "'Orbitron', sans-serif";
                     message.style.width = '100%';
-                    message.innerHTML = `No games found matching <span style="color: #00ffff;">${searchTerm}</span>. Try another search term.`;
+                    message.innerHTML = `No games found matching <span style="color: #ff00ff;">${searchTerm}</span>. Try another search term.`;
                     
                     const gamesGrid = document.querySelector('.games-grid');
                     if (gamesGrid) {
@@ -7237,7 +7932,7 @@
             </div>
             <nav>
                 <div class="header">
-                    <h1 class="site-title">Broccoli Direct</h1>
+                   
                 </div>
             </nav>
             <div class="user-actions" id="userActions">
@@ -7272,7 +7967,7 @@
                     <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                         <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 24px; margin-right: 10px;">🖱️</span>
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">AUTO CLICKER</h3>
+                            <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">AUTO CLICKER</h3>
                         </div>
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
                         <div class="tool-content" style="font-size: 12px;">
@@ -7296,8 +7991,8 @@
                                 <button id="stop-autoclicker" class="btn" disabled style="background-color: rgba(10, 10, 20, 0.5); color: #888888; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; flex: 1;">STOP</button>
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
-                                <p id="click-status" style="color: #00ffff; margin: 4px 0; font-size: 11px;">Status: Stopped</p>
-                                <p id="click-counter" style="color: #00ffff; margin: 4px 0; font-size: 11px;">Clicks: 0</p>
+                                <p id="click-status" style="color: #ff00ff; margin: 4px 0; font-size: 11px;">Status: Stopped</p>
+                                <p id="click-counter" style="color: #ff00ff; margin: 4px 0; font-size: 11px;">Clicks: 0</p>
                                 <p style="color: #ff00ff; margin: 4px 0; font-size: 10px;">Press F6 to start/stop</p>
                             </div>
                         </div>
@@ -7307,7 +8002,7 @@
                     <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                         <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 24px; margin-right: 10px;">📝</span>
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">TEXT HACKER</h3>
+                            <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">TEXT HACKER</h3>
                         </div>
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
                         <div class="tool-content" style="font-size: 12px;">
@@ -7323,7 +8018,7 @@
                                 <button data-format="vaporwave" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #ff00ff;">ｖａｐｏｒｗａｖｅ</button>
                             </div>
                             <div class="output-container">
-                                <textarea id="format-output" readonly style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #00ffff; color: #00ffff; padding: 4px 8px; border-radius: 4px; width: 100%; height: 60px; resize: none; font-family: 'Orbitron', sans-serif; margin-bottom: 8px;"></textarea>
+                                <textarea id="format-output" readonly style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #00ffff; color: #ff00ff; padding: 4px 8px; border-radius: 4px; width: 100%; height: 60px; resize: none; font-family: 'Orbitron', sans-serif; margin-bottom: 8px;"></textarea>
                                 <button id="copy-formatted" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #00ffff;">COPY HACKED TEXT</button>
                             </div>
                         </div>
@@ -7333,7 +8028,7 @@
                     <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                         <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 24px; margin-right: 10px;">🎨</span>
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">NEON PICKER</h3>
+                            <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">NEON PICKER</h3>
                         </div>
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
                         <div class="tool-content" style="font-size: 12px;">
@@ -7341,15 +8036,15 @@
                                 <div class="color-sample" id="color-sample" style="width: 40px; height: 40px; border-radius: 4px; background-color: #ff00ff; margin-right: 10px; box-shadow: 0 0 10px #ff00ff;"></div>
                                 <div class="color-info" style="font-family: 'Orbitron', sans-serif;">
                                     <span id="color-hex" style="display: block; color: #ff00ff; text-shadow: 0 0 5px #ff00ff;">#FF00FF</span>
-                                    <span id="color-rgb" style="display: block; color: #00ffff; font-size: 10px;">RGB: 255, 0, 255</span>
+                                    <span id="color-rgb" style="display: block; color: #ff00ff; font-size: 10px;">RGB: 255, 0, 255</span>
                                 </div>
                             </div>
                             <div class="color-history" style="margin-bottom: 8px;">
-                                <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0 0 5px 0; font-size: 12px; font-family: 'Orbitron', sans-serif;">CYBER PALETTE</h4>
+                                <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0 0 5px 0; font-size: 12px; font-family: 'Orbitron', sans-serif;">CYBER PALETTE</h4>
                                 <div class="color-swatches" id="color-history" style="display: flex; flex-wrap: wrap; gap: 5px; background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; border-radius: 4px; padding: 5px;"></div>
                             </div>
                             <button id="start-picker" style="background-color: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-bottom: 5px;">CAPTURE COLORS</button>
-                            <p style="color: #00ffff; margin: 0; font-size: 10px; text-align: center;">Press ESC to capture neon colors</p>
+                            <p style="color: #ff00ff; margin: 0; font-size: 10px; text-align: center;">Press ESC to capture neon colors</p>
                         </div>
                     </div>
                     
@@ -7357,7 +8052,7 @@
                     <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                         <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 24px; margin-right: 10px;">🔐</span>
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">CRYPTO KEY</h3>
+                            <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">CRYPTO KEY</h3>
                         </div>
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
                         <div class="tool-content" style="font-size: 12px;">
@@ -7365,27 +8060,27 @@
                                 <label for="password-length" style="color: #ff00ff; display: block; margin-bottom: 4px; font-family: 'Orbitron', sans-serif;">KEY LENGTH:</label>
                                 <input type="range" id="password-length" min="4" max="32" value="12" style="width: 100%; background: #ff00ff; height: 4px; -webkit-appearance: none; appearance: none; outline: none;">
                                 <div style="display: flex; justify-content: space-between;">
-                                    <span style="color: #00ffff; font-size: 10px;">4</span>
+                                    <span style="color: #ff00ff; font-size: 10px;">4</span>
                                     <span id="length-value" style="color: #ff00ff; font-size: 12px;">12</span>
-                                    <span style="color: #00ffff; font-size: 10px;">32</span>
+                                    <span style="color: #ff00ff; font-size: 10px;">32</span>
                                 </div>
                             </div>
                             <div style="margin-bottom: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                <label style="color: #ff00ff; font-size: 11px; display: flex; align-items: center;">
                                     <input type="checkbox" id="include-uppercase" checked style="margin-right: 5px;"> UPPERCASE
                                 </label>
-                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                <label style="color: #ff00ff; font-size: 11px; display: flex; align-items: center;">
                                     <input type="checkbox" id="include-lowercase" checked style="margin-right: 5px;"> lowercase
                                 </label>
-                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                <label style="color: #ff00ff; font-size: 11px; display: flex; align-items: center;">
                                     <input type="checkbox" id="include-numbers" checked style="margin-right: 5px;"> NUMBERS
                                 </label>
-                                <label style="color: #00ffff; font-size: 11px; display: flex; align-items: center;">
+                                <label style="color: #ff00ff; font-size: 11px; display: flex; align-items: center;">
                                     <input type="checkbox" id="include-symbols" style="margin-right: 5px;"> SYMBOLS
                                 </label>
                             </div>
                             <div style="margin-bottom: 8px;">
-                                <input type="text" id="generated-password" readonly style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #00ffff; padding: 8px; border-radius: 4px; width: 100%; font-family: 'Orbitron', sans-serif; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">
+                                <input type="text" id="generated-password" readonly style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #ff00ff; padding: 8px; border-radius: 4px; width: 100%; font-family: 'Orbitron', sans-serif; text-align: center; letter-spacing: 1px; margin-bottom: 5px;">
                                 <div style="height: 5px; background-color: rgba(0, 0, 0, 0.3); border-radius: 2px; margin-bottom: 5px; overflow: hidden;">
                                     <div id="strength-bar" style="height: 100%; width: 50%; background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00); border-radius: 2px;"></div>
                                 </div>
@@ -7406,7 +8101,7 @@
                     <div class="tool-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                         <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 24px; margin-right: 10px;">👾</span>
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">GLITCH TEXT</h3>
+                            <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; margin: 0; font-family: 'Orbitron', sans-serif;">GLITCH TEXT</h3>
                         </div>
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); animation: scan-line 2s linear infinite;"></div>
                         <div class="tool-content" style="font-size: 12px;">
@@ -7420,7 +8115,7 @@
                                 <button data-glitch="alien" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 4px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 10px; text-shadow: 0 0 5px #00ffff;">ALIEN</button>
                             </div>
                             <div class="output-container">
-                                <div id="glitch-output" style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #00ffff; padding: 8px; border-radius: 4px; width: 100%; height: 60px; font-family: 'Orbitron', sans-serif; margin-bottom: 8px; overflow: hidden; position: relative;"></div>
+                                <div id="glitch-output" style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid #00ffff; color: #ff00ff; padding: 8px; border-radius: 4px; width: 100%; height: 60px; font-family: 'Orbitron', sans-serif; margin-bottom: 8px; overflow: hidden; position: relative;"></div>
                                 <button id="copy-glitch" style="background-color: rgba(0, 255, 255, 0.3); color: #ffffff; border: 1px solid #00ffff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #00ffff;">COPY GLITCHED TEXT</button>
                             </div>
                         </div>
@@ -7651,14 +8346,14 @@
                         </div>
                         <div class="currency-item">
                             <span class="currency-icon" style="font-size: 24px; margin-right: 10px;">💎</span>
-                            <span class="currency-amount" style="font-size: 20px; color: #00ffff; font-weight: bold; margin-right: 5px; text-shadow: 0 0 5px #00ffff;">0</span>
+                            <span class="currency-amount" style="font-size: 20px; color: #ff00ff; font-weight: bold; margin-right: 5px; text-shadow: 0 0 5px #00ffff;">0</span>
                             <span class="currency-name" style="color: #ffffff; font-family: 'Orbitron', sans-serif;">Premium Gems</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="daily-rewards">
-                    <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">DAILY LOGIN REWARDS</h3>
+                    <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">DAILY LOGIN REWARDS</h3>
                     <div class="daily-rewards-track" style="display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px;">
                         <div class="reward-day claimed">
                             <div class="reward-icon">🥦</div>
@@ -7701,7 +8396,7 @@
                     </div>
                 </div>
                 
-                <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">REWARDS SHOP</h3>
+                <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin-top: 20px;">REWARDS SHOP</h3>
                 <div class="rewards-categories" style="display: flex; gap: 10px; margin: 15px 0;">
                     <button class="reward-category-btn active" data-category="all" style="background: rgba(255, 0, 255, 0.3); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 5px #ff00ff; transition: all 0.3s ease;">ALL</button>
                     <button class="reward-category-btn" data-category="avatars" style="background: rgba(10, 10, 20, 0.5); color: #fff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease;">AVATARS</button>
@@ -7716,7 +8411,7 @@
                         <div class="reward-item-image">
                             <img src="https://i.imgur.com/8tBPYMa.png" alt="Ninja Avatar">
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Ninja Avatar</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Ninja Avatar</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">100</span>
@@ -7728,7 +8423,7 @@
                         <div class="reward-item-image">
                             <img src="https://i.imgur.com/JzVjuOX.png" alt="Robot Avatar">
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Robot Avatar</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Robot Avatar</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">150</span>
@@ -7740,7 +8435,7 @@
                         <div class="reward-item-image">
                             <img src="https://i.imgur.com/pSNBCDM.png" alt="Gamer Avatar">
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Gamer Avatar</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Gamer Avatar</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">175</span>
@@ -7752,7 +8447,7 @@
                         <div class="reward-item-image">
                             <img src="https://i.imgur.com/qHDGqCJ.png" alt="Dragon Avatar">
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Dragon Avatar</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Dragon Avatar</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">💎</span>
                             <span class="price-amount">3</span>
@@ -7766,7 +8461,7 @@
                         <div class="reward-item-image theme-preview neon-theme">
                             <div class="theme-sample"></div>
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Neon Theme</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Neon Theme</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">200</span>
@@ -7778,7 +8473,7 @@
                         <div class="reward-item-image theme-preview retro-theme">
                             <div class="theme-sample"></div>
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Retro Theme</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Retro Theme</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">225</span>
@@ -7790,7 +8485,7 @@
                         <div class="reward-item-image theme-preview galaxy-theme">
                             <div class="theme-sample"></div>
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Galaxy Theme</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Galaxy Theme</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">💎</span>
                             <span class="price-amount">2</span>
@@ -7803,7 +8498,7 @@
                         <div class="reward-item-image theme-preview hacker-theme">
                             <div class="theme-sample"></div>
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Hacker Theme</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Hacker Theme</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">💎</span>
                             <span class="price-amount">3</span>
@@ -7817,7 +8512,7 @@
                         <div class="reward-item-image">
                             <img src="https://i.imgur.com/6PzOxS3.gif" alt="Fire Cursor">
                         </div>
-                        <h4 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Fire Cursor</h4>
+                        <h4 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif; margin: 10px 0;">Fire Cursor</h4>
                         <div class="reward-item-price">
                             <span class="currency-icon">🥦</span>
                             <span class="price-amount">250</span>
@@ -7936,7 +8631,7 @@
                             <h3>Rammerhead Proxy</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PROXY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SECURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SECURE</span>
                             </div>
                             <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Advanced proxy with session support</p>
                         </div>
@@ -7961,356 +8656,7 @@
             </div>
         </div>
         
-        <!-- Cloaking Tab Content -->
-        <div class="main-tab-content" id="cloaking-tab">
-            <div class="glass-panel">
-                <h2>URL Cloaking</h2>
-                <div class="cloaking-container">
-                    <div class="url-input-section">
-                        <h3>Target URL</h3>
-                        <input type="url" id="target-url" placeholder="Enter URL to cloak" class="url-input">
-                    </div>
-                    
-                    <div class="cloaking-methods">
-                        <h3>Cloaking Methods</h3>
-                        <div class="method-grid">
-                            <div class="method-card" onclick="applyCloaking('about:blank')">
-                                <span class="method-icon">🔗</span>
-                                <span class="method-name">About:Blank</span>
-                                <span class="method-desc">Opens in about:blank frame</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('iframe')">
-                                <span class="method-icon">📑</span>
-                                <span class="method-name">iFrame Embed</span>
-                                <span class="method-desc">Embeds in invisible iframe</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('redirect')">
-                                <span class="method-icon">🔄</span>
-                                <span class="method-name">Redirect Chain</span>
-                                <span class="method-desc">Multiple redirect layers</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('proxy')">
-                                <span class="method-icon">🛡️</span>
-                                <span class="method-name">Proxy Server</span>
-                                <span class="method-desc">Routes through proxy</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('classroom')">
-                                <span class="method-icon">📚</span>
-                                <span class="method-name">Google Classroom</span>
-                                <span class="method-desc">Disguises as classroom</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('canvas')">
-                                <span class="method-icon">🎨</span>
-                                <span class="method-name">Canvas LMS</span>
-                                <span class="method-desc">Mimics Canvas interface</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('schoology')">
-                                <span class="method-icon">📝</span>
-                                <span class="method-name">Schoology</span>
-                                <span class="method-desc">Schoology look-alike</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('blackboard')">
-                                <span class="method-icon">📋</span>
-                                <span class="method-name">Blackboard</span>
-                                <span class="method-desc">Blackboard interface</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('moodle')">
-                                <span class="method-icon">📊</span>
-                                <span class="method-name">Moodle</span>
-                                <span class="method-desc">Moodle platform style</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('edmodo')">
-                                <span class="method-icon">📱</span>
-                                <span class="method-name">Edmodo</span>
-                                <span class="method-desc">Edmodo appearance</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('docs')">
-                                <span class="method-icon">📄</span>
-                                <span class="method-name">Google Docs</span>
-                                <span class="method-desc">Google Docs interface</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('slides')">
-                                <span class="method-icon">📑</span>
-                                <span class="method-name">Google Slides</span>
-                                <span class="method-desc">Slides presentation</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('sheets')">
-                                <span class="method-icon">📊</span>
-                                <span class="method-name">Google Sheets</span>
-                                <span class="method-desc">Spreadsheet view</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('forms')">
-                                <span class="method-icon">📝</span>
-                                <span class="method-name">Google Forms</span>
-                                <span class="method-desc">Survey form style</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('drive')">
-                                <span class="method-icon">📁</span>
-                                <span class="method-name">Google Drive</span>
-                                <span class="method-desc">Drive file view</span>
-                            </div>
-                            <div class="method-card" onclick="applyCloaking('blob')">
-                                <span class="method-icon">🔒</span>
-                                <span class="method-name">Blob URL</span>
-                                <span class="method-desc">Creates secure blob URL</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Home Tab Content -->
-        <div class="main-tab-content" id="home-tab">
-            <div class="glass-panel">
-                <h2>Welcome to Broccoli Unblocker</h2>
-                <div class="promo-text">
-                    <h3>🚀 Why Gamers Love Broccoli Unblocker</h3>
-                    <p>Unlike other gaming sites filled with broken links, intrusive ads, or shady downloads, Broccoli Unblocker focuses on delivering a clean, user-friendly experience. Our unblocked games are carefully selected to ensure they load quickly, run without lag, and most importantly bypass common school or workplace filters. From adrenaline-pumping action games to brain-teasing puzzles and multiplayer challenges, we update our library regularly so you'll always find something fresh to play.</p>
-
-                    <h3>🔥 A Library Built for Players</h3>
-                    <p>We know that gamers have different tastes, so we've organized our collection into easy-to-browse categories:</p>
-                    <ul>
-                        <li>✔ Action & Adventure: Defeat enemies, escape traps, and explore dynamic worlds.</li>
-                        <li>✔ Puzzle & Strategy: Test your logic with mind-bending challenges.</li>
-                        <li>✔ Sports & Racing: Shoot, score, or speed your way to victory.</li>
-                        <li>✔ Classic Arcade: Nostalgic retro unblocked games for quick, satisfying sessions.</li>
-                        <li>✔ Two-Player Games: Challenge a friend in head-to-head battles.</li>
-                    </ul>
-
-                    <h3>📌 No Barriers, Just Unblocked Games</h3>
-                    <p>One of the biggest frustrations with gaming sites is dealing with complicated setups but not here. Broccoli Unblocker eliminates all the annoyances:</p>
-                    <ul>
-                        <li>✔ Zero Downloads: Every game runs directly in your browser.</li>
-                        <li>✔ No Registration: No annoying sign-ups or personal data required.</li>
-                        <li>✔ Works on Any Device: Play on Chromebooks, laptops, or even school PCs.</li>
-                        <li>✔ Safe & Secure: We filter out malicious ads and scams so you can game worry-free.</li>
-                    </ul>
-
-                    <h3>👉 How to Get Started? It Couldn't Be Easier.</h3>
-                    <ol>
-                        <li>Visit Broccoli Unblocker (bookmark us to skip the search next time!).</li>
-                        <li>Choose a game browse by category or use the search bar.</li>
-                        <li>Click and play instantly no waiting, no redirects.</li>
-                    </ol>
-
-                    <h3>💡 Our Promise to You</h3>
-                    <p>We're not just another unblocked games site. Broccoli Unblocker is built by gamers, for gamers, with a focus on speed, accessibility, and fun. Whether you're a student looking for a quick break or someone stuck at work needing a distraction, we've got your back.</p>
-
-                    <h3>🎮 Ready to play? Jump in now and see why thousands of players choose Broccoli Unblocker every day!</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- Customize Tab Content -->
-        <div class="main-tab-content" id="customize-tab">
-            <div class="glass-panel">
-                <h2>Customize Your Experience</h2>
-                <div class="customization-options">
-                    <div class="option-group">
-                        <h3>Theme Settings</h3>
-                        <div class="theme-toggle">
-                            <label for="darkMode">Dark Mode</label>
-                            <input type="checkbox" id="darkMode" checked onchange="toggleTheme()">
-                        </div>
-                        
-                        <div class="background-picker">
-                            <h4>Background Style</h4>
-                            <select onchange="setBackgroundStyle(this.value)">
-                                <option value="solid-color">Solid Color</option>
-                                <option value="gradient">Gradient</option>
-                                <option value="matrix-rain">Matrix Rain</option>
-                                <option value="particles">Particles</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="option-group">
-                        <h3>Display Settings</h3>
-                        <div class="display-options">
-                            <label>
-                                <input type="checkbox" onchange="toggleGridSize()"> Large Game Grid
-                            </label>
-                            <label>
-                                <input type="checkbox" onchange="toggleShowTitles()"> Show Game Titles
-                            </label>
-                            <label>
-                                <input type="checkbox" onchange="toggleAnimations()"> Enable Animations
-                            </label>
-                            <label>
-                                <input type="checkbox" onchange="toggleNotifications()"> Enable Notifications
-                            </label>
-                        </div>
-                    </div>
-                    <div class="option-group">
-                        <h3>Game Settings</h3>
-                        <div class="game-options">
-                            <label>
-                                <input type="checkbox" onchange="toggleAutoFullscreen()"> Auto Fullscreen Games
-                            </label>
-                            <label>
-                                <input type="checkbox" onchange="toggleSaveProgress()"> Save Game Progress
-                            </label>
-                            <label>
-                                <input type="checkbox" onchange="toggleGameSound()"> Enable Game Sound
-                            </label>
-                            <div class="volume-control">
-                                <label>Game Volume:</label>
-                                <input type="range" min="0" max="100" value="50" onchange="changeVolume(this.value)">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Tab Content -->
-        <div class="main-tab-content" id="stats-tab">
-            <div class="glass-panel">
-                <div class="stats-container">
-                    <div class="stats-overview">
-                        <h2>Your Gaming Stats</h2>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <h3>Total Play Time</h3>
-                                <div class="stat-value" id="total-play-time">0h 0m</div>
-                            </div>
-                            <div class="stat-item">
-                                <h3>Games Played</h3>
-                                <div class="stat-value" id="games-played">0</div>
-                            </div>
-                            <div class="stat-item">
-                                <h3>Unique Games</h3>
-                                <div class="stat-value" id="unique-games">0</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="stats-grid">
-                        <div class="recent-games">
-                            <h3>Recent Games</h3>
-                            <div class="recent-games-list"></div>
-                        </div>
-                        
-                        <div class="game-categories">
-                            <h3>Game Categories</h3>
-                            <div class="category-stats"></div>
-                        </div>
-                        
-                        <div class="achievements">
-                            <h3>Achievements</h3>
-                            <div class="achievements-list">
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎮</span>
-                                    <span class="achievement-name">First Game</span>
-                                    <span class="achievement-desc">Play your first game</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">⭐</span>
-                                    <span class="achievement-name">Game Master</span>
-                                    <span class="achievement-desc">Play 10 different games</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🏆</span>
-                                    <span class="achievement-name">Completionist</span>
-                                    <span class="achievement-desc">Play all available games</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">⏱️</span>
-                                    <span class="achievement-name">Time Traveler</span>
-                                    <span class="achievement-desc">Play for 24 hours total</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎯</span>
-                                    <span class="achievement-name">Sharpshooter</span>
-                                    <span class="achievement-desc">Get a perfect score in any game</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎨</span>
-                                    <span class="achievement-name">Customizer</span>
-                                    <span class="achievement-desc">Try all background styles</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🔔</span>
-                                    <span class="achievement-name">Notified</span>
-                                    <span class="achievement-desc">Enable notifications</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎵</span>
-                                    <span class="achievement-name">DJ</span>
-                                    <span class="achievement-desc">Adjust game volume</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🔍</span>
-                                    <span class="achievement-name">Explorer</span>
-                                    <span class="achievement-desc">Visit all tabs</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">💾</span>
-                                    <span class="achievement-name">Saver</span>
-                                    <span class="achievement-desc">Enable game progress saving</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎭</span>
-                                    <span class="achievement-name">Theme Master</span>
-                                    <span class="achievement-desc">Try both light and dark themes</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">📱</span>
-                                    <span class="achievement-name">Mobile Gamer</span>
-                                    <span class="achievement-desc">Play on a mobile device</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎲</span>
-                                    <span class="achievement-name">Lucky Roll</span>
-                                    <span class="achievement-desc">Win 3 games in a row</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">📊</span>
-                                    <span class="achievement-name">Stat Master</span>
-                                    <span class="achievement-desc">View stats 10 times</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎪</span>
-                                    <span class="achievement-name">Arcade Regular</span>
-                                    <span class="achievement-desc">Play 50 games total</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎯</span>
-                                    <span class="achievement-name">Precision Player</span>
-                                    <span class="achievement-desc">Get a high score in 5 different games</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎨</span>
-                                    <span class="achievement-name">Color Expert</span>
-                                    <span class="achievement-desc">Try all color themes</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🔒</span>
-                                    <span class="achievement-name">Security Expert</span>
-                                    <span class="achievement-desc">Use all cloaking methods</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🎮</span>
-                                    <span class="achievement-name">Pro Gamer</span>
-                                    <span class="achievement-desc">Play for 100 hours total</span>
-                                </div>
-                                <div class="achievement">
-                                    <span class="achievement-icon">🏅</span>
-                                    <span class="achievement-name">Legend</span>
-                                    <span class="achievement-desc">Unlock all achievements</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="play-time">
-                            <h3>Play Time Distribution</h3>
-                            <canvas id="play-time-chart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  
 
         <div id="cloaking" class="tab-content">
             <div class="cloaking-container">
@@ -8394,7 +8740,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER ARCADE</h2>
                     <div class="autoclicker-toggle" style="display: flex; align-items: center; background: rgba(255, 0, 255, 0.2); padding: 8px 15px; border-radius: 20px; border: 1px solid #ff00ff;">
-                        <span style="color: #00ffff; margin-right: 10px; font-family: 'Orbitron', sans-serif; font-size: 14px;">AUTO CLICKER:</span>
+                        <span style="color: #ff00ff; margin-right: 10px; font-family: 'Orbitron', sans-serif; font-size: 14px;">AUTO CLICKER:</span>
                         <button id="game-autoclicker-toggle" style="background: #00ffff; color: #1a1a2e; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px #00ffff;">ACTIVATE</button>
                     </div>
                 </div>
@@ -8445,7 +8791,7 @@
                             <i class="fas fa-times-circle"></i>
                         </button>
                     </div>
-                    <div id="search-tip" style="color: #00ffff; font-size: 12px; margin-top: 5px; text-align: center; text-shadow: 0 0 5px #00ffff;">
+                    <div id="search-tip" style="color: #ff00ff; font-size: 12px; margin-top: 5px; text-align: center; text-shadow: 0 0 5px #00ffff;">
                         Type to instantly filter games by name, category, or tag
                     </div>
                 </div>
@@ -8460,7 +8806,7 @@
                     </button>
                 </div>
                 
-                <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                     <!-- Game cards organized alphabetically -->
                     <!-- 1 on 1 Soccer -->
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxJ3oet4bnNqQK_nqPo6KSwPlvIMR448__kEYKx_WN-QbncNc98PEc-qaFme7l2tbKH/exec')">
@@ -8472,7 +8818,7 @@
                             <h3>1 on 1 Soccer</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SOCCER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SOCCER</span>
                             </div>
                         </div>
                     </div>
@@ -8487,7 +8833,7 @@
                             <h3>1v1.LOL</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -8504,7 +8850,7 @@
                             <h3>Among Us</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STRATEGY</span>
                             </div>
                         </div>
                     </div>
@@ -8521,7 +8867,7 @@
                             <h3>Backyard Basketball</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BASKETBALL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BASKETBALL</span>
                             </div>
                         </div>
                     </div>
@@ -8540,7 +8886,7 @@
                             <h3>Basketball Random</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
@@ -8555,7 +8901,7 @@
                             <h3>Bike Obby (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">OBSTACLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">OBSTACLE</span>
                             </div>
                         </div>
                     </div>
@@ -8570,7 +8916,7 @@
                             <h3>BitLife (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">LIFE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">LIFE</span>
                             </div>
                         </div>
                     </div>
@@ -8586,7 +8932,7 @@
                             <h3>Bloons TD 2</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -8624,11 +8970,11 @@
                             <h3>Snow Rider 3D</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwqW4kBl41CHKxAW1aOCzUllnCGaK6LDmkZfAZH_dJzu646nns5bRfn0oqa5Zpq9zEI/exec')" data-category="racing" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz6GTepbaULO9dEqHBzfb2Rm0C3pdSKcKnaOGr6qAWXxoppLkkA65v3vTgsDS4o7W56aQ/exec')" data-category="racing" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
@@ -8637,7 +8983,7 @@
                             <h3>Race Survival: Arena King</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -8650,7 +8996,7 @@
                             <h3>Death Run 3D</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RACING</span>
                             </div>
                         </div>
                     </div>
@@ -8666,7 +9012,7 @@
                             <h3>Plants vs Zombies (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -8681,7 +9027,7 @@
                             <h3>Pokemon Emerald (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RPG</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
                             </div>
                         </div>
                     </div>
@@ -8695,7 +9041,7 @@
                             <h3>Vex 6</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -8708,7 +9054,7 @@
                             <h3>Cookie Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">CLICKER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STRATEGY</span>
                             </div>
                         </div>
                     </div>
@@ -8721,7 +9067,7 @@
                             <h3>Snake.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
@@ -8734,7 +9080,7 @@
                             <h3>Car Drawing</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CREATIVE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CREATIVE</span>
                             </div>
                         </div>
                     </div>
@@ -8748,7 +9094,7 @@
                             <h3>Fake Virus Troll (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PRANK</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FUNNY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FUNNY</span>
                             </div>
                         </div>
                     </div>
@@ -8762,7 +9108,7 @@
                             <h3>Sprunki Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLICKER</span>
                             </div>
                         </div>
                     </div>
@@ -8777,7 +9123,7 @@
                             <h3>Epic Stunt Cars (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STUNTS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STUNTS</span>
                             </div>
                         </div>
                     </div>
@@ -8792,7 +9138,7 @@
                             <h3>Extreme Drift Cars (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRIFTING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIFTING</span>
                             </div>
                         </div>
                     </div>
@@ -8805,7 +9151,7 @@
                             <h3>Mr Racer</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -8820,7 +9166,7 @@
                             <h3>Rescue The Fish</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -8835,7 +9181,7 @@
                             <h3>Roblox Obby</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">OBSTACLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">OBSTACLE</span>
                             </div>
                         </div>
                     </div>
@@ -8848,7 +9194,7 @@
                             <h3>Geometry Dash</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PLATFORMER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PLATFORMER</span>
                             </div>
                         </div>
                     </div>
@@ -8863,7 +9209,7 @@
                             <h3>Minecraft 1.8 (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SURVIVAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SURVIVAL</span>
                             </div>
                         </div>
                     </div>
@@ -8878,7 +9224,7 @@
                             <h3>Minecraft 1.12.2 (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SURVIVAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SURVIVAL</span>
                             </div>
                         </div>
                     </div>
@@ -8893,7 +9239,7 @@
                             <h3>Minecraft 1.11 (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SURVIVAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SURVIVAL</span>
                             </div>
                         </div>
                     </div>
@@ -8908,7 +9254,7 @@
                             <h3>Minecraft 1.5 Original (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLASSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLASSIC</span>
                             </div>
                         </div>
                     </div>
@@ -8923,7 +9269,7 @@
                             <h3>Moto Road Crash 3D (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -8938,7 +9284,7 @@
                             <h3>Monster Truck Stunts Sim (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STUNTS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STUNTS</span>
                             </div>
                         </div>
                     </div>
@@ -8952,7 +9298,7 @@
                             <h3>Moto X3M</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -8967,7 +9313,7 @@
                             <h3>Wild West Snipers (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SHOOTER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">WESTERN</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">WESTERN</span>
                             </div>
                         </div>
                     </div>
@@ -8982,7 +9328,7 @@
                             <h3>Ultimate Car Driving (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SIMULATION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMULATION</span>
                             </div>
                         </div>
                     </div>
@@ -8997,7 +9343,7 @@
                             <h3>Masked Forces (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SHOOTER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
@@ -9011,7 +9357,7 @@
                             <h3>Super Mario</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLASSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLASSIC</span>
                             </div>
                         </div>
                     </div>
@@ -9024,7 +9370,7 @@
                             <h3>Super Mario Bros 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLASSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLASSIC</span>
                             </div>
                         </div>
                     </div>
@@ -9039,7 +9385,7 @@
                             <h3>The Operation (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SKILL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SKILL</span>
                             </div>
                         </div>
                     </div>
@@ -9054,7 +9400,7 @@
                             <h3>Stickman Hook (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -9069,7 +9415,7 @@
                             <h3>Fire Balls</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -9082,7 +9428,7 @@
                             <h3>Flappy Bird OG</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLASSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLASSIC</span>
                             </div>
                         </div>
                     </div>
@@ -9097,7 +9443,7 @@
                             <h3>Stack Ball</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -9112,7 +9458,7 @@
                             <h3>G Switch 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RUNNER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
                             </div>
                         </div>
                     </div>
@@ -9125,7 +9471,7 @@
                             <h3>Bottle Flip 3D</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -9138,7 +9484,7 @@
                             <h3>Stickman Duel</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FIGHTING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FIGHTING</span>
                             </div>
                         </div>
                     </div>
@@ -9153,7 +9499,7 @@
                             <h3>Skibidi Strike</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SHOOTER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -9167,7 +9513,7 @@
                             <h3>Ski King</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SKIING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SKIING</span>
                             </div>
                         </div>
                     </div>
@@ -9182,7 +9528,7 @@
                             <h3>Space Waves</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SHOOTER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SPACE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SPACE</span>
                             </div>
                         </div>
                     </div>
@@ -9197,7 +9543,7 @@
                             <h3>2048 Game</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STRATEGY</span>
                             </div>
                         </div>
                     </div>
@@ -9210,7 +9556,7 @@
                             <h3>Angry Birds OG</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -9223,7 +9569,7 @@
                             <h3>Bloons TD 1</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -9237,7 +9583,7 @@
                             <h3>Backyard Football</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FOOTBALL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FOOTBALL</span>
                             </div>
                         </div>
                     </div>
@@ -9251,7 +9597,7 @@
                             <h3>Backyard Hockey</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">HOCKEY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">HOCKEY</span>
                             </div>
                         </div>
                     </div>
@@ -9264,7 +9610,7 @@
                             <h3>Pixel Shooter</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -9280,7 +9626,7 @@
                             <h3>Run 1</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RUNNER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
                             </div>
                         </div>
                     </div>
@@ -9293,7 +9639,7 @@
                             <h3>Doom</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -9306,7 +9652,7 @@
                             <h3>Neon Blaster</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -9321,7 +9667,7 @@
                             <h3>Infinite Craft</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CRAFTING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CRAFTING</span>
                             </div>
                         </div>
                     </div>
@@ -9334,7 +9680,7 @@
                             <h3>Driving Force 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRIVING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIVING</span>
                             </div>
                         </div>
                     </div>
@@ -9347,7 +9693,7 @@
                             <h3>Road Fury</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRIVING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIVING</span>
                             </div>
                         </div>
                     </div>
@@ -9360,7 +9706,7 @@
                             <h3>Parking Fury</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PARKING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PARKING</span>
                             </div>
                         </div>
                     </div>
@@ -9373,7 +9719,7 @@
                             <h3>Bloons TD 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -9386,7 +9732,7 @@
                             <h3>Bloons TD 4 Expansion</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -9399,7 +9745,7 @@
                             <h3>Bloons TD 5</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TOWER DEFENSE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TOWER DEFENSE</span>
                             </div>
                         </div>
                     </div>
@@ -9412,7 +9758,7 @@
                             <h3>PUBG Mini</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -9425,7 +9771,7 @@
                             <h3>Mario Run</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PLATFORMER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PLATFORMER</span>
                             </div>
                         </div>
                     </div>
@@ -9438,7 +9784,7 @@
                             <h3>Super Mario Sunshine 64 (Mod)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MOD</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MOD</span>
                             </div>
                         </div>
                     </div>
@@ -9451,7 +9797,7 @@
                             <h3>Hole.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -9464,7 +9810,7 @@
                             <h3>Drift Hunters</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRIFT</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIFT</span>
                             </div>
                         </div>
                     </div>
@@ -9477,7 +9823,7 @@
                             <h3>NBA Jam</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BASKETBALL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BASKETBALL</span>
                             </div>
                         </div>
                     </div>
@@ -9490,7 +9836,7 @@
                             <h3>Chess</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BOARD GAME</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BOARD GAME</span>
                             </div>
                         </div>
                     </div>
@@ -9502,7 +9848,7 @@
                         <div class="game-info">
                             <h3>Board Game Classics</h3>
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">COLLECTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">COLLECTION</span>
                             </div>
                         </div>
                     <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/madalinstuntcars3/index.html')" data-category="racing">
@@ -9514,7 +9860,7 @@
                             <h3>Madalin Stunt Cars 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STUNTS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STUNTS</span>
                             </div>
                         </div>
                     </div>
@@ -9528,7 +9874,7 @@
                             <h3>Drag Racing Club</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRAG</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRAG</span>
                             </div>
                         </div>
                     </div>
@@ -9541,7 +9887,7 @@
                             <h3>Fall Guys</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">OBSTACLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">OBSTACLE</span>
                             </div>
                         </div>
                     </div>
@@ -9554,7 +9900,7 @@
                             <h3>Operious</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
                             </div>
                         </div>
                     </div>
@@ -9567,7 +9913,7 @@
                             <h3>Crossy Road</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ENDLESS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ENDLESS</span>
                             </div>
                         </div>
                     </div>
@@ -9583,7 +9929,7 @@
                             <h3>Slope.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ENDLESS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ENDLESS</span>
                             </div>
                         </div>
                     </div>
@@ -9597,7 +9943,7 @@
                             <h3>Tomb of the Mask</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PUZZLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PUZZLE</span>
                             </div>
                         </div>
                     </div>
@@ -9611,7 +9957,7 @@
                             <h3>Subway Surfers</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RUNNER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
                             </div>
                         </div>
                     </div>
@@ -9625,7 +9971,7 @@
                             <h3>Police Chase</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
                             </div>
                         </div>
                     </div>
@@ -9641,7 +9987,7 @@
                             <h3>Geometry Dash Lite</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RHYTHM</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RHYTHM</span>
                             </div>
                         </div>
                     </div>
@@ -9658,7 +10004,7 @@
                             <h3>Minecraft 1.9</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
                             </div>
                         </div>
                     </div>
@@ -9672,7 +10018,7 @@
                             <h3>Elastic Face</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -9686,7 +10032,7 @@
                             <h3>Stack</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SKILL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SKILL</span>
                             </div>
                         </div>
                     </div>
@@ -9700,7 +10046,7 @@
                             <h3>Jetpack Joyride</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RUNNER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
                             </div>
                         </div>
                     </div>
@@ -9714,7 +10060,7 @@
                             <h3>Cluster Rush</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PARKOUR</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PARKOUR</span>
                             </div>
                         </div>
                     </div>
@@ -9728,7 +10074,7 @@
                             <h3>Hacker Typer</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">HACKING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">HACKING</span>
                             </div>
                         </div>
                     </div>
@@ -9742,7 +10088,7 @@
                             <h3>Gun Fest</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -9756,7 +10102,7 @@
                             <h3>Stack Surfer</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RUNNER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
                             </div>
                         </div>
                     </div>
@@ -9770,7 +10116,7 @@
                             <h3>Block Blast</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ARCADE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ARCADE</span>
                             </div>
                         </div>
                     </div>
@@ -9784,7 +10130,7 @@
                             <h3>Granny</h3>
                             <div class="game-tags">
                                 <span class="game-tag">HORROR</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SURVIVAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SURVIVAL</span>
                             </div>
                         </div>
                     </div>
@@ -9798,7 +10144,7 @@
                             <h3>Money Rush</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -9812,7 +10158,7 @@
                             <h3>Crazy Cattle 3D</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">DRIVING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIVING</span>
                             </div>
                         </div>
                     </div>
@@ -9826,7 +10172,7 @@
                             <h3>Mario Kart Wii</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
@@ -9840,7 +10186,7 @@
                             <h3>Goofy Ahh Rocket League</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CARS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CARS</span>
                             </div>
                         </div>
                     </div>
@@ -9853,7 +10199,7 @@
                             <h3>The Impossible Quiz</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BRAIN TEASER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BRAIN TEASER</span>
                             </div>
                         </div>
                     </div>
@@ -9866,7 +10212,7 @@
                             <h3>Rooftop Snipers</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
                         </div>
                     </div>
@@ -9879,7 +10225,7 @@
                             <h3>Time Shooter 3</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FPS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FPS</span>
                             </div>
                         </div>
                     </div>
@@ -9892,7 +10238,7 @@
                             <h3>Soccar Random</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SOCCER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SOCCER</span>
                             </div>
                         </div>
                     </div>
@@ -9906,7 +10252,7 @@
                             <h3>Sonic Revert</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PLATFORMER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PLATFORMER</span>
                             </div>
                         </div>
                     </div>
@@ -9919,7 +10265,7 @@
                             <h3>Boxing Random</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BOXING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BOXING</span>
                             </div>
                         </div>
                     </div>
@@ -9932,7 +10278,7 @@
                             <h3>poop Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">CLICKER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SILLY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SILLY</span>
                             </div>
                         </div>
                     </div>
@@ -9945,7 +10291,7 @@
                             <h3>Spacebar Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">CLICKER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SIMPLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMPLE</span>
                             </div>
                         </div>
                     </div>
@@ -9958,7 +10304,7 @@
                             <h3>Melon Playground</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -9973,7 +10319,7 @@
                             <h3>FNAF</h3>
                             <div class="game-tags">
                                 <span class="game-tag">HORROR</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SURVIVAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SURVIVAL</span>
                             </div>
                         </div>
                     </div>
@@ -9986,7 +10332,7 @@
                             <h3>Doodle Jump</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">JUMPING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">JUMPING</span>
                             </div>
                         </div>
                     </div>
@@ -9999,7 +10345,7 @@
                             <h3>Omega Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CLICKER</span>
                             </div>
                         </div>
                     </div>
@@ -10012,7 +10358,7 @@
                             <h3>Baseball Blast</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BASEBALL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BASEBALL</span>
                             </div>
                         </div>
                     </div>
@@ -10025,7 +10371,7 @@
                             <h3>Call of Duty</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">FPS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FPS</span>
                             </div>
                         </div>
                     </div>
@@ -10038,7 +10384,7 @@
                             <h3>Ragdoll Archers</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -10051,7 +10397,7 @@
                             <h3>Ragdoll.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IO</span>
                             </div>
                         </div>
                     </div>
@@ -10064,7 +10410,7 @@
                             <h3>Oregon Trail</h3>
                             <div class="game-tags">
                                 <span class="game-tag">STRATEGY</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
                             </div>
                         </div>
                     </div>
@@ -10077,7 +10423,7 @@
                             <h3>Bad Time Simulator</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">UNDERTALE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">UNDERTALE</span>
                             </div>
                         </div>
                     </div>
@@ -10090,7 +10436,7 @@
                             <h3>Stumble Guys</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">OBSTACLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">OBSTACLE</span>
                             </div>
                         </div>
                     </div>
@@ -10103,7 +10449,7 @@
                             <h3>Friday Night Funkin</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RHYTHM</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RHYTHM</span>
                             </div>
                         </div>
                     </div>
@@ -10117,7 +10463,7 @@
                             <h3>Garfield Scary Scavenger Hunt</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">HORROR</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">HORROR</span>
                             </div>
                         </div>
                     </div>
@@ -10133,7 +10479,7 @@
                             <h3>Backyard Baseball</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SPORTS</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BASEBALL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BASEBALL</span>
                             </div>
                         </div>
                     </div>
@@ -10146,7 +10492,7 @@
                             <h3>Minecraft</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CRAFTING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CRAFTING</span>
                             </div>
                         </div>
                     </div>
@@ -10159,7 +10505,7 @@
                             <h3>Riddle School</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
                             </div>
                         </div>
                     </div>
@@ -10172,7 +10518,7 @@
                             <h3>Riddle School 2</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ESCAPE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ESCAPE</span>
                             </div>
                         </div>
                     </div>
@@ -10185,7 +10531,7 @@
                             <h3>A Dance of Fire and Ice</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RHYTHM</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MUSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MUSIC</span>
                             </div>
                         </div>
                     </div>
@@ -10198,7 +10544,7 @@
                             <h3>Penguin IO</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IO</span>
                             </div>
                         </div>
                     </div>
@@ -10211,7 +10557,7 @@
                             <h3>Surviv.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BATTLE ROYALE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BATTLE ROYALE</span>
                             </div>
                         </div>
                     </div>
@@ -10224,7 +10570,7 @@
                             <h3>Snowball.io</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IO</span>
                             </div>
                         </div>
                     </div>
@@ -10237,7 +10583,7 @@
                             <h3>Grand Prix Tycoon</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TYCOON</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TYCOON</span>
                             </div>
                         </div>
                     </div>
@@ -10250,7 +10596,7 @@
                             <h3>Coffee Tycoon</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">TYCOON</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">TYCOON</span>
                             </div>
                         </div>
                     </div>
@@ -10263,7 +10609,7 @@
                             <h3>Shop Empire 2</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MANAGEMENT</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MANAGEMENT</span>
                             </div>
                         </div>
                     </div>
@@ -10277,7 +10623,7 @@
                             <h3>Geometry Dash Classic</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RHYTHM</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RHYTHM</span>
                             </div>
                     </div>
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxHiTGRnW2DlsogC3ETEPabSkYGp_8c6RqGdjyD7_7Jca65LszPobm60W1wJYyl5X_v/exec', 'Paper.io 3D')" data-category="multiplayer">
@@ -10289,7 +10635,7 @@
                             <h3>Paper.io 3D</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IO</span>
                             </div>
                         </div>
                     </div>
@@ -10302,7 +10648,7 @@
                             <h3>Paper.io 2</h3>
                             <div class="game-tags">
                                 <span class="game-tag">MULTIPLAYER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IO</span>
                             </div>
                         </div>
                     </div>
@@ -10315,7 +10661,7 @@
                             <h3>Paper Minecraft</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SANDBOX</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CRAFTING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CRAFTING</span>
                             </div>
                         </div>
                     </div>
@@ -10328,7 +10674,7 @@
                             <h3>Crypto Clicker</h3>
                             <div class="game-tags">
                                 <span class="game-tag">CLICKER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">IDLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IDLE</span>
                             </div>
                         </div>
                     </div>
@@ -10341,7 +10687,7 @@
                             <h3>Flappy Fortnite</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">CASUAL</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
                             </div>
                         </div>
                     </div>
@@ -10354,7 +10700,7 @@
                             <h3>Jelly Mario</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PLATFORMER</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -10367,7 +10713,7 @@
                             <h3>Roblox YouTube Simulator</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ROBLOX</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ROBLOX</span>
                             </div>
                         </div>
                     </div>
@@ -10380,7 +10726,7 @@
                             <h3>Eggy Car</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">PHYSICS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
                             </div>
                         </div>
                     </div>
@@ -10393,7 +10739,7 @@
                             <h3>Red vs Blue</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -10406,7 +10752,7 @@
                             <h3>Gunspin</h3>
                             <div class="game-tags">
                                 <span class="game-tag">ACTION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
                             </div>
                         </div>
                     </div>
@@ -10419,7 +10765,7 @@
                             <h3>Magic Tiles</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RHYTHM</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MUSIC</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MUSIC</span>
                             </div>
                         </div>
                     </div>
@@ -10432,7 +10778,7 @@
                             <h3>Corp</h3>
                             <div class="game-tags">
                                 <span class="game-tag">SIMULATION</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">BUSINESS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BUSINESS</span>
                             </div>
                         </div>
                     </div>
@@ -10445,7 +10791,7 @@
                             <h3>Polytrack</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STRATEGY</span>
                             </div>
                         </div>
                     </div>
@@ -10505,7 +10851,7 @@
                         <h3>Windows 11</h3>
                         <div class="game-tags">
                             <span class="game-tag">OS</span>
-                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SIMULATION</span>
+                            <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMULATION</span>
                         </div>
                         <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Experience Windows 11 in your browser</p>
                     </div>
@@ -10521,7 +10867,7 @@
                         <h3>Gemini AI</h3>
                         <div class="game-tags">
                             <span class="game-tag">AI</span>
-                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ASSISTANT</span>
+                            <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ASSISTANT</span>
                         </div>
                         <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Google's advanced AI assistant</p>
                     </div>
@@ -10537,7 +10883,7 @@
                         <h3>ChatGPT</h3>
                         <div class="game-tags">
                             <span class="game-tag">AI</span>
-                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">ASSISTANT</span>
+                            <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ASSISTANT</span>
                         </div>
                         <p style="font-size: 12px; color: #ccc; margin-top: 5px;">OpenAI's powerful AI chat assistant</p>
                     </div>
@@ -10555,37 +10901,37 @@
                 <div class="resources-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
                     <!-- Resource Cards -->
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Research Assistant</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Research Assistant</h3>
                         <p style="color: #fff; margin: 10px 0;">Access advanced research tools and databases for your academic projects.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">ACCESS NOW</button>
                     </div>
                     
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Digital Library</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Digital Library</h3>
                         <p style="color: #fff; margin: 10px 0;">Extensive collection of e-books, journals, and academic papers for students.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">BROWSE LIBRARY</button>
                     </div>
                     
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Study Portal</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Study Portal</h3>
                         <p style="color: #fff; margin: 10px 0;">Interactive study materials, practice tests, and educational videos for all subjects.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">START STUDYING</button>
                     </div>
                     
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Academic Reference Tool</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Academic Reference Tool</h3>
                         <p style="color: #fff; margin: 10px 0;">Citation generator and reference management system for research papers.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">CREATE CITATIONS</button>
                     </div>
                     
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Learning Hub</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Learning Hub</h3>
                         <p style="color: #fff; margin: 10px 0;">Comprehensive educational resources for all grade levels and subjects.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">EXPLORE</button>
                     </div>
                     
                     <div class="resource-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5); transition: transform 0.3s ease;" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/a')">
-                        <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Online Tutoring</h3>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #00ffff; font-family: 'Orbitron', sans-serif;">Online Tutoring</h3>
                         <p style="color: #fff; margin: 10px 0;">Connect with expert tutors for personalized learning assistance in any subject.</p>
                         <button style="background: rgba(255, 0, 255, 0.3); color: #ffffff; border: 1px solid #ff00ff; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron', sans-serif; width: 100%; text-shadow: 0 0 5px #ff00ff; margin-top: 10px;">FIND A TUTOR</button>
                     </div>
@@ -10980,7 +11326,58 @@
                             margin-top: 10px;
                             cursor: pointer;
                         }
-                    </style>
+                    /* Cool animations for game cards */
+        @keyframes pulse-border {
+            0% { border: 2px solid rgba(255, 0, 255, 0.7); }
+            50% { border: 2px solid rgba(0, 255, 255, 0.7); }
+            100% { border: 2px solid rgba(255, 0, 255, 0.7); }
+        }
+        
+        @keyframes floating {
+            0% { transform: scale(1.1) translateY(-5px); }
+            50% { transform: scale(1.15) translateY(-10px); }
+            100% { transform: scale(1.1) translateY(-5px); }
+        }
+        
+        @keyframes glow-button {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 0, 255, 0.9), 0 0 50px rgba(0, 255, 255, 0.6); }
+        }
+        
+        /* 3D effect for game cards */
+        .game-card {
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
                 </head>
                 <body>
                     <iframe id="proxy-frame" src="${proxyUrl}"></iframe>
@@ -11681,7 +12078,58 @@
                             margin-top: 10px;
                             cursor: pointer;
                         }
-                    </style>
+                    /* Cool animations for game cards */
+        @keyframes pulse-border {
+            0% { border: 2px solid rgba(255, 0, 255, 0.7); }
+            50% { border: 2px solid rgba(0, 255, 255, 0.7); }
+            100% { border: 2px solid rgba(255, 0, 255, 0.7); }
+        }
+        
+        @keyframes floating {
+            0% { transform: scale(1.1) translateY(-5px); }
+            50% { transform: scale(1.15) translateY(-10px); }
+            100% { transform: scale(1.1) translateY(-5px); }
+        }
+        
+        @keyframes glow-button {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 0, 255, 0.9), 0 0 50px rgba(0, 255, 255, 0.6); }
+        }
+        
+        /* 3D effect for game cards */
+        .game-card {
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
                 </head>
                 <body>
                     <iframe id="proxy-frame" src="${proxyUrl}"></iframe>
@@ -11759,7 +12207,58 @@
                         <style>
                             body, html { margin: 0; padding: 0; height: 100%; }
                             iframe { border: none; width: 100%; height: 100%; }
-                        </style>
+                        /* Cool animations for game cards */
+        @keyframes pulse-border {
+            0% { border: 2px solid rgba(255, 0, 255, 0.7); }
+            50% { border: 2px solid rgba(0, 255, 255, 0.7); }
+            100% { border: 2px solid rgba(255, 0, 255, 0.7); }
+        }
+        
+        @keyframes floating {
+            0% { transform: scale(1.1) translateY(-5px); }
+            50% { transform: scale(1.15) translateY(-10px); }
+            100% { transform: scale(1.1) translateY(-5px); }
+        }
+        
+        @keyframes glow-button {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 0, 255, 0.9), 0 0 50px rgba(0, 255, 255, 0.6); }
+        }
+        
+        /* 3D effect for game cards */
+        .game-card {
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
                     </head>
                     <body>
                         <iframe src="${url}"></iframe>
@@ -13486,7 +13985,7 @@
                         if (random > 0.9) {
                             return `<span style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff;">${char}</span>`;
                         } else if (random > 0.7) {
-                            return `<span style="color: #00ffff; text-shadow: 0 0 5px #00ffff;">${char}</span>`;
+                            return `<span style="color: #ff00ff; text-shadow: 0 0 5px #00ffff;">${char}</span>`;
                         } else {
                             return `<span style="color: #ffffff;">${char}</span>`;
                         }
@@ -13506,9 +14005,9 @@
                         const index = normalChars.indexOf(char);
                         if (index !== -1) {
                             const alienChar = alienChars[index % alienChars.length];
-                            return `<span style="color: #00ffff; text-shadow: 0 0 5px #00ffff;">${alienChar}</span>`;
+                            return `<span style="color: #ff00ff; text-shadow: 0 0 5px #00ffff;">${alienChar}</span>`;
                         }
-                        return `<span style="color: #00ffff;">${char}</span>`;
+                        return `<span style="color: #ff00ff;">${char}</span>`;
                     }).join('');
                 default:
                     return text;
@@ -13802,9 +14301,9 @@
             <!-- Search for apps -->
             <div class="search-container" style="margin-bottom: 30px; position: relative;">
                 <div style="position: relative;">
-                    <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #00ffff; text-shadow: 0 0 5px #00ffff;"></i>
+                    <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ff00ff; text-shadow: 0 0 5px #00ffff;"></i>
                     <input type="text" id="app-search" placeholder="SEARCH FOR ANY APP..." style="width: 100%; background: rgba(0, 0, 0, 0.5); border: 2px solid #00ffff; color: #fff; padding: 12px 15px 12px 45px; border-radius: 30px; font-family: 'Exo 2', sans-serif; box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); transition: all 0.3s ease;" oninput="searchApps()">
-                    <button type="button" id="clear-app-search" onclick="clearAppSearch()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #00ffff; cursor: pointer; display: none;">
+                    <button type="button" id="clear-app-search" onclick="clearAppSearch()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #ff00ff; cursor: pointer; display: none;">
                         <i class="fas fa-times-circle"></i>
                     </button>
                 </div>
@@ -13830,7 +14329,7 @@
                         <h3>Windows 11</h3>
                         <div class="game-tags">
                             <span class="game-tag">OS</span>
-                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">SIMULATION</span>
+                            <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMULATION</span>
                         </div>
                         <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Experience Windows 11 in your browser</p>
                     </div>
@@ -13846,7 +14345,7 @@
                         <h3>Learning Portal</h3>
                         <div class="game-tags">
                             <span class="game-tag">EDUCATION</span>
-                            <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">RESOURCES</span>
+                            <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RESOURCES</span>
                         </div>
                         <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Access educational materials and resources</p>
                     </div>
