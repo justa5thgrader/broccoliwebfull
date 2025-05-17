@@ -7,9 +7,117 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://lms.pps.net/favicon.ico">
+    <link rel="icon" href="https://myapps.classlink.com/favicon.ico">
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
+    <style>
+        /* Slap Animation with Random Quote - Minecraft Style */
+        .slap-animation-container {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allow clicking through */
+        }
+
+        .slap-content {
+            position: relative;
+            text-align: center;
+            transform: scale(0.5) translateY(-50px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+        }
+
+        .slap-animation-container.active .slap-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .slap-animation-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slap-text {
+            font-family: 'Minecraft', 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffff00;
+            text-shadow: 2px 2px 0px #000000;
+            margin: 0;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            animation: slap-text-animation 0.8s ease-out;
+        }
+
+        @keyframes slap-text-animation {
+            0% { transform: translateY(-20px); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        .slap-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .slap-effect::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.8) 0%, rgba(0, 255, 255, 0.5) 40%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: slap-ripple 0.8s ease-out;
+        }
+
+        @keyframes slap-ripple {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 300%; height: 300%; opacity: 0; }
+        }
+
+        .close-slap {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #ff00ff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .close-slap:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px #ff00ff;
+            transform: scale(1.1);
+        }
+    </style>
     <style>
 /* Cool Smooth Game Card Animations for 6th Graders */
 
@@ -528,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Network nodes and connections
         const nodes = [];
-        const maxNodes = 150; // Increased number of nodes (was 50)
+        const maxNodes = 200; // Increased number of nodes (was 50)
         const connectionDistance = 120; // Maximum distance for connections (slightly reduced for better performance)
         
         // Create initial nodes
@@ -7948,11 +8056,7 @@ function toggleFullscreen() {
         <div class="main-tabs">
             <button class="main-tab active" data-tab="home">Home</button>
             <button class="main-tab" data-tab="games">Games</button>
-            <button class="main-tab" data-tab="tools">Tools</button>
             <button class="main-tab" data-tab="proxy">Proxy</button>
-            <button class="main-tab" data-tab="challenges">Challenges</button>
-            <button class="main-tab" data-tab="tournaments">Tournaments</button>
-            <button class="main-tab" data-tab="rewards">Rewards</button>
             <button class="main-tab" data-tab="apps">Apps</button>
         </div>
 
@@ -8622,7 +8726,7 @@ function toggleFullscreen() {
                     </div>
                     
                     <!-- Rammerhead Proxy -->
-                    <div class="game-card" onclick="openGame('https://scienceguide.wiki.gd', 'Rammerhead Proxy')" data-category="proxy">
+                    <div class="game-card" onclick="openGame('https://pbs.lookids.com', 'Rammerhead Proxy')" data-category="proxy">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">LAUNCH PROXY</button>
                         </div>
@@ -8638,13 +8742,13 @@ function toggleFullscreen() {
                     </div>
                     
                     <!-- Ultraviolet Proxy -->
-                    <div class="game-card" onclick="openGame('https://pbs.lookids.com', 'Rammerhead link 2')" data-category="proxy">
+                    <div class="game-card" onclick="openGame('https://motionless-karmen-justa5thgrader-c62ff578.koyeb.app/', 'Ultraviolet Proxy')" data-category="proxy">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">LAUNCH PROXY</button>
                         </div>
                         <img src="https://i.imgur.com/Yd6QALc.png" alt="Ultraviolet Proxy" class="game-thumbnail" style="background-color: #1a1a2e;">
                         <div class="game-info">
-                            <h3>Rammerhead link 2</h3>
+                            <h3>Ultraviolet Proxy</h3>
                             <div class="game-tags">
                                 <span class="game-tag">PROXY</span>
                                 <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FAST</span>
@@ -8896,7 +9000,7 @@ function toggleFullscreen() {
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
-                        <img src="https://tr.rbxcdn.com/180DAY-0aee4808db5c1ebae4fa0c0edae0d78c/768/432/Image/Webp/noFilter" alt="Roblox Bike Obby" class="game-thumbnail">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSoIWPgsBFDfREc_hkfakJlzrc1tFWBc6JngE4RDx-loFdZo9rDW9EKJF72gG32uoYtvVINU76h-UQ1TLRrDfKtO3wWpaE2k72CiCyPZg" alt="Roblox Bike Obby" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Bike Obby (No Ads)</h3>
                             <div class="game-tags">
@@ -10181,7 +10285,7 @@ function toggleFullscreen() {
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
-                        <img src="https://watchdocumentaries.com/wp-content/uploads/rocket-league-game.jpg" alt="Goofy Ahh Rocket League" class="game-thumbnail">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQoRMZyV2TMtQteipR__S7qtf3J7d-amb0xA&s" alt="Goofy Ahh Rocket League" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Goofy Ahh Rocket League</h3>
                             <div class="game-tags">
@@ -14667,5 +14771,67 @@ function toggleFullscreen() {
             <p>All games are property of their respective owners</p>
         </div>
     </footer>
+    
+    <!-- Slap Animation with Random Quote -->
+    <script>
+        // Slap Animation with Random Quotes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create the slap animation container
+            const slapContainer = document.createElement('div');
+            slapContainer.className = 'slap-animation-container';
+            document.body.appendChild(slapContainer);
+            
+            // Create the slap content
+            const slapContent = document.createElement('div');
+            slapContent.className = 'slap-content';
+            slapContainer.appendChild(slapContent);
+            
+            // Create the slap text element
+            const slapText = document.createElement('div');
+            slapText.className = 'slap-text';
+            slapContent.appendChild(slapText);
+            
+            // Array of quotes
+            const quotes = [
+                "Parker is a parking lot!",
+                "Fix the proxy!",
+                "Try out the proxy!",
+                "You know what else is massive?",
+                "TUNG TUNG TUNG SAHUR!"
+            ];
+            
+            // Function to show the slap animation with a random quote
+            function showSlapAnimation() {
+                // Select a random quote
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                
+                // Set the quote text
+                slapText.textContent = randomQuote;
+                
+                // Show the animation
+                slapContainer.classList.add('active');
+                
+                // Reset animation
+                slapText.style.animation = 'none';
+                void slapText.offsetWidth; // Force reflow
+                
+                // Start animation again
+                slapText.style.animation = 'slap-text-animation 3s ease-out forwards';
+                
+                // Auto-hide after animation completes
+                setTimeout(() => {
+                    slapContainer.classList.remove('active');
+                }, 3000);
+            }
+            
+            // Show the slap animation when the page is loaded
+            window.addEventListener('load', function() {
+                // Show immediately when page loads
+                setTimeout(() => {
+                    showSlapAnimation();
+                }, 500);
+            });
+        });
+    </script>
 </body>
 </html>
