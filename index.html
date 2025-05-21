@@ -11,218 +11,6 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
     <style>
-        /* Base styles */
-        .modal-popup {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, rgba(25,25,50,0.95) 0%, rgba(10,10,30,0.95) 100%);
-            margin: 10% auto;
-            padding: 20px;
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 0 20px rgba(0,255,255,0.5);
-            animation: modal-appear 0.3s ease-out;
-        }
-        
-        @keyframes modal-appear {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #00ffff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .modal-header h2 {
-            color: #00ffff;
-            margin: 0;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 10px rgba(0,255,255,0.5);
-        }
-        
-        .close-btn {
-            color: #00ffff;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .close-btn:hover {
-            color: #ff00ff;
-            text-shadow: 0 0 10px rgba(255,0,255,0.8);
-        }
-        
-        .section-description {
-            color: #ccc;
-            margin-bottom: 20px;
-        }
-        
-        /* Form styles */
-        .cloaking-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .cloaking-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #00ffff;
-            border-radius: 5px;
-            background-color: rgba(0,0,0,0.3);
-            color: #fff;
-            font-family: 'Exo 2', sans-serif;
-        }
-        
-        .cloaking-input:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(0,255,255,0.5);
-        }
-        
-        .cloaking-submit-btn {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%);
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        .cloaking-submit-btn:hover {
-            background: linear-gradient(135deg, #00ffff 0%, #00aaff 100%);
-            box-shadow: 0 0 15px rgba(0,255,255,0.7);
-            transform: translateY(-2px);
-        }
-        
-        /* Loading and result styles */
-        .cloaking-loading {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #00ffff;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .cloaking-error {
-            display: none;
-            color: #ff5555;
-            background-color: rgba(255,0,0,0.1);
-            border: 1px solid #ff5555;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        
-        .result-container {
-            display: none;
-            background-color: rgba(0,255,255,0.1);
-            border: 1px solid #00ffff;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-        
-        .result-label {
-            color: #00ffff;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .cloaking-result {
-            background-color: rgba(0,0,0,0.3);
-            padding: 10px;
-            border-radius: 5px;
-            color: #fff;
-            word-break: break-all;
-            margin-bottom: 15px;
-            font-family: monospace;
-        }
-        
-        .result-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-        
-        .action-btn {
-            padding: 8px 15px;
-            background: linear-gradient(135deg, #ff00ff 0%, #aa00ff 100%);
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Exo 2', sans-serif;
-        }
-        
-        .action-btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-        
-        .action-btn:not(:disabled):hover {
-            background: linear-gradient(135deg, #ff00ff 0%, #cc00ff 100%);
-            box-shadow: 0 0 10px rgba(255,0,255,0.7);
-            transform: translateY(-2px);
-        }
-        
-        .copy-success {
-            position: absolute;
-            background-color: rgba(0,255,0,0.2);
-            color: #00ff00;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-size: 12px;
-            animation: fade-out 2s forwards;
-        }
-        
-        @keyframes fade-out {
-            0% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-    </style>
-    <style>
         /* Slap Animation with Random Quote - Minecraft Style */
         .slap-animation-container {
             position: fixed;
@@ -738,87 +526,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Call the function to add the Request Changes tab
     addRequestChangesTab();
-    
-    // Add Cloaking Tab
-    const addCloakingTab = () => {
-        // Find the tabs container
-        const tabsContainer = document.querySelector('.tabs');
-        const contentContainer = document.querySelector('.tab-content');
-        
-        if (!tabsContainer || !contentContainer) return;
-        
-        // Create the new tab button
-        const cloakingTab = document.createElement('button');
-        cloakingTab.className = 'tab-btn';
-        cloakingTab.setAttribute('data-tab', 'cloaking-tab');
-        cloakingTab.innerHTML = '<span class="tab-icon">🔒</span> Cloaking';
-        
-        // Create the new tab content
-        const cloakingContent = document.createElement('div');
-        cloakingContent.className = 'tab-pane';
-        cloakingContent.id = 'cloaking-tab';
-        cloakingContent.innerHTML = `
-            <div class="cloaking-container">
-                <h2 class="section-title">URL Cloaking Service</h2>
-                <p class="section-description">Encrypt and cloak any URL using our secure Cloudflare Workers proxy.</p>
-                
-                <form id="cloaking-form" class="cloaking-form">
-                    <div class="input-group">
-                        <input type="url" id="url-to-cloak" class="cloaking-input" placeholder="Enter URL to cloak (https://example.com)" required>
-                        <button type="submit" class="cloaking-submit-btn">Cloak URL</button>
-                    </div>
-                    
-                    <div id="cloaking-loading" class="cloaking-loading">
-                        <div class="spinner"></div>
-                        <span>Encrypting URL...</span>
-                    </div>
-                    
-                    <div id="cloaking-error" class="cloaking-error"></div>
-                    
-                    <div id="cloaking-result-container" class="result-container">
-                        <div class="result-label">Cloaked URL:</div>
-                        <div id="cloaking-result" class="cloaking-result"></div>
-                        
-                        <div class="result-actions">
-                            <button id="copy-cloaked-url" class="action-btn" disabled>Copy URL</button>
-                            <button id="load-cloaked-url" class="action-btn" disabled>Load Content</button>
-                        </div>
-                    </div>
-                </form>
-                
-                <div id="cloaked-content" class="cloaked-content">
-                    <h3>Cloaked Content</h3>
-                    <div class="iframe-container">
-                        <iframe id="cloaked-content-frame" sandbox="allow-same-origin allow-scripts" title="Cloaked Content"></iframe>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Add the new tab and content
-        tabsContainer.appendChild(cloakingTab);
-        contentContainer.appendChild(cloakingContent);
-        
-        // Add click event for the new tab
-        cloakingTab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Hide all tab content
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.classList.remove('active');
-            });
-            
-            // Add active class to clicked tab and show its content
-            this.classList.add('active');
-            document.getElementById('cloaking-tab').classList.add('active');
-        });
-    };
-    
-    // Call the function to add the Cloaking tab
-    addCloakingTab();
     // Sort all games alphabetically
     const gamesContainer = document.querySelector('.games-grid');
     if (gamesContainer) {
@@ -8997,140 +8704,64 @@ function toggleFullscreen() {
         </div>
 
         <!-- Proxy Tab Content -->
-        <div class="tab-content" id="proxy">
-            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);">
-                <h2 style="color: #00ffff; text-shadow: 0 0 10px #00ffff; font-family: 'Orbitron', sans-serif;">CLOUDFLARE CLOAKER</h2>
+        <div class="main-tab-content" id="proxy-tab">
+            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
+                <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif;">PROXY SERVICES</h2>
                 
-                <div class="cloaker-container" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
-                    <!-- URL Input Section -->
-                    <div class="cloaker-input-section" style="display: flex; flex-direction: column; gap: 15px;">
-                        <div class="section-description" style="color: #ccc; margin-bottom: 10px;">
-                            <p>Enter any URL below to cloak it using our Cloudflare Worker. The cloaked content will appear in the iframe below.</p>
+                <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    <!-- Adenny Proxy -->
+                    <div class="game-card" onclick="openGame('https://01.adenny.net', 'Adenny Proxy')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
                         </div>
-                        
-                        <div class="input-group" style="display: flex; gap: 10px; width: 100%;">
-                            <input type="url" id="cloaker-url-input" class="cloaking-input" placeholder="Enter URL to cloak (https://example.com)" style="flex: 1; padding: 12px 15px; border: 1px solid #00ffff; border-radius: 5px; background-color: rgba(0,0,0,0.3); color: #fff; font-family: 'Exo 2', sans-serif;">
-                            <button id="cloaker-submit-btn" class="cloaking-submit-btn" style="padding: 12px 20px; background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%); border: none; border-radius: 5px; color: #000; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">CLOAK URL</button>
-                        </div>
-                        
-                        <div id="cloaker-loading" style="display: none; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
-                            <div class="spinner" style="width: 20px; height: 20px; border: 3px solid rgba(0,255,255,0.3); border-radius: 50%; border-top-color: #00ffff; animation: spin 1s linear infinite;"></div>
-                            <span style="color: #00ffff;">Loading content...</span>
-                        </div>
-                        
-                        <div id="cloaker-error" style="display: none; color: #ff5555; background-color: rgba(255,0,0,0.1); border: 1px solid #ff5555; padding: 10px; border-radius: 5px; margin: 10px 0;"></div>
-                    </div>
-                    
-                    <!-- Action Buttons -->
-                    <div class="cloaker-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <button id="cloaker-fullscreen-btn" class="action-btn" style="padding: 8px 15px; background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%); border: none; border-radius: 5px; color: #000; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">
-                            <i class="fas fa-expand"></i> FULLSCREEN
-                        </button>
-                        <button id="cloaker-about-blank-btn" class="action-btn" style="padding: 8px 15px; background: linear-gradient(135deg, #ff00ff 0%, #aa00ff 100%); border: none; border-radius: 5px; color: #fff; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">
-                            <i class="fas fa-external-link-alt"></i> OPEN IN ABOUT:BLANK
-                        </button>
-                    </div>
-                    
-                    <!-- Iframe Container -->
-                    <div id="cloaker-iframe-container" style="width: 100%; height: 600px; border: 1px solid #00ffff; border-radius: 5px; overflow: hidden; background-color: rgba(0,0,0,0.3); position: relative;">
-                        <div id="cloaker-iframe-placeholder" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; color: #00ffff; text-align: center; padding: 20px;">
-                            <img src="https://assets.website-files.com/5f4d33d5c1875485b6245a09/60d3c3e7c4f25b2a1cb4c39a_cloudflare-workers-1-logo.png" alt="Cloudflare Worker" style="width: 100px; height: 100px; margin-bottom: 20px;">
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff;">Enter a URL above to load cloaked content</h3>
-                            <p style="color: #ccc; max-width: 500px;">The content will be loaded through our Cloudflare Worker proxy, hiding the original URL from network monitoring.</p>
-                        </div>
-                        <iframe id="cloaker-iframe" style="width: 100%; height: 100%; border: none; display: none;" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads" allowfullscreen="true"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Cloaking Popup Modal -->
-        <div id="cloaking-popup" class="modal-popup">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Cloudflare Worker URL Cloaker</h2>
-                    <span class="close-btn" onclick="closeCloakingPopup()">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <p class="section-description">Encrypt and cloak any URL using our secure Cloudflare Workers proxy.</p>
-                    
-                    <form id="cloaking-form" class="cloaking-form">
-                        <div class="input-group">
-                            <input type="url" id="url-to-cloak" class="cloaking-input" placeholder="Enter URL to cloak (https://example.com)" required>
-                            <button type="submit" class="cloaking-submit-btn">Cloak URL</button>
-                        </div>
-                        
-                        <div id="cloaking-loading" class="cloaking-loading">
-                            <div class="spinner"></div>
-                            <span>Encrypting URL...</span>
-                        </div>
-                        
-                        <div id="cloaking-error" class="cloaking-error"></div>
-                        
-                        <div id="cloaking-result-container" class="result-container">
-                            <div class="result-label">Cloaked URL:</div>
-                            <div id="cloaking-result" class="cloaking-result"></div>
-                            
-                            <div class="result-actions">
-                                <button type="button" id="copy-cloaked-url" class="action-btn" disabled>Copy URL</button>
-                                <button type="button" id="load-cloaked-url" class="action-btn" disabled>Open in New Tab</button>
+                        <img src="https://i.imgur.com/UPXwHGk.png" alt="My proxy  setup" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Adenny Proxy</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">UNBLOCKED</span>
                             </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Fast and reliable proxy service</p>
                         </div>
-                    </form>
+                    </div>
+                    
+                    <!-- Rammerhead Proxy -->
+                    <div class="game-card" onclick="openGame('https://pbs.lookids.com', 'Rammerhead Proxy')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
+                        </div>
+                        <img src="https://demo-opensource.rammerhead.org/logo.png" alt="Rammerhead Proxy" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Rammerhead Proxy</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SECURE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Advanced proxy with session support</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Ultraviolet Proxy -->
+                    <div class="game-card" onclick="openGame('https://docs.google.l5.ca', 'Ultraviolet Proxy')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
+                        </div>
+                        <img src="https://demo-opensource.rammerhead.org/logo.png" alt="Ultraviolet Proxy" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>rammerhead link 2</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FAST</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">High-performance web proxy</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
   
 
-        <!-- Cloudflare Cloaker Tab Content -->
-        <div class="main-tab-content" id="cloaker-tab">
-            <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);">
-                <h2 style="color: #00ffff; text-shadow: 0 0 10px #00ffff; font-family: 'Orbitron', sans-serif;">CLOUDFLARE CLOAKER</h2>
-                
-                <div class="cloaker-container" style="display: flex; flex-direction: column; gap: 20px; padding: 20px;">
-                    <!-- URL Input Section -->
-                    <div class="cloaker-input-section" style="display: flex; flex-direction: column; gap: 15px;">
-                        <div class="section-description" style="color: #ccc; margin-bottom: 10px;">
-                            <p>Enter any URL below to cloak it using our Cloudflare Worker. The cloaked content will appear in the iframe below.</p>
-                        </div>
-                        
-                        <div class="input-group" style="display: flex; gap: 10px; width: 100%;">
-                            <input type="url" id="cloaker-url-input" class="cloaking-input" placeholder="Enter URL to cloak (https://example.com)" style="flex: 1; padding: 12px 15px; border: 1px solid #00ffff; border-radius: 5px; background-color: rgba(0,0,0,0.3); color: #fff; font-family: 'Exo 2', sans-serif;">
-                            <button id="cloaker-submit-btn" class="cloaking-submit-btn" style="padding: 12px 20px; background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%); border: none; border-radius: 5px; color: #000; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">CLOAK URL</button>
-                        </div>
-                        
-                        <div id="cloaker-loading" style="display: none; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
-                            <div class="spinner" style="width: 20px; height: 20px; border: 3px solid rgba(0,255,255,0.3); border-radius: 50%; border-top-color: #00ffff; animation: spin 1s linear infinite;"></div>
-                            <span style="color: #00ffff;">Loading content...</span>
-                        </div>
-                        
-                        <div id="cloaker-error" style="display: none; color: #ff5555; background-color: rgba(255,0,0,0.1); border: 1px solid #ff5555; padding: 10px; border-radius: 5px; margin: 10px 0;"></div>
-                    </div>
-                    
-                    <!-- Action Buttons -->
-                    <div class="cloaker-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <button id="cloaker-fullscreen-btn" class="action-btn" style="padding: 8px 15px; background: linear-gradient(135deg, #00ffff 0%, #0088ff 100%); border: none; border-radius: 5px; color: #000; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">
-                            <i class="fas fa-expand"></i> FULLSCREEN
-                        </button>
-                        <button id="cloaker-about-blank-btn" class="action-btn" style="padding: 8px 15px; background: linear-gradient(135deg, #ff00ff 0%, #aa00ff 100%); border: none; border-radius: 5px; color: #fff; cursor: pointer; transition: all 0.2s; font-family: 'Orbitron', sans-serif;">
-                            <i class="fas fa-external-link-alt"></i> OPEN IN ABOUT:BLANK
-                        </button>
-                    </div>
-                    
-                    <!-- Iframe Container -->
-                    <div id="cloaker-iframe-container" style="width: 100%; height: 600px; border: 1px solid #00ffff; border-radius: 5px; overflow: hidden; background-color: rgba(0,0,0,0.3); position: relative;">
-                        <div id="cloaker-iframe-placeholder" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; color: #00ffff; text-align: center; padding: 20px;">
-                            <img src="https://assets.website-files.com/5f4d33d5c1875485b6245a09/60d3c3e7c4f25b2a1cb4c39a_cloudflare-workers-1-logo.png" alt="Cloudflare Worker" style="width: 100px; height: 100px; margin-bottom: 20px;">
-                            <h3 style="color: #00ffff; text-shadow: 0 0 5px #00ffff;">Enter a URL above to load cloaked content</h3>
-                            <p style="color: #ccc; max-width: 500px;">The content will be loaded through our Cloudflare Worker proxy, hiding the original URL from network monitoring.</p>
-                        </div>
-                        <iframe id="cloaker-iframe" style="width: 100%; height: 100%; border: none; display: none;" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads" allowfullscreen="true"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <div id="cloaking" class="tab-content">
             <div class="cloaking-container">
                 <div class="url-input-section">
@@ -9371,7 +9002,7 @@ function toggleFullscreen() {
                         </div>
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSoIWPgsBFDfREc_hkfakJlzrc1tFWBc6JngE4RDx-loFdZo9rDW9EKJF72gG32uoYtvVINU76h-UQ1TLRrDfKtO3wWpaE2k72CiCyPZg" alt="Roblox Bike Obby" class="game-thumbnail">
                         <div class="game-info">
-                            <h3>Stickman bike)</h3>
+                            <h3>Bike Obby (No Ads)</h3>
                             <div class="game-tags">
                                 <span class="game-tag">RACING</span>
                                 <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">OBSTACLE</span>
@@ -9505,7 +9136,7 @@ function toggleFullscreen() {
                         </div>
                     </div>
                     
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbzi5I00V5E4UoWKNwYMpazWyXDs1J4m0hui0937lFzMRKs31QGZ3rcUHRroAt13wmc9tw/exec')" data-category="platformer">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz8v_RJWxc2wQeL7Rl5kZERIGBl6-OPLEYUZjTK4fR1jbgGpQYvXzPc_HqYNvWXPWw/exec')" data-category="platformer">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
@@ -15201,481 +14832,6 @@ function toggleFullscreen() {
                 }, 500);
             });
         });
-    </script>
-    
-    <!-- Scripts to add games -->
-    <script src="add-games.js"></script>
-    <script src="add-games-a.js"></script>
-    <script src="add-games-b.js"></script>
-    <script src="add-games-c-d.js"></script>
-    <script src="add-games-e-f.js"></script>
-    <script src="add-games-g-h.js"></script>
-    <!-- Cloaking functionality script -->
-    <script>
-        // Handle cloaking form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('cloaking-form');
-            const urlInput = document.getElementById('url-to-cloak');
-            const resultContainer = document.getElementById('cloaking-result');
-            const copyButton = document.getElementById('copy-cloaked-url');
-            const loadButton = document.getElementById('load-cloaked-url');
-            const errorMessage = document.getElementById('cloaking-error');
-            
-            if (!form) return; // Exit if the form doesn't exist yet
-            
-            // Handle form submission
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Clear previous results and errors
-                resultContainer.textContent = '';
-                errorMessage.textContent = '';
-                errorMessage.style.display = 'none';
-                resultContainer.style.display = 'none';
-                
-                // Get the URL to cloak
-                const url = urlInput.value.trim();
-                
-                // Validate URL
-                if (!url) {
-                    showError('Please enter a URL to cloak');
-                    return;
-                }
-                
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    showError('URL must start with http:// or https://');
-                    return;
-                }
-                
-                try {
-                    // Show loading animation
-                    document.getElementById('cloaking-loading').style.display = 'flex';
-                    
-                    // Encrypt the URL (simple base64 encoding for demo)
-                    const encryptedUrl = btoa(url);
-                    
-                    // Create the cloaked URL using the provided Cloudflare Worker
-                    const cloakedUrl = `https://classlink.eemore212.workers.dev/lessons/${encryptedUrl}`;
-                    
-                    // Display the result
-                    resultContainer.textContent = cloakedUrl;
-                    resultContainer.style.display = 'block';
-                    
-                    // Enable the copy and load buttons
-                    copyButton.disabled = false;
-                    loadButton.disabled = false;
-                    
-                    // Store the cloaked URL for the buttons to use
-                    copyButton.dataset.url = cloakedUrl;
-                    loadButton.dataset.url = cloakedUrl;
-                } catch (error) {
-                    showError('Failed to cloak URL: ' + error.message);
-                } finally {
-                    // Hide loading animation
-                    document.getElementById('cloaking-loading').style.display = 'none';
-                }
-            });
-            
-            // Handle copy button click
-            copyButton.addEventListener('click', function() {
-                const url = this.dataset.url;
-                if (!url) return;
-                
-                navigator.clipboard.writeText(url).then(function() {
-                    // Show success message with animation
-                    const successMsg = document.createElement('div');
-                    successMsg.className = 'copy-success';
-                    successMsg.textContent = 'Copied!';
-                    copyButton.parentNode.appendChild(successMsg);
-                    
-                    // Remove after animation
-                    setTimeout(() => {
-                        successMsg.remove();
-                    }, 2000);
-                }).catch(function() {
-                    showError('Failed to copy URL');
-                });
-            });
-            
-            // Handle load button click
-            loadButton.addEventListener('click', function() {
-                const url = this.dataset.url;
-                if (!url) return;
-                
-                // Create iframe to load the cloaked URL
-                const iframe = document.getElementById('cloaked-content-frame');
-                if (iframe) {
-                    iframe.src = url;
-                    document.getElementById('cloaked-content').style.display = 'block';
-                }
-            });
-            
-            // Function to show error messages
-            function showError(message) {
-                const errorMessage = document.getElementById('cloaking-error');
-                errorMessage.textContent = message;
-                errorMessage.style.display = 'block';
-            }
-        });
-    </script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        // Register service worker for cloaking functionality
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function(registration) {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                    })
-                    .catch(function(error) {
-                        console.error('Service Worker registration failed:', error);
-                    });
-            });
-        }
-        
-        // Cloudflare Worker Cloaking Functions
-        // Function to show the cloaking popup
-        function showCloakingPopup() {
-            // Show the popup
-            const popup = document.getElementById('cloaking-popup');
-            if (popup) {
-                popup.style.display = 'block';
-                
-                // Initialize the form handlers if not already done
-                initCloakingForm();
-            }
-        }
-        
-        // Function to initialize the cloaking form and its event handlers
-        function initCloakingForm() {
-            const form = document.getElementById('cloaking-form');
-            const urlInput = document.getElementById('url-to-cloak');
-            const resultContainer = document.getElementById('cloaking-result');
-            const copyButton = document.getElementById('copy-cloaked-url');
-            const loadButton = document.getElementById('load-cloaked-url');
-            const errorMessage = document.getElementById('cloaking-error');
-            
-            // Skip if already initialized
-            if (form.dataset.initialized === 'true') return;
-            
-            // Mark as initialized
-            form.dataset.initialized = 'true';
-            
-            // Handle form submission
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Clear previous results and errors
-                resultContainer.textContent = '';
-                errorMessage.textContent = '';
-                errorMessage.style.display = 'none';
-                document.getElementById('cloaking-result-container').style.display = 'none';
-                
-                // Get the URL to cloak
-                const url = urlInput.value.trim();
-                
-                // Validate URL
-                if (!url) {
-                    showError('Please enter a URL to cloak');
-                    return;
-                }
-                
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    showError('URL must start with http:// or https://');
-                    return;
-                }
-                
-                try {
-                    // Show loading animation
-                    document.getElementById('cloaking-loading').style.display = 'flex';
-                    
-                    // Encrypt the URL (simple base64 encoding)
-                    const encryptedUrl = btoa(url);
-                    
-                    // Create the cloaked URL using the Cloudflare Worker
-                    const cloakedUrl = `https://classlink.eemore212.workers.dev/lessons/${encryptedUrl}`;
-                    
-                    // Display the result
-                    resultContainer.textContent = cloakedUrl;
-                    document.getElementById('cloaking-result-container').style.display = 'block';
-                    
-                    // Enable the copy and load buttons
-                    copyButton.disabled = false;
-                    loadButton.disabled = false;
-                    
-                    // Store the cloaked URL for the buttons to use
-                    copyButton.dataset.url = cloakedUrl;
-                    loadButton.dataset.url = cloakedUrl;
-                } catch (error) {
-                    showError('Failed to cloak URL: ' + error.message);
-                } finally {
-                    // Hide loading animation
-                    document.getElementById('cloaking-loading').style.display = 'none';
-                }
-            });
-            
-            // Handle copy button click
-            copyButton.addEventListener('click', function() {
-                const url = this.dataset.url;
-                if (!url) return;
-                
-                navigator.clipboard.writeText(url).then(function() {
-                    // Show success message with animation
-                    const successMsg = document.createElement('div');
-                    successMsg.className = 'copy-success';
-                    successMsg.textContent = 'Copied!';
-                    copyButton.parentNode.appendChild(successMsg);
-                    
-                    // Remove after animation
-                    setTimeout(() => {
-                        successMsg.remove();
-                    }, 2000);
-                }).catch(function() {
-                    showError('Failed to copy URL');
-                });
-            });
-            
-            // Handle load button click
-            loadButton.addEventListener('click', function() {
-                const url = this.dataset.url;
-                if (!url) return;
-                
-                // Open in a new tab
-                window.open(url, '_blank');
-            });
-        }
-        
-        // Function to close the cloaking popup
-        function closeCloakingPopup() {
-            const popup = document.getElementById('cloaking-popup');
-            if (popup) {
-                popup.style.display = 'none';
-            }
-        }
-        
-        // Function to show error messages in the popup
-        function showError(message) {
-            const errorMessage = document.getElementById('cloaking-error');
-            if (errorMessage) {
-                errorMessage.textContent = message;
-                errorMessage.style.display = 'block';
-            }
-        }
-        
-        // Initialize the cloaking functionality when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Make sure the popup is hidden initially
-            const popup = document.getElementById('cloaking-popup');
-            if (popup) {
-                popup.style.display = 'none';
-            }
-            
-            // Initialize the Cloudflare Cloaker tab functionality
-            initCloudflareTab();
-            
-            // Initialize tab switching functionality
-            initTabSwitching();
-        });
-        
-        // Function to initialize tab switching
-        function initTabSwitching() {
-            // Get all tab buttons and tab contents
-            const tabButtons = document.querySelectorAll('.main-tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            // Hide all tab contents except the first one (home)
-            tabContents.forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            // Show the home tab by default
-            const homeTab = document.getElementById('home');
-            if (homeTab) {
-                homeTab.style.display = 'block';
-            }
-            
-            // Add click event listeners to tab buttons
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Get the tab to show
-                    const tabToShow = this.getAttribute('data-tab');
-                    
-                    // Hide all tab contents
-                    tabContents.forEach(content => {
-                        content.style.display = 'none';
-                    });
-                    
-                    // Show the selected tab content
-                    const selectedTab = document.getElementById(tabToShow);
-                    if (selectedTab) {
-                        selectedTab.style.display = 'block';
-                    }
-                });
-            });
-        }
-        
-        // Function to initialize the Cloudflare Cloaker tab
-        function initCloudflareTab() {
-            const urlInput = document.getElementById('cloaker-url-input');
-            const submitBtn = document.getElementById('cloaker-submit-btn');
-            const iframe = document.getElementById('cloaker-iframe');
-            const iframePlaceholder = document.getElementById('cloaker-iframe-placeholder');
-            const fullscreenBtn = document.getElementById('cloaker-fullscreen-btn');
-            const aboutBlankBtn = document.getElementById('cloaker-about-blank-btn');
-            const loadingIndicator = document.getElementById('cloaker-loading');
-            const errorDisplay = document.getElementById('cloaker-error');
-            
-            // Disable the action buttons initially
-            fullscreenBtn.disabled = true;
-            aboutBlankBtn.disabled = true;
-            fullscreenBtn.style.opacity = '0.5';
-            aboutBlankBtn.style.opacity = '0.5';
-            
-            // Handle URL submission
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                loadCloakedUrl();
-            });
-            
-            // Also handle Enter key in the input field
-            urlInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    loadCloakedUrl();
-                }
-            });
-            
-            // Function to load the cloaked URL in the iframe
-            function loadCloakedUrl() {
-                // Get the URL to cloak
-                const url = urlInput.value.trim();
-                
-                // Clear previous errors
-                errorDisplay.style.display = 'none';
-                errorDisplay.textContent = '';
-                
-                // Validate URL
-                if (!url) {
-                    showError('Please enter a URL to cloak');
-                    return;
-                }
-                
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    showError('URL must start with http:// or https://');
-                    return;
-                }
-                
-                try {
-                    // Show loading indicator
-                    loadingIndicator.style.display = 'flex';
-                    
-                    // Hide placeholder and prepare iframe
-                    iframePlaceholder.style.display = 'none';
-                    iframe.style.display = 'none';
-                    
-                    // Encrypt the URL (simple base64 encoding)
-                    const encryptedUrl = btoa(url);
-                    
-                    // Create the cloaked URL using the Cloudflare Worker
-                    const cloakedUrl = `https://classlink.eemore212.workers.dev/lessons/${encryptedUrl}`;
-                    
-                    // Set the iframe source to the cloaked URL
-                    iframe.src = cloakedUrl;
-                    
-                    // Enable the action buttons
-                    fullscreenBtn.disabled = false;
-                    aboutBlankBtn.disabled = false;
-                    fullscreenBtn.style.opacity = '1';
-                    aboutBlankBtn.style.opacity = '1';
-                    
-                    // Store the cloaked URL for the buttons to use
-                    fullscreenBtn.dataset.url = cloakedUrl;
-                    aboutBlankBtn.dataset.url = cloakedUrl;
-                    
-                    // Show the iframe when loaded
-                    iframe.onload = function() {
-                        loadingIndicator.style.display = 'none';
-                        iframe.style.display = 'block';
-                    };
-                    
-                    // Handle iframe loading errors
-                    iframe.onerror = function() {
-                        loadingIndicator.style.display = 'none';
-                        showError('Failed to load the cloaked content. The site may be blocking iframe embedding.');
-                        iframePlaceholder.style.display = 'flex';
-                    };
-                } catch (error) {
-                    loadingIndicator.style.display = 'none';
-                    showError('Failed to cloak URL: ' + error.message);
-                    iframePlaceholder.style.display = 'flex';
-                }
-            }
-            
-            // Handle fullscreen button click
-            fullscreenBtn.addEventListener('click', function() {
-                if (iframe && iframe.requestFullscreen) {
-                    iframe.requestFullscreen().catch(err => {
-                        showError('Could not enter fullscreen mode: ' + err.message);
-                    });
-                }
-            });
-            
-            // Handle about:blank button click
-            aboutBlankBtn.addEventListener('click', function() {
-                const url = this.dataset.url;
-                if (!url) return;
-                
-                // Open about:blank in a new tab
-                const newTab = window.open('about:blank', '_blank');
-                
-                // Wait for the new tab to load
-                if (newTab) {
-                    // Write an iframe to the new tab that loads the cloaked content
-                    newTab.document.write(`
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <title>Cloaked Content</title>
-                            <style>
-                                body, html {
-                                    margin: 0;
-                                    padding: 0;
-                                    height: 100%;
-                                    overflow: hidden;
-                                }
-                                iframe {
-                                    width: 100%;
-                                    height: 100%;
-                                    border: none;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <iframe src="${url}" allowfullscreen="true" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads"></iframe>
-                        </body>
-                        </html>
-                    `);
-                    newTab.document.close();
-                } else {
-                    showError('Failed to open a new tab. Your browser may be blocking popups.');
-                }
-            });
-            
-            // Function to show error messages
-            function showError(message) {
-                errorDisplay.textContent = message;
-                errorDisplay.style.display = 'block';
-            }
-        }
     </script>
 </body>
 </html>
