@@ -6461,6 +6461,54 @@ function toggleFullscreen() {
         
         // Initialize rewards shop functionality
         function initializeRewardsShop() {
+            document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, initializing tabs');
+            
+            // First, hide all tab content sections
+            const allTabContents = document.querySelectorAll('.main-tab-content');
+            allTabContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Get all tab buttons
+            const tabButtons = document.querySelectorAll('.main-tab');
+            
+            // Add click event to each tab button
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Tab button clicked:', this.getAttribute('data-tab'));
+                    
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Hide all tab content sections
+                    allTabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Show the selected tab content
+                    const tabName = this.getAttribute('data-tab');
+                    const selectedTab = document.getElementById(tabName);
+                    if (selectedTab) {
+                        console.log('Showing tab content:', tabName);
+                        selectedTab.style.display = 'block';
+                    } else {
+                        console.error('Tab content not found for:', tabName);
+                    }
+                });
+            });
+            
+            // Initialize by showing the home tab by default
+            const homeTab = document.querySelector('.main-tab[data-tab="home"]');
+            if (homeTab) {
+                homeTab.click();
+            } else {
+                console.error('Home tab button not found');
+            }
+        });    
             // Add event listeners to reward category buttons
             const categoryButtons = document.querySelectorAll('.reward-category-btn');
             categoryButtons.forEach(button => {
@@ -8056,14 +8104,257 @@ function toggleFullscreen() {
         <div class="main-tabs">
             <button class="main-tab active" data-tab="home">Home</button>
             <button class="main-tab" data-tab="games">Games</button>
+            <button class="main-tab" data-tab="movies">Movies</button>
             <button class="main-tab" data-tab="proxy">Proxy</button>
             <button class="main-tab" data-tab="apps">Apps</button>
+        </div>
+
+        <!-- Home Tab Content -->
+        <div class="main-tab-content" id="home">
+            <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">WELCOME TO BROCCOLI DIRECT</h2>
+                </div>
+                <p style="color: #fff; margin-bottom: 20px;">Your ultimate destination for games, movies, and more!</p>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">GAMES</h3>
+                        <p style="color: #fff;">Access hundreds of unblocked games</p>
+                        <button class="main-tab" data-tab="games" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">EXPLORE GAMES</button>
+                    </div>
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">MOVIES</h3>
+                        <p style="color: #fff;">Watch your favorite movies anytime</p>
+                        <button class="main-tab" data-tab="movies" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">BROWSE MOVIES</button>
+                    </div>
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">PROXY</h3>
+                        <p style="color: #fff;">Bypass restrictions with our proxy services</p>
+                        <button class="main-tab" data-tab="proxy" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">ACCESS PROXY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movies Tab Content -->
+        <div class="main-tab-content" id="movies" style="display: none;">
+            <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER MOVIES</h2>
+                </div>
+                
+                <div class="movies-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <!-- Movie 1: Toy Story 3 -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTcwNTA4MDQyMw@@._V1_.jpg" 
+                                 alt="Toy Story 3" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Toy Story 3
+                            </h3>
+                            <a href="https://drive.google.com/file/d/13msxxmyEco7CRBkO_Ju1SMx5KK4r4Su8/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 2: Sonic 2 -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMGI1NjA1MjUtNGQxOC00ZDRhLTkzN2UtN2JkMTZkZmU1MjgzXkEyXkFqcGdeQXVyMTM0NTUzNDIy._V1_.jpg" 
+                                 alt="Sonic 2" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Sonic 2
+                            </h3>
+                            <a href="https://drive.google.com/file/d/13YPdlfR1BTzXfqwmfbzfiuPycjQsh0Yb/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 3: Encanto -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://lumiere-a.akamaihd.net/v1/images/p_encanto_homeent_22359_4892ae1c.jpeg" 
+                                 alt="Encanto" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Encanto
+                            </h3>
+                            <a href="https://drive.google.com/file/d/17mETnDL0Z4M-ke4aw9Oouuf9w8xQkfIb/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 4: Spider-Man: Into the Spider-Verse -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg" 
+                                 alt="Spider-Man: Into the Spider-Verse" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Spider-Man: Into the Spider-Verse
+                            </h3>
+                            <a href="https://drive.google.com/file/d/18k9mTY7zM45nsFrfAmu5thQH6ao77O--/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 5: Space Jam (1996) -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMDgyZTI2YjYtZmY4OS00MTE0LWIwMmYtZTI2ZGZkMGNhMWYxXkEyXkFqcGdeQXVyNjY5NDU4NzI@._V1_.jpg" 
+                                 alt="Space Jam (1996)" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Space Jam (1996)
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1Jn-9YsKif3wVxnDfH3ZW3HwSq1iTyb6r/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 6: Luca -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://lumiere-a.akamaihd.net/v1/images/p_luca_21670_3c13c611.jpeg" 
+                                 alt="Luca" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Luca
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1VcUlwoH5kBsHK6vYEMYMJuhpYgTCng20/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 7: Despicable Me 1 -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTY3NjY0MTQ0Nl5BMl5BanBnXkFtZTcwMzQ2MTc0Mw@@._V1_.jpg" 
+                                 alt="Despicable Me 1" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Despicable Me 1
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1KDDDkhqdiwnoXUw9aYc4WdBfprqPX6pE/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 8: Spider-Man: Across the Spider-Verse -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_.jpg" 
+                                 alt="Spider-Man: Across the Spider-Verse" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Spider-Man: Across the Spider-Verse
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1dSeZ1c4_p8T_lW7z0qpKsebKYN-R3zHR/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 9: Toy Story 4 -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://lumiere-a.akamaihd.net/v1/images/p_toystory4_19639_917ad716.jpeg" 
+                                 alt="Toy Story 4" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Toy Story 4
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1bFUbsQ9VEazeCt5l_VBVDtjCsbJmZ_Vr/preview" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 10: Ratatouille -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_.jpg" 
+                                 alt="Ratatouille" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Ratatouille
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1kjVDdXtZ3-O0SndMHeIwMXe4jNZJ4w2C/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 11: Mario Movie -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/M/MV5BOTJhNzlmNzctNTU5Yy00N2YwLThhMjQtZDM0YjEzN2Y0ZjNhXkEyXkFqcGdeQXVyMTEwMTQ4MzU5._V1_.jpg" 
+                                 alt="Mario Movie" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Mario Movie
+                            </h3>
+                            <a href="https://drive.google.com/file/d/1OsyF2LKJqjtv0b2Xd9GWOLcYkzny3VZo/view" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                WATCH NOW
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Movie 12: Dog Man -->
+                    <div class="game-card">
+                        <div style="position: relative; overflow: hidden; height: 150px;">
+                            <img src="https://m.media-amazon.com/images/I/81fyoFoaxlL._AC_UF1000,1000_QL80_.jpg" 
+                                 alt="Dog Man" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="padding: 15px;">
+                            <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                                Dog Man
+                            </h3>
+                            <a href="#" target="_blank" style="display: block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; text-align: center; padding: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
+                                COMING SOON
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Browser Tab Content -->
         
         <!-- Tools Tab Content -->
-        <div class="main-tab-content" id="tools-tab">
+        <div class="main-tab-content" id="tools" style="display: none;">
             <div class="glass-panel" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);">
                 <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif;">CYBER TOOLS</h2>
                 <div class="tools-container" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
@@ -8838,8 +9129,110 @@ function toggleFullscreen() {
             </div>
         </div>
 
+        <!-- Proxy Tab Content -->
+        <div class="main-tab-content" id="proxy">
+            <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER PROXIES</h2>
+                </div>
+                
+                <div class="proxy-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; margin-top: 20px;">
+                    <!-- Rammerhead Proxy 1 -->
+                    <div class="game-card" onclick="openGame('https://docs.google.l5.ca', 'Rammerhead Proxy')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
+                        </div>
+                        <img src="https://demo-opensource.rammerhead.org/logo.png" alt="Rammerhead Proxy" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Rammerhead Proxy</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SECURE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Advanced proxy with session support</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Rammerhead Proxy 2 -->
+                    <div class="game-card" onclick="openGame('https://pbs.lookids.com', 'Rammerhead Link 2')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
+                        </div>
+                        <img src="https://demo-opensource.rammerhead.org/logo.png" alt="Rammerhead Link 2" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Rammerhead Link 2</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FAST</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">High-performance web proxy</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Iframe Bypass -->
+                    <div class="game-card" onclick="window.location.href='bypass-proxy.html'" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH BYPASS</button>
+                        </div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2313/2313448.png" alt="Advanced Iframe Bypass" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Advanced Iframe Bypass</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IFRAME</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Bypass site restrictions with iframe technology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apps Tab Content -->
+        <div class="main-tab-content" id="apps">
+            <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER APPS</h2>
+                </div>
+                
+                <div class="apps-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; margin-top: 20px;">
+                    <!-- Windows 11 -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/apps/win11/index1.html', 'Windows 11')" data-category="app">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH APP</button>
+                        </div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/2048px-Windows_logo_-_2021.svg.png" alt="Windows 11" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Windows 11</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">OS</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">WINDOWS</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Windows 11 operating system in your browser</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gemini AI -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/apps/ai/indexone.html', 'Gemini AI')" data-category="app">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH APP</button>
+                        </div>
+                        <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_Thumbnail.max-1000x1000.png" alt="Gemini AI" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Gemini AI</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">AI</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ASSISTANT</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Google's advanced AI assistant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Games Tab Content -->
-        <div class="main-tab-content" id="games-tab">
+        <div class="main-tab-content" id="games">
             <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER ARCADE</h2>
@@ -8848,9 +9241,6 @@ function toggleFullscreen() {
                         <button id="game-autoclicker-toggle" style="background: #00ffff; color: #1a1a2e; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px #00ffff;">ACTIVATE</button>
                     </div>
                 </div>
-                
-
-                
                 <!-- Game of the Hour Section -->
                 <div id="game-of-hour" style="margin-bottom: 40px; background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2)); border-radius: 15px; padding: 20px; box-shadow: 0 0 25px rgba(255, 0, 255, 0.5); position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 0; right: 0; background: linear-gradient(45deg, #ff00ff, #00ffff); padding: 8px 15px; border-bottom-left-radius: 15px; font-family: 'Orbitron', sans-serif; font-weight: bold; color: #000; font-size: 0.9rem; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
@@ -14831,6 +15221,57 @@ function toggleFullscreen() {
                     showSlapAnimation();
                 }, 500);
             });
+        });
+    </script>
+    <!-- Tab Switching Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing tab system');
+            
+            // First, hide all tab content sections except home
+            const allTabContents = document.querySelectorAll('.main-tab-content');
+            allTabContents.forEach(content => {
+                if (content.id !== 'home') {
+                    content.style.display = 'none';
+                }
+            });
+            
+            // Get all tab buttons
+            const tabButtons = document.querySelectorAll('.main-tab');
+            
+            // Add click event to each tab button
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Tab clicked:', this.getAttribute('data-tab'));
+                    
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Hide all tab content sections
+                    allTabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Show the selected tab content
+                    const tabName = this.getAttribute('data-tab');
+                    const selectedTab = document.getElementById(tabName);
+                    if (selectedTab) {
+                        console.log('Showing tab:', tabName);
+                        selectedTab.style.display = 'block';
+                    } else {
+                        console.error('Tab content not found for:', tabName);
+                    }
+                });
+            });
+            
+            // Initialize by showing the home tab by default
+            const homeTab = document.querySelector('.main-tab[data-tab="home"]');
+            if (homeTab) {
+                homeTab.click();
+            }
         });
     </script>
 </body>
