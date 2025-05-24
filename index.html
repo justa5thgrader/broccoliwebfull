@@ -11,6 +11,66 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
     <style>
+        /* Game Frame and Controls Styles */
+        .iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
+        }
+
+        .iframe-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            margin: 2% auto;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.4);
+            border: 2px solid #ff00ff;
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: #fff;
+        }
+
+        .close-button, .fullscreen-button {
+            position: absolute;
+            top: 10px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #000;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        .close-button {
+            right: 10px;
+        }
+
+        .fullscreen-button {
+            right: 110px;
+        }
+
+        .close-button:hover, .fullscreen-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+        }
+        
         /* Slap Animation with Random Quote - Minecraft Style */
         .slap-animation-container {
             position: fixed;
@@ -540,36 +600,42 @@ function addNewGames() {
             title: 'Uno',
             url: 'https://storage.classroomsarecool.mex.com/uno.html',
             imageUrl: 'https://play-lh.googleusercontent.com/0G_yn9N-Zks6KzxO0xjdYOJJ7yvB7y_RBMh5QoAWJcgIxVZCzVQXpGn-vjcvxGzJNQ',
+            description: 'Classic card game where you match colors and numbers. Be the first to get rid of all your cards!',
             tags: ['Card Game', 'Multiplayer']
         },
         {
             title: 'Paper.io 2',
             url: 'https://paper-io.com/',
             imageUrl: 'https://play-lh.googleusercontent.com/KxcjUrs8S75iOPnKBR2b-s7eGtXkRVGHfDHZABKvw0sBZFvQQY-Zw-TBIbXbFzGGHnSY',
+            description: 'Control your paper and conquer the territory.',
             tags: ['IO Game', 'Strategy']
         },
         {
             title: 'Temple Run 2',
             url: 'https://storage.classroomsarecool.mex.com/temple-run-2/index.html',
             imageUrl: 'https://play-lh.googleusercontent.com/go4XqS4mYs-G2tZymiVLF4wJYXIi5QrvwixNRzssk4G_vRBHrAdX4-nThYZcC8yV_gs',
+            description: 'Run, jump and slide to escape the temple! Avoid obstacles and collect coins in this endless runner.',
             tags: ['Runner', 'Arcade']
         },
         {
             title: 'GTA Gameboy Advance',
             url: 'https://script.google.com/macros/s/AKfycbyWKrsytpSCc0NsQl7rZQ1_xPQ-EAsQz50DalIlThoqQJNLsqs-NEpMb1V04hs-CAAN/exec',
             imageUrl: 'https://i.ytimg.com/vi/QeY-iJD5ZMY/maxresdefault.jpg',
+            description: 'Experience the classic GTA gameplay on a Gameboy Advance emulator. Complete missions in an open-world environment.',
             tags: ['Action', 'Adventure']
         },
         {
             title: 'Slope.io 2 Player',
             url: 'https://storage.classroomsarecool.mex.com/slope-2/index.html',
             imageUrl: 'https://play-lh.googleusercontent.com/uJn2i9h7KxYQarC_c3K4qH6o7gLtflFnhD_dN14MNb9rwJGZQQDBGIbK2-nOVB-jfkrV',
+            description: 'Race down a steep slope with a friend! Control your ball to avoid obstacles and see who can go the furthest.',
             tags: ['Racing', 'Multiplayer']
         },
         {
             title: 'Paper Minecraft',
             url: 'https://storage.classroomsarecool.mex.com/paper-minecraft/index.html',
             imageUrl: 'https://i.ytimg.com/vi/7aQQYMZmpm8/maxresdefault.jpg',
+            description: 'A 2D version of Minecraft where you can mine, craft, and build in a simplified paper-like world.',
             tags: ['Sandbox', 'Adventure']
         },
         {
@@ -1292,9 +1358,10 @@ function toggleFullscreen() {
                              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
                     </div>
                     <div style="padding: 15px;">
-                        <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
+                        <h3 style="color: #ff00ff; font-family: 'Orbitron', sans-serif; margin-top: 0; margin-bottom: 5px; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255, 0, 255, 0.5);">
                             ${gameInfo.title || 'Untitled Game'}
                         </h3>
+                        ${gameInfo.description ? `<p style="color: #e0e0ff; font-family: 'Exo 2', sans-serif; margin-top: 0; margin-bottom: 10px; font-size: 0.85rem; line-height: 1.4;">${gameInfo.description}</p>` : ''}
                         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
                             ${gameInfo.tags.map(tag => `
                                 <span style="background: rgba(0, 255, 255, 0.2); color: #ff00ff; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-family: 'Exo 2', sans-serif;">
@@ -7347,6 +7414,53 @@ function toggleFullscreen() {
             localStorage.setItem('userStats', JSON.stringify(userStats));
         }
         
+        // Functions for game frame controls
+        function closeGame() {
+            const iframeContainer = document.querySelector('.iframe-container');
+            const whiteCanvas = document.getElementById('game-white-canvas');
+            
+            if (iframeContainer) {
+                iframeContainer.style.display = 'none';
+            }
+            
+            if (whiteCanvas) {
+                whiteCanvas.style.display = 'none';
+            }
+            
+            // Clear any game intervals
+            if (window.gameInterval) {
+                clearInterval(window.gameInterval);
+            }
+        }
+        
+        function toggleFullscreen() {
+            const gameFrame = document.getElementById('gameFrame');
+            
+            if (!gameFrame) return;
+            
+            if (!document.fullscreenElement) {
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.mozRequestFullScreen) { // Firefox
+                    gameFrame.mozRequestFullScreen();
+                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
+                    gameFrame.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
         // Enhanced openGame function to track stats and achievements
         function openGame(url, title) {
             console.log('Opening game:', url, title);
@@ -9351,7 +9465,7 @@ function toggleFullscreen() {
                         <div class="game-card-overlay">
                             <button class="play-now-btn">LAUNCH APP</button>
                         </div>
-                        <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_Thumbnail.max-1000x1000.png" alt="Gemini AI" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGn9Q-HFVKa_eNq7EbVDKy8scCc8xZH-2SiA&s" class="game-thumbnail" style="background-color: #1a1a2e;">
                         <div class="game-info">
                             <h3>Gemini AI</h3>
                             <div class="game-tags">
@@ -9367,7 +9481,7 @@ function toggleFullscreen() {
                         <div class="game-card-overlay">
                             <button class="play-now-btn">LAUNCH APP</button>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/5166/5166940.png" alt="Soundboard" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9ugIFCw6PdRy9e3cIgL8XJak5OXeVAFwnNKdO9-LhplD25KYH0tQjJctG_oMPuCxCzI&usqp=CAU" alt="Soundboard" class="game-thumbnail" style="background-color: #1a1a2e;">
                         <div class="game-info">
                             <h3>Soundboard</h3>
                             <div class="game-tags">
@@ -9388,7 +9502,7 @@ function toggleFullscreen() {
                     <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">CYBER ARCADE</h2>
                     <div class="autoclicker-toggle" style="display: flex; align-items: center; background: rgba(255, 0, 255, 0.2); padding: 8px 15px; border-radius: 20px; border: 1px solid #ff00ff;">
                         <span style="color: #ff00ff; margin-right: 10px; font-family: 'Orbitron', sans-serif; font-size: 14px;">AUTO CLICKER:</span>
-                        <button id="game-autoclicker-toggle" style="background: #00ffff; color: #1a1a2e; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px #00ffff;">ACTIVATE</button>
+                       
                     </div>
                 </div>
                 <!-- Game of the Hour Section -->
@@ -9416,16 +9530,7 @@ function toggleFullscreen() {
                     </div>
                 </div>
                 
-                <div class="game-categories" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-                    <button class="game-category-btn active" data-category="all" style="background: linear-gradient(45deg, #ff00ff, #00ffff); border: none; color: #000; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: bold; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">ALL GAMES</button>
-                    <button class="game-category-btn" data-category="action" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">ACTION</button>
-                    <button class="game-category-btn" data-category="arcade" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">ARCADE</button>
-                    <button class="game-category-btn" data-category="strategy" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">STRATEGY</button>
-                    <button class="game-category-btn" data-category="sports" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">SPORTS</button>
-                    <button class="game-category-btn" data-category="racing" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">RACING</button>
-                    <button class="game-category-btn" data-category="multiplayer" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">MULTIPLAYER</button>
-                    <button class="game-category-btn" data-category="clicker" style="background: rgba(255, 0, 255, 0.2); border: 1px solid #ff00ff; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif;">CLICKER</button>
-                </div>
+          
                 
                 <div class="search-container" style="margin-bottom: 20px; position: relative;">
                     <div style="position: relative;">
@@ -9571,7 +9676,7 @@ function toggleFullscreen() {
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
-                        <img src="https://www.google.com/images/icons/product/drive-64.png" alt="Bloons TD 2" class="game-thumbnail">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNh2nPAOsASBZSvibqEBNjs8JDqUXT37Gz1Q&s" alt="Bloons TD 2" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Bloons TD 2</h3>
                             <div class="game-tags">
@@ -10315,7 +10420,7 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <!-- Copy these game cards into your index.html file where you want them to appear -->
+                  
 
 <!-- Bike Rider Simulator -->
 <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/bicycleridersimulator/index.html')" data-category="simulation">
@@ -16137,6 +16242,237 @@ function toggleFullscreen() {
             if (homeTab) {
                 homeTab.click();
             }
+        });
+    </script>
+    <!-- Game of the Hour Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Game of the Hour');
+            
+            // Get all game cards
+            const allGameCards = document.querySelectorAll('.game-card');
+            const gameOfHourContainer = document.getElementById('featured-game-container');
+            const countdownTimer = document.getElementById('countdown-timer');
+            
+            // Function to select a random game for the Game of the Hour
+            function selectNewGameOfHour() {
+                // Clear previous game
+                gameOfHourContainer.innerHTML = '';
+                
+                // Get all game cards
+                const gameCards = Array.from(allGameCards);
+                
+                // Select a random game card
+                const randomIndex = Math.floor(Math.random() * gameCards.length);
+                const selectedGame = gameCards[randomIndex].cloneNode(true);
+                
+                // Get the game URL and title
+                let gameUrl = '';
+                let gameTitle = '';
+                
+                // Extract URL from the original game card
+                const originalCard = gameCards[randomIndex];
+                if (originalCard.hasAttribute('onclick')) {
+                    const onclickValue = originalCard.getAttribute('onclick');
+                    const match = onclickValue.match(/openGame\(['"]([^'"]+)['"],\s*['"]([^'"]+)['"]/);
+                    if (match && match.length >= 3) {
+                        gameUrl = match[1];
+                        gameTitle = match[2];
+                    }
+                }
+                
+                // Set the onclick for the featured game card
+                if (gameUrl && gameTitle) {
+                    selectedGame.setAttribute('onclick', `openGame('${gameUrl}', '${gameTitle}')`);
+                    
+                    // Also update the play button
+                    const playButton = selectedGame.querySelector('.play-now-btn');
+                    if (playButton) {
+                        playButton.textContent = 'PLAY FEATURED GAME';
+                        playButton.setAttribute('onclick', `openGame('${gameUrl}', '${gameTitle}'); event.stopPropagation();`);
+                    }
+                }
+                
+                // Add special styling to the featured game
+                selectedGame.style.width = '100%';
+                selectedGame.style.height = '300px';
+                selectedGame.style.margin = '0';
+                selectedGame.style.boxShadow = '0 0 30px rgba(255, 0, 255, 0.7)';
+                
+                // Add to the featured game container
+                gameOfHourContainer.appendChild(selectedGame);
+                
+                // Reset the countdown timer
+                resetCountdownTimer();
+                
+                // Save the selected game to localStorage
+                const gameInfo = {
+                    index: randomIndex,
+                    timestamp: Date.now(),
+                    expiryTime: Date.now() + (60 * 60 * 1000) // 1 hour in milliseconds
+                };
+                localStorage.setItem('gameOfHour', JSON.stringify(gameInfo));
+            }
+            
+            // Global variable to store the timer interval
+            let gameTimerInterval;
+            
+            // Function to reset the countdown timer
+            function resetCountdownTimer() {
+                // Clear any existing timer interval
+                if (gameTimerInterval) {
+                    clearInterval(gameTimerInterval);
+                }
+                
+                // Set the countdown to 1 hour
+                let hours = 1;
+                let minutes = 0;
+                let seconds = 0;
+                
+                // Update the timer display immediately
+                updateTimerDisplay();
+                
+                // Calculate the target end time (1 hour from now)
+                const endTime = Date.now() + (60 * 60 * 1000);
+                
+                // Start the countdown using the absolute time difference
+                gameTimerInterval = setInterval(function() {
+                    // Calculate remaining time based on the current time and end time
+                    const remaining = endTime - Date.now();
+                    
+                    if (remaining <= 0) {
+                        // Time's up, select a new game
+                        clearInterval(gameTimerInterval);
+                        selectNewGameOfHour();
+                        return;
+                    }
+                    
+                    // Convert remaining milliseconds to hours, minutes, seconds
+                    hours = Math.floor(remaining / (60 * 60 * 1000));
+                    minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+                    seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+                    
+                    // Update the display
+                    updateTimerDisplay();
+                }, 1000);
+                
+                // Function to update the timer display
+                function updateTimerDisplay() {
+                    countdownTimer.textContent = 
+                        (hours < 10 ? '0' + hours : hours) + ':' +
+                        (minutes < 10 ? '0' + minutes : minutes) + ':' +
+                        (seconds < 10 ? '0' + seconds : seconds);
+                }
+            }
+            
+            // Check if there's a saved game of the hour
+            const savedGameInfo = localStorage.getItem('gameOfHour');
+            
+            if (savedGameInfo) {
+                const gameInfo = JSON.parse(savedGameInfo);
+                const currentTime = Date.now();
+                
+                if (currentTime < gameInfo.expiryTime) {
+                    // The saved game is still valid
+                    // Calculate remaining time
+                    const remainingTime = gameInfo.expiryTime - currentTime;
+                    const remainingHours = Math.floor(remainingTime / (60 * 60 * 1000));
+                    const remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
+                    const remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+                    
+                    // Display the saved game
+                    if (gameInfo.index < allGameCards.length) {
+                        const selectedGame = allGameCards[gameInfo.index].cloneNode(true);
+                        
+                        // Get the game URL and title
+                        let gameUrl = '';
+                        let gameTitle = '';
+                        
+                        // Extract URL from the original game card
+                        const originalCard = allGameCards[gameInfo.index];
+                        if (originalCard.hasAttribute('onclick')) {
+                            const onclickValue = originalCard.getAttribute('onclick');
+                            const match = onclickValue.match(/openGame\(['"](.*?)['"](,|,\s*)['"](.*?)['"]/);
+                            if (match && match.length >= 4) {
+                                gameUrl = match[1];
+                                gameTitle = match[3];
+                            } else {
+                                // Try alternative regex pattern
+                                const altMatch = onclickValue.match(/openGame\(['"](.*?)['"](,|,\s*)['"]([^'"]+)['"]/);
+                                if (altMatch && altMatch.length >= 4) {
+                                    gameUrl = altMatch[1];
+                                    gameTitle = altMatch[3];
+                                }
+                            }
+                        }
+                        
+                        // Set the onclick for the featured game card
+                        if (gameUrl) {
+                            selectedGame.setAttribute('onclick', `openGame('${gameUrl}', '${gameTitle || "Featured Game"}')`);
+                            
+                            // Also update the play button
+                            const playButton = selectedGame.querySelector('.play-now-btn');
+                            if (playButton) {
+                                playButton.textContent = 'PLAY FEATURED GAME';
+                                playButton.setAttribute('onclick', `openGame('${gameUrl}', '${gameTitle || "Featured Game"}'); event.stopPropagation();`);
+                            }
+                        }
+                        
+                        selectedGame.style.width = '100%';
+                        selectedGame.style.height = '300px';
+                        selectedGame.style.margin = '0';
+                        selectedGame.style.boxShadow = '0 0 30px rgba(255, 0, 255, 0.7)';
+                        gameOfHourContainer.appendChild(selectedGame);
+                        
+                        // Clear any existing timer interval
+                        if (gameTimerInterval) {
+                            clearInterval(gameTimerInterval);
+                        }
+                        
+                        // Update the timer display immediately
+                        countdownTimer.textContent = 
+                            (remainingHours < 10 ? '0' + remainingHours : remainingHours) + ':' +
+                            (remainingMinutes < 10 ? '0' + remainingMinutes : remainingMinutes) + ':' +
+                            (remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds);
+                        
+                        // Start the countdown using the absolute time difference
+                        gameTimerInterval = setInterval(function() {
+                            // Calculate remaining time based on the current time and expiry time
+                            const remaining = gameInfo.expiryTime - Date.now();
+                            
+                            if (remaining <= 0) {
+                                // Time's up, select a new game
+                                clearInterval(gameTimerInterval);
+                                selectNewGameOfHour();
+                                return;
+                            }
+                            
+                            // Convert remaining milliseconds to hours, minutes, seconds
+                            const hours = Math.floor(remaining / (60 * 60 * 1000));
+                            const minutes = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+                            const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+                            
+                            // Update the display
+                            countdownTimer.textContent = 
+                                (hours < 10 ? '0' + hours : hours) + ':' +
+                                (minutes < 10 ? '0' + minutes : minutes) + ':' +
+                                (seconds < 10 ? '0' + seconds : seconds);
+                        }, 1000);
+                    } else {
+                        // Invalid index, select a new game
+                        selectNewGameOfHour();
+                    }
+                } else {
+                    // The saved game has expired, select a new game
+                    selectNewGameOfHour();
+                }
+            } else {
+                // No saved game, select a new game
+                selectNewGameOfHour();
+            }
+            
+            // Make the selectNewGameOfHour function globally available
+            window.selectNewGameOfHour = selectNewGameOfHour;
         });
     </script>
 </body>
