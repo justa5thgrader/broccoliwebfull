@@ -11,6 +11,17 @@
     <link rel="preload" as="image" href="https://www.gstatic.com/classroom/logo_square_48.svg">
     <link rel="preload" as="image" href="https://www.gstatic.com/images/icons/material/system/1x/docs_black_48dp.png">
     <style>
+        /* Canvas Styles */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+        }
+        
         /* Game Frame and Controls Styles */
         .iframe-container {
             position: fixed;
@@ -528,9 +539,13 @@ body.loaded .loading-screen {
     transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
     </style>
+    <script src="../CascadeProjects/iframe-bypass.js"></script>
+    <script src="../CascadeProjects/game-list.js"></script>
     <script>
 // Game enhancements for My.PPS
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize full screen canvas
+    initFullScreenCanvas();
     // Add Request Changes tab
     const addRequestChangesTab = () => {
         // Find the tabs container
@@ -1581,20 +1596,6 @@ function toggleFullscreen() {
 
         .app-card p, .game-card p {
             color: var(--text-secondary);
-        }
-
-        /* Theme selector styles */
-        .theme-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-            background-color: var(--card-bg);
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: var(--card-shadow);
         }
 
         .theme-btn {
@@ -9557,6 +9558,22 @@ function toggleFullscreen() {
                 
                 <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                     <!-- Game cards organized alphabetically -->
+                    <!-- Bloxd.io (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/bloxdhop-io/index.html?v=1.331', 'Bloxd.io')" data-category="platformer">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://images.crazygames.com/games/bloxdhop-io/cover_16x9-1709115453824.png?auto=format,compress&q=75&cs=strip" alt="Bloxd.io" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Bloxd.io</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PLATFORMER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">3D multiplayer parkour game</p>
+                        </div>
+                    </div>
+                    
                     <!-- 1 on 1 Soccer -->
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxJ3oet4bnNqQK_nqPo6KSwPlvIMR448__kEYKx_WN-QbncNc98PEc-qaFme7l2tbKH/exec')">
                         <div class="game-card-overlay">
@@ -16474,6 +16491,409 @@ function toggleFullscreen() {
             // Make the selectNewGameOfHour function globally available
             window.selectNewGameOfHour = selectNewGameOfHour;
         });
+    </script>
+    
+    <!-- Embedded iframe-bypass.js -->
+    <script>
+        /**
+         * Advanced Iframe Bypass System
+         * Works with Cloudflare Worker to encode URLs and bypass iframe restrictions
+         * Also supports direct iframe embedding for CrazyGames
+         */
+        
+        // Configuration
+        const WORKER_URL = 'https://classlinkapps.derekter127.workers.dev'; // Cloudflare worker URL
+        const CRAZYGAMES_DOMAIN = 'example.crazygames.com'; // CrazyGames domain for direct iframe embedding
+        
+        /**
+         * Encodes a URL using the Cloudflare worker
+         * @param {string} url - The URL to encode
+         * @returns {Promise<string>} - Promise resolving to the encoded URL
+         */
+        async function encodeGameUrl(url) {
+            try {
+                const response = await fetch(`${WORKER_URL}/encode?url=${encodeURIComponent(url)}`);
+                if (!response.ok) {
+                    throw new Error(`Error encoding URL: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                return data.encoded;
+            } catch (error) {
+                console.error('Failed to encode URL:', error);
+                // Fallback to local encoding if worker is unavailable
+                return btoa(url);
+            }
+        }
+        
+        /**
+         * Decodes an encoded URL
+         * @param {string} encodedUrl - The encoded URL
+         * @returns {string} - The decoded URL
+         */
+        function decodeGameUrl(encodedUrl) {
+            try {
+                return atob(encodedUrl);
+            } catch (error) {
+                console.error('Failed to decode URL:', error);
+                return '';
+            }
+        }
+        
+        /**
+         * Opens a game in an iframe with advanced bypass
+         * @param {string} gameUrl - The URL of the game
+         * @param {string} gameTitle - The title of the game
+         */
+        async function openGameWithBypass(gameUrl, gameTitle) {
+            try {
+                // Create or get the iframe container
+                let iframeContainer = document.getElementById('iframe-container');
+                if (!iframeContainer) {
+                    iframeContainer = document.createElement('div');
+                    iframeContainer.id = 'iframe-container';
+                    iframeContainer.className = 'iframe-container';
+                    document.body.appendChild(iframeContainer);
+                }
+        
+                // Check if this is a CrazyGames URL for direct embedding
+                if (gameUrl.includes(CRAZYGAMES_DOMAIN)) {
+                    // Direct iframe embedding for CrazyGames
+                    iframeContainer.innerHTML = `
+                        <div class="iframe-content">
+                            <iframe src="${gameUrl}" class="game-frame" allowfullscreen frameborder="0" style="border:none;" sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts"></iframe>
+                            <button class="close-button" onclick="closeGame()">CLOSE</button>
+                            <button class="fullscreen-button" onclick="toggleFullscreen()">FULLSCREEN</button>
+                            <div class="bypass-info">Direct CrazyGames Embed</div>
+                        </div>
+                    `;
+                } else {
+                    // Use worker proxy for other URLs
+                    const encodedUrl = await encodeGameUrl(gameUrl);
+                    const proxyUrl = `${WORKER_URL}/lessons?encoded=${encodedUrl}`;
+                    
+                    iframeContainer.innerHTML = `
+                        <div class="iframe-content">
+                            <iframe src="${proxyUrl}" class="game-frame" allowfullscreen sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts"></iframe>
+                            <button class="close-button" onclick="closeGame()">CLOSE</button>
+                            <button class="fullscreen-button" onclick="toggleFullscreen()">FULLSCREEN</button>
+                            <div class="bypass-info">Advanced Bypass Active</div>
+                        </div>
+                    `;
+                }
+        
+                // Show the iframe container
+                iframeContainer.style.display = 'block';
+                
+                // Prevent scrolling on the body when game is open
+                document.body.style.overflow = 'hidden';
+                
+                // Add event listener to prevent arrow keys and WASD from scrolling the page
+                window.addEventListener('keydown', preventDefaultForGameKeys);
+                
+                // Log successful bypass
+                console.log(`Game opened: ${gameTitle}`);
+                
+            } catch (error) {
+                console.error('Error in bypass system:', error);
+                // Fall back to regular game opening method if bypass fails
+                openGame(gameUrl, gameTitle);
+            }
+        }
+        
+        /**
+         * Stores an encoded URL in local storage for later use
+         * @param {string} encodedUrl - The encoded URL to store
+         * @param {string} gameTitle - The title of the game
+         */
+        function storeEncodedGame(encodedUrl, gameTitle) {
+            try {
+                const gameData = {
+                    encoded: encodedUrl,
+                    title: gameTitle,
+                    timestamp: Date.now()
+                };
+                
+                // Get existing stored games
+                let storedGames = JSON.parse(localStorage.getItem('bypassGames') || '[]');
+                
+                // Add new game to the list (or update if exists)
+                const existingIndex = storedGames.findIndex(game => game.title === gameTitle);
+                if (existingIndex >= 0) {
+                    storedGames[existingIndex] = gameData;
+                } else {
+                    storedGames.push(gameData);
+                }
+                
+                // Limit to last 20 games
+                if (storedGames.length > 20) {
+                    storedGames = storedGames.slice(-20);
+                }
+                
+                // Save back to localStorage
+                localStorage.setItem('bypassGames', JSON.stringify(storedGames));
+                
+                return true;
+            } catch (error) {
+                console.error('Failed to store encoded game:', error);
+                return false;
+            }
+        }
+        
+        /**
+         * Gets the list of stored encoded games
+         * @returns {Array} - Array of stored game objects
+         */
+        function getStoredEncodedGames() {
+            try {
+                return JSON.parse(localStorage.getItem('bypassGames') || '[]');
+            } catch (error) {
+                console.error('Failed to retrieve stored games:', error);
+                return [];
+            }
+        }
+        
+        /**
+         * Tests the connection to the Cloudflare worker
+         * @returns {Promise<boolean>} - Promise resolving to true if connection is successful
+         */
+        async function testWorkerConnection() {
+            try {
+                const response = await fetch(WORKER_URL);
+                return response.ok;
+            } catch (error) {
+                console.error('Worker connection test failed:', error);
+                return false;
+            }
+        }
+        
+        /**
+         * Opens a CrazyGames embed using the worker proxy
+         * @param {string} gameUrl - The URL of the CrazyGames game
+         */
+        async function openCrazyGamesEmbed(gameUrl) {
+            try {
+                // Extract the game title from the URL
+                const urlObj = new URL(gameUrl);
+                const pathParts = urlObj.pathname.split('/');
+                let gameTitle = 'CrazyGames';
+                
+                // Try to extract a meaningful title from the URL
+                if (pathParts.length > 0) {
+                    const lastPart = pathParts[pathParts.length - 1];
+                    if (lastPart && lastPart !== '') {
+                        gameTitle = lastPart.replace(/\.[^/.]+$/, '').replace(/-/g, ' ');
+                        gameTitle = gameTitle.split('/').pop().split('?')[0]; // Remove any query parameters
+                        gameTitle = gameTitle.charAt(0).toUpperCase() + gameTitle.slice(1); // Capitalize first letter
+                    }
+                }
+                
+                // Always use the worker proxy for CrazyGames URLs
+                const encodedUrl = await encodeGameUrl(gameUrl);
+                const proxyUrl = `${WORKER_URL}/lessons?encoded=${encodedUrl}`;
+                
+                // Create or get the iframe container
+                let iframeContainer = document.getElementById('iframe-container');
+                if (!iframeContainer) {
+                    iframeContainer = document.createElement('div');
+                    iframeContainer.id = 'iframe-container';
+                    iframeContainer.className = 'iframe-container';
+                    document.body.appendChild(iframeContainer);
+                }
+                
+                iframeContainer.innerHTML = `
+                    <div class="iframe-content">
+                        <iframe src="${proxyUrl}" class="game-frame" allowfullscreen sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts"></iframe>
+                        <button class="close-button" onclick="closeGame()">CLOSE</button>
+                        <button class="fullscreen-button" onclick="toggleFullscreen()">FULLSCREEN</button>
+                        <div class="bypass-info">CrazyGames Proxy Active</div>
+                    </div>
+                `;
+                
+                // Show the iframe container
+                iframeContainer.style.display = 'block';
+                
+                // Prevent scrolling on the body when game is open
+                document.body.style.overflow = 'hidden';
+                
+                // Add event listener to prevent arrow keys and WASD from scrolling the page
+                window.addEventListener('keydown', preventDefaultForGameKeys);
+                
+                // Log successful bypass
+                console.log(`CrazyGames opened: ${gameTitle}`);
+                
+                // Store the game for later access
+                storeEncodedGame(encodedUrl, gameTitle);
+                
+            } catch (error) {
+                console.error('Error opening CrazyGames embed:', error);
+                // Fall back to direct URL opening if proxy fails
+                window.open(gameUrl, '_blank');
+            }
+        }
+        
+        // Export functions for use in the main application
+        window.iframeBypass = {
+            encodeGameUrl,
+            decodeGameUrl,
+            openGameWithBypass,
+            openCrazyGamesEmbed,
+            storeEncodedGame,
+            getStoredEncodedGames,
+            testWorkerConnection
+        };
+        
+        /**
+         * Closes the game iframe and restores normal page scrolling
+         */
+        function closeGame() {
+            const iframeContainer = document.getElementById('iframe-container');
+            if (iframeContainer) {
+                // Clear the iframe content completely
+                iframeContainer.innerHTML = '';
+                iframeContainer.style.display = 'none';
+                
+                // Restore scrolling on the body
+                document.body.style.overflow = 'auto';
+                
+                // Remove event listener for game keys
+                window.removeEventListener('keydown', preventDefaultForGameKeys);
+            }
+        }
+        
+        /**
+         * Toggles fullscreen mode for the game iframe
+         */
+        function toggleFullscreen() {
+            const gameFrame = document.querySelector('.game-frame');
+            if (!gameFrame) return;
+            
+            if (!document.fullscreenElement) {
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.mozRequestFullScreen) { // Firefox
+                    gameFrame.mozRequestFullScreen();
+                } else if (gameFrame.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { // IE/Edge
+                    gameFrame.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { // Firefox
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { // IE/Edge
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
+        /**
+         * Prevents default behavior for game control keys
+         * @param {KeyboardEvent} e - The keyboard event
+         */
+        function preventDefaultForGameKeys(e) {
+            // Prevent arrow keys and WASD from scrolling the page
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D', ' '].includes(e.key)) {
+                e.preventDefault();
+            }
+        }
+        
+        // Make closeGame and toggleFullscreen globally available
+        window.closeGame = closeGame;
+        window.toggleFullscreen = toggleFullscreen;
+        
+        /**
+         * Initializes and manages the full screen canvas
+         */
+        function initFullScreenCanvas() {
+            // Create canvas if it doesn't exist
+            let canvas = document.getElementById('fullScreenCanvas');
+            if (!canvas) {
+                canvas = document.createElement('canvas');
+                canvas.id = 'fullScreenCanvas';
+                document.body.insertBefore(canvas, document.body.firstChild);
+            }
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match window size
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawOnCanvas(); // Redraw when resized
+            }
+            
+            // Initial resize
+            resizeCanvas();
+            
+            // Handle window resize
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Animation variables
+            let particles = [];
+            const particleCount = 100;
+            
+            // Create initial particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 3 + 1,
+                    color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 255, ${Math.random() * 0.5 + 0.1})`,
+                    speedX: Math.random() * 2 - 1,
+                    speedY: Math.random() * 2 - 1
+                });
+            }
+            
+            // Draw function
+            function drawOnCanvas() {
+                // Clear canvas with semi-transparent background for trail effect
+                ctx.fillStyle = 'rgba(10, 21, 80, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw and update particles
+                particles.forEach(particle => {
+                    // Draw particle
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = particle.color;
+                    ctx.fill();
+                    
+                    // Update position
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Bounce off edges
+                    if (particle.x < 0 || particle.x > canvas.width) {
+                        particle.speedX *= -1;
+                    }
+                    
+                    if (particle.y < 0 || particle.y > canvas.height) {
+                        particle.speedY *= -1;
+                    }
+                });
+                
+                // Continue animation
+                requestAnimationFrame(drawOnCanvas);
+            }
+            
+            // Start animation
+            drawOnCanvas();
+            
+            // Make canvas accessible globally
+            window.canvasContext = ctx;
+            
+            // Initialize the games interface after canvas is ready
+            if (window.gamesInterface && typeof window.gamesInterface.initGamesInterface === 'function') {
+                setTimeout(window.gamesInterface.initGamesInterface, 500);
+            }
+        }
+        
+        // Make canvas functions globally available
+        window.initFullScreenCanvas = initFullScreenCanvas;
     </script>
 </body>
 </html>
