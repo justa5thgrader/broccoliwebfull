@@ -540,7 +540,6 @@ body.loaded .loading-screen {
 }
     </style>
     <script src="../CascadeProjects/iframe-bypass.js"></script>
-    <script src="../CascadeProjects/game-list.js"></script>
     <script>
 // Game enhancements for My.PPS
 document.addEventListener('DOMContentLoaded', function() {
@@ -712,6 +711,69 @@ function addNewGames() {
             url: 'https://storage.classroomsarecool.mex.com/standonrightcolorrobby/index.html',
             imageUrl: 'https://tr.rbxcdn.com/e8e4c5e4f9e9a2e5a5e9e5e4f9e9a2e5/500/280/Image/Jpeg',
             tags: ['Obby', 'Platformer']
+        },
+        {
+            title: 'Solar Smash',
+            url: 'https://games.crazygames.com/en_US/solar-smash/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/games/solar-smash/cover-1591336739727.png?auto=format,compress&q=75&cs=strip',
+            description: 'Destroy planets with various weapons in this physics-based destruction game.',
+            tags: ['Simulation', 'Action']
+        },
+        {
+            title: 'Holey.io',
+            url: 'https://games.crazygames.com/en_US/holey-io-battle-royale/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/games/holey-io-battle-royale/thumb-1584433985486.png?auto=format,compress&q=75&cs=strip',
+            description: 'Grow your hole and consume everything in this multiplayer io game.',
+            tags: ['IO Game', 'Multiplayer']
+        },
+        {
+            title: 'Slice Master',
+            url: 'https://games.crazygames.com/en_US/slice-master/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/slice-master/20201014162703/slice-master-cover?auto=format,compress&q=75&cs=strip',
+            description: 'Slice fruits and avoid bombs in this fast-paced arcade game.',
+            tags: ['Arcade', 'Action']
+        },
+        {
+            title: 'Ragdoll Archers',
+            url: 'https://games.crazygames.com/en_US/ragdoll-archers/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/ragdoll-archers/20220318114011/ragdoll-archers-cover?auto=format,compress&q=75&cs=strip',
+            description: 'Battle with physics-based archery in this hilarious ragdoll game.',
+            tags: ['Action', 'Multiplayer']
+        },
+        {
+            title: 'Shell Shockers',
+            url: 'https://games.crazygames.com/en_US/shellshockersio/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/shellshockersio/20200325162704/shellshockersio-cover?auto=format,compress&q=75&cs=strip',
+            description: 'FPS game where you play as armed eggs in intense multiplayer battles.',
+            tags: ['Shooter', 'Multiplayer']
+        },
+        {
+            title: 'Devil Cat Granny',
+            url: 'https://games.crazygames.com/en_US/cat-life-simulator-devil-cat/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/cat-life-simulator-devil-cat/20230214172511/cat-life-simulator-devil-cat-cover?auto=format,compress&q=75&cs=strip',
+            description: 'Play as a mischievous cat causing chaos in a granny\'s house.',
+            tags: ['Simulation', 'Action']
+        },
+        {
+            title: 'Italian Brainrot Clicker',
+            url: 'https://games.crazygames.com/en_US/italian-brainrot-clicker-usp/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/italian-brainrot-clicker-usp/20230721151211/italian-brainrot-clicker-usp-cover?auto=format,compress&q=75&cs=strip',
+            description: 'An addictive clicker game with an Italian theme.',
+            tags: ['Clicker', 'Casual']
+        },
+        {
+            title: 'Crazy Supermarket',
+            url: 'https://games.crazygames.com/en_US/supermarket-simulator-cashier-game/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/supermarket-simulator-cashier-game/20220519163850/supermarket-simulator-cashier-game-cover?auto=format,compress&q=75&cs=strip',
+            description: 'Manage a busy supermarket as a cashier in this fun simulator game.',
+            tags: ['Simulation', 'Casual']
+        },
+        {
+            title: 'Hazmob FPS',
+            url: 'https://games.crazygames.com/en_US/hazmob-fps-online-shooter/index.html?v=1.331',
+            imageUrl: 'https://images.crazygames.com/hazmob-fps-online-shooter/20230607171928/hazmob-fps-online-shooter-cover?auto=format,compress&q=75&cs=strip',
+            description: 'Fast-paced multiplayer first-person shooter with hazmat suits and intense action.',
+            tags: ['Shooter', 'Multiplayer']
         }
     ];
     
@@ -9551,13 +9613,60 @@ function toggleFullscreen() {
                     <i class="fas fa-exclamation-triangle" style="font-size: 30px; margin-bottom: 15px; text-shadow: 0 0 10px #ff00ff;"></i>
                     <h3 style="margin-bottom: 10px; text-shadow: 0 0 8px #ff00ff;">NO GAMES FOUND</h3>
                     <p style="margin-bottom: 15px;">Try a different search term or category</p>
-                    <button onclick="clearGameSearch()" style="background: rgba(255, 0, 255, 0.3); border: 1px solid #ff00ff; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);">
                         <i class="fas fa-times-circle"></i> CLEAR SEARCH
                     </button>
                 </div>
                 
                 <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                     <!-- Game cards organized alphabetically -->
+                    <!-- Aces of the Sky (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/aces-of-the-sky-epic-dogfights/index.html?v=1.331', 'Aces of the Sky')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/aces-of-the-sky-epic-dogfights_16x9/20250319094415/aces-of-the-sky-epic-dogfights_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop" alt="Aces of the Sky" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Aces of the Sky</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FLYING</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Thrilling aerial combat dogfights</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Amazing Strange Rope Police (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/amazing-strange-rope-police-vice-spider/index.html?v=1.331', 'Amazing Strange Rope Police')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/games/amazing-strange-rope-police-vice-spider/cover-1655216920003.png?metadata=none&quality=70&width=506.5" alt="Amazing Strange Rope Police" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Amazing Strange Rope Police</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Swing through the city as a rope hero</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Agar.io (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/agario/index.html?v=1.331', 'Agar.io')" data-category="io">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://www2.minijuegosgratis.com/v3/games/thumbnails/210110_1.jpg" alt="Agar.io" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Agar.io</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">IO GAME</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Grow your cell and consume others</p>
+                        </div>
+                    </div>
+                    
                     <!-- Bloxd.io (CrazyGames) -->
                     <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/bloxdhop-io/index.html?v=1.331', 'Bloxd.io')" data-category="platformer">
                         <div class="game-card-overlay">
@@ -9566,11 +9675,315 @@ function toggleFullscreen() {
                         <img src="https://images.crazygames.com/games/bloxdhop-io/cover_16x9-1709115453824.png?auto=format,compress&q=75&cs=strip" alt="Bloxd.io" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Bloxd.io</h3>
+                            <div class="game-tags">                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">3D multiplayer parkour game</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Capybara Clicker (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/capybara-clicker/index.html?v=1.331', 'Capybara Clicker')" data-category="clicker">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/games/capybara-clicker/cover-1678290947532.png?metadata=none&quality=70&width=460.5" alt="Capybara Clicker" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Capybara Clicker</h3>
                             <div class="game-tags">
-                                <span class="game-tag">PLATFORMER</span>
+                                <span class="game-tag">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Click to collect adorable capybaras</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Count Masters: Stickman Games (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/count-masters-stickman-games/index.html?v=1.331', 'Count Masters: Stickman Games')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/68G5dZSy3xGTXklA4lW_hGrVJB_Jt9BJIrmI3EVQEWt4ZmvUsCZzGoOJs_6AlA_vEg" alt="Count Masters: Stickman Games" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Count Masters: Stickman Games</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">RUNNER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Build your stickman army and battle rivals</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Demolition Derby 2 (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/demolition-derby-2/index.html?v=1.331', 'Demolition Derby 2')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/o_RfWgrzUF-HEz3LTwKQl8IJW0FhvQEdpK4vYuf-rzaUK9KR-oAxJQB78Gd_httCsHfv" alt="Demolition Derby 2" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Demolition Derby 2</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Crash and smash in this demolition game</p>
+                        </div>
+                    </div>
+                    
+                    <!-- People Playground (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/playground/index.html?v=1.331', 'People Playground')" data-category="sandbox">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://images.crazygames.com/playground_16x9/20250311120048/playground_16x9-cover?auto=format,compress&q=75&cs=strip" alt="People Playground" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>People Playground</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">SANDBOX</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PHYSICS</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Creative sandbox with physics simulation</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Prison Escape (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/prison-escape-lnj/index.html?v=1.331', 'Prison Escape')" data-category="adventure">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://images.crazygames.com/prison-escape-lnj_16x9/20250509092652/prison-escape-lnj_16x9-cover?auto=format,compress&q=75&cs=strip" alt="Prison Escape" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Prison Escape</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ADVENTURE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PUZZLE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Escape prison through puzzles and challenges</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Solar Smash (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/solar-smash/index.html?v=1.331', 'Solar Smash')" data-category="simulation">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/9oKsgghjeohO1ztpmG6SrIMAVLn8sAhwsRGKHuOaqfMghYWiFHJ1osjwf_fAaMQZA5Y" alt="Solar Smash" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Solar Smash</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">SIMULATION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Destroy planets with various weapons</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Spot the Difference (Find It) (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/find-it---find-the-differences/index.html?v=1.331', 'Spot the Difference')" data-category="puzzle">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/find-it---find-the-differences_16x9/20240906051610/find-it---find-the-differences_16x9-cover?metadata=none&quality=70&width=506.5" alt="Spot the Difference" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Spot the Difference</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PUZZLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Find differences between similar images</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Holey.io (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/holey-io-battle-royale/index.html?v=1.331', 'Holey.io')" data-category="io">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://images.crazygames.com/holey-io-battle-royale_16x9/20231023094206/holey-io-battle-royale_16x9-cover?auto=format,compress&q=75&cs=strip" alt="Holey.io" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Holey.io</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">IO GAME</span>
                                 <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
                             </div>
-                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">3D multiplayer parkour game</p>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Grow your hole and consume everything</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slice Master (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/slice-master/index.html?v=1.331', 'Slice Master')" data-category="arcade">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/slice-master_16x9/20240731033229/slice-master_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop" alt="Slice Master" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Slice Master</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ARCADE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Slice fruits and avoid bombs</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Ragdoll Archers (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/ragdoll-archers/index.html?v=1.331', 'Ragdoll Archers')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/XMiWEMPbuq13oVcwYQ6ySLtZnBf7WpJ3rb7v-TM4MdFOvWfo1Z2hzSEAApRXzEcshjY" alt="Ragdoll Archers" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Ragdoll Archers</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Physics-based archery battles</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Rally Racer Dirt (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/rally-racer-dirt/index.html?v=1.331', 'Rally Racer Dirt')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/UqZiWmUIMlY_bdtpRuDtRn9uojavtBSDgjtkKIEKS7_AiN8H-k6OoLt9mZGZsKe4Mt7c" alt="Rally Racer Dirt" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Rally Racer Dirt</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIFTING</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Rally drift racing on dirt tracks</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Shell Shockers (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/shellshockersio/index.html?v=1.331', 'Shell Shockers')" data-category="shooter">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShQfsXhdrdJ2Ch9HgMxvby7g5dkWWysWvEAw&s" alt="Shell Shockers" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Shell Shockers</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">FPS with armed eggs in battle</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Devil Cat Granny (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/cat-life-simulator-devil-cat/index.html?v=1.331', 'Devil Cat Granny')" data-category="simulation">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/U_U4lIfh3kCe3ebMgc_wclU_uhShG3lapdV9-O2WiKYdx6qz1P_j7d7XmJpmszILeg=w526-h296-rw" alt="Devil Cat Granny" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Devil Cat Granny</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">SIMULATION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ACTION</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Mischievous cat causing chaos</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Italian Brainrot Clicker (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/italian-brainrot-clicker-usp/index.html?v=1.331', 'Italian Brainrot Clicker')" data-category="clicker">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/italian-brainrot-clicker-usp_16x9/20250430033904/italian-brainrot-clicker-usp_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop" alt="Italian Brainrot Clicker" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Italian Brainrot Clicker</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Addictive Italian-themed clicker</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Italian Brainrot Quiz (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/italianbrainrotquiz-io/index.html?v=1.331', 'Italian Brainrot Quiz')" data-category="quiz">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/italianbrainrotquiz-io_16x9/20250522065211/italianbrainrotquiz-io_16x9-cover?metadata=none&quality=70&width=460.5" alt="Italian Brainrot Quiz" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Italian Brainrot Quiz</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">QUIZ</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Identify chaotic Italian meme characters</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Moto X3M Winter (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/moto-x3m-spooky-land/index.html?v=1.331', 'Moto X3M Winter')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMnKszZBp4VScYiwqK3suA65eBf9lQNoYUfw&s" alt="Moto X3M Winter" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Moto X3M Winter</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">STUNT</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Winter-themed motorcycle stunts</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Street Life (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/street-life/index.html?v=1.331', 'Street Life')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/games/street-life/cover_16x9-1744800465274.png?metadata=none&quality=70&width=460.5" alt="Street Life" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Street Life</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ADVENTURE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Explore the city and complete missions</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Ultimate Flying Car (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/ultimate-flying-car/index.html?v=1.331', 'Ultimate Flying Car')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGOotAvX1ugXtPfuVKgEJPchfOs1_oaPplZQ&s" alt="Ultimate Flying Car" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Ultimate Flying Car</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FLYING</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Transform your car into a flying machine</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Crazy Supermarket (CrazyGames) -->
+                
+                    
+                    <!-- Hazmob FPS (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/hazmob-fps-online-shooter/index.html?v=1.331', 'Hazmob FPS')" data-category="shooter">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://play-lh.googleusercontent.com/w0VwOXBbXTWNQRskk-L8zlqFuW-pJ0HLlBJFSTtSaSDKTrCtekD9rSiEQtBFlXFFXFA" alt="Hazmob FPS" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Hazmob FPS</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">SHOOTER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Fast-paced FPS with hazmat suits</p>
                         </div>
                     </div>
                     
