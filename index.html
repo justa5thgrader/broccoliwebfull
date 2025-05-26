@@ -917,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Network nodes and connections
         const nodes = [];
-        const maxNodes = 200; // Increased number of nodes (was 50)
+        const maxNodes = 10; // Increased number of nodes (was 50)
         const connectionDistance = 120; // Maximum distance for connections (slightly reduced for better performance)
         
         // Create initial nodes
@@ -9268,7 +9268,7 @@ function toggleFullscreen() {
                     </div>
                     
                     <!-- Advanced Iframe Bypass -->
-                    <div class="game-card" onclick="window.location.href='bypass-proxy.html'" data-category="proxy">
+                    <div class="game-card" id="iframe-bypass-card" data-category="proxy">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">LAUNCH BYPASS</button>
                         </div>
@@ -9556,22 +9556,7 @@ function toggleFullscreen() {
                     
                  
                     
-                    <!-- UNO -->
-                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://www.xpgameplus.com/games/uno/default.html', 'UNO')" data-category="card">
-                        <div class="game-card-overlay">
-                            <button class="play-now-btn">PLAY NOW</button>
-                        </div>
-                        <img src="https://play-lh.googleusercontent.com/jO4QmMNLuqV0s8za91xCPmGGYGNu7HXgioOYWEiBpV7bNTmIpGj8M_iios2AmfErKA" alt="UNO" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3>UNO</h3>
-                            <div class="game-tags">
-                                <span class="game-tag">CARD</span>
-                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MULTIPLAYER</span>
-                            </div>
-                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Classic UNO card game</p>
-                        </div>
-                    </div>
-                    
+                 
                     <!-- Bridge Race (CrazyGames) -->
                     <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/bridge-race/index.html?v=1.331', 'Bridge Race')" data-category="racing">
                         <div class="game-card-overlay">
@@ -9605,9 +9590,88 @@ function toggleFullscreen() {
                         </div>
                     </div>
                     
+                    <!-- Mergest Kingdom (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/mergest-kingdom/index.html?v=1.331', 'Mergest Kingdom')" data-category="strategy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/mergest-kingdom_16x9/20250203022532/mergest-kingdom_16x9-cover?metadata=none&quality=70&width=502.5" alt="Mergest Kingdom" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Mergest Kingdom</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">MERGE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Build your kingdom by merging items</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Bodycamera Shooter (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/bodycamera-shooter/index.html?v=1.331', 'Bodycamera Shooter')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/bodycamera-shooter_16x9/20240805083830/bodycamera-shooter_16x9-cover?metadata=none&quality=70&width=502.5" alt="Bodycamera Shooter" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Bodycamera Shooter</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">FPS</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">First-person shooter with bodycam view</p>
+                        </div>
+                    </div>
+                    
+                    <!-- TV Invasion (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/tv-invasion/index.html?v=1.331', 'TV Invasion')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/tv-invasion/20230320150758/tv-invasion-cover?metadata=none&quality=70&width=502.5" alt="TV Invasion" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>TV Invasion</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ARCADE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Battle through TV channels in this arcade game</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Xtreme Drift City Driving (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/xtreme-city-drifting/index.html?v=1.331', 'Xtreme Drift City Driving')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/xtreme-city-drifting_16x9/20250403103844/xtreme-city-drifting_16x9-cover?metadata=none&quality=70&width=502.5" alt="Xtreme Drift City Driving" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Xtreme Drift City Driving</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">DRIVING</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Extreme drifting action in city streets</p>
+                        </div>
+                    </div>
+                    
+                    <!-- GeoGuessr (CrazyGames) -->
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://games.crazygames.com/en_US/openguessr/index.html?instantJoin=true&v=1.331', 'GeoGuessr')" data-category="puzzle">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://imgs.crazygames.com/openguessr_16x9/20250423032721/openguessr_16x9-cover?metadata=none&quality=70&width=456.5" alt="GeoGuessr" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>GeoGuessr</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PUZZLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">GEOGRAPHY</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Guess locations from street view images</p>
+                        </div>
+                    </div>
                     
                     <!-- Obby on a Bike (GameDistribution) -->
-                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://html5.gamedistribution.com/bc2f52c2d9d04e41aee48bef01075d22/', 'Obby on a Bike')" data-category="obstacle">
+                    <div class="game-card" onclick="window.iframeBypass.openGameWithBypass('https://playhop.com/app/257923?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=cristian-ovidiu&clid=8531463', 'Obby on a Bike')" data-category="obstacle">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
