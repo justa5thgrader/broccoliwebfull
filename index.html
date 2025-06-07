@@ -7600,31 +7600,6 @@ function toggleFullscreen() {
                 whiteCanvas.style.display = 'block';
                 // Iframe container
                 let iframeContainer = document.querySelector('.iframe-container');
-                if (!iframeContainer) {
-                    iframeContainer = document.createElement('div');
-                    iframeContainer.className = 'iframe-container';
-                    document.body.appendChild(iframeContainer);
-                }
-                // Inject Bloxd.io embed code
-                iframeContainer.innerHTML = `
-                    <div class=\"iframe-content\" style=\"background:#13141E;\">
-                        <button class=\"close-button\" onclick=\"closeGame()\">Close Game</button>
-                        <button class=\"fullscreen-button\" onclick=\"toggleFullscreen()\">Fullscreen</button>
-                        <iframe src=\"https://bloxd.io/\" allowfullscreen style=\"border:none;width:100vw;height:100vh;background:#13141E;\"></iframe>
-                    </div>
-                `;
-                iframeContainer.style.backgroundColor = '#13141E';
-                iframeContainer.style.zIndex = '999';
-                setTimeout(() => {
-                    if (loadingScreen) {
-                        loadingScreen.classList.add('fade-out');
-                        setTimeout(() => {
-                            loadingScreen.style.display = 'none';
-                            loadingScreen.classList.remove('fade-out');
-                        }, 500);
-                    }
-                    iframeContainer.style.display = 'block';
-                }, 2000);
                 return;
             }
             console.log('Opening game:', url, title);
@@ -11825,7 +11800,7 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('bloxdio-embed', 'Bloxd.io')" data-category="io">
+                    <div class="game-card" onclick="window.open('bloxdio_crazygames_embed.html', '_blank');" data-category="io">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
