@@ -7574,6 +7574,59 @@ function toggleFullscreen() {
         
         // Enhanced openGame function to track stats and achievements
         function openGame(url, title) {
+            // Special embed for Bloxd.io
+            if (url === 'bloxdio-embed') {
+                const loadingScreen = document.querySelector('.loading-screen');
+                const gameTitle = title || 'Bloxd.io';
+                // Show loading screen
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'flex';
+                    document.querySelector('.loading-text').textContent = `Loading ${gameTitle}...`;
+                }
+                // White canvas
+                let whiteCanvas = document.getElementById('game-white-canvas');
+                if (!whiteCanvas) {
+                    whiteCanvas = document.createElement('div');
+                    whiteCanvas.id = 'game-white-canvas';
+                    whiteCanvas.style.position = 'fixed';
+                    whiteCanvas.style.top = '0';
+                    whiteCanvas.style.left = '0';
+                    whiteCanvas.style.width = '100%';
+                    whiteCanvas.style.height = '100%';
+                    whiteCanvas.style.backgroundColor = '#ffffff';
+                    whiteCanvas.style.zIndex = '998';
+                    document.body.appendChild(whiteCanvas);
+                }
+                whiteCanvas.style.display = 'block';
+                // Iframe container
+                let iframeContainer = document.querySelector('.iframe-container');
+                if (!iframeContainer) {
+                    iframeContainer = document.createElement('div');
+                    iframeContainer.className = 'iframe-container';
+                    document.body.appendChild(iframeContainer);
+                }
+                // Inject Bloxd.io embed code
+                iframeContainer.innerHTML = `
+                    <div class=\"iframe-content\" style=\"background:#13141E;\">
+                        <button class=\"close-button\" onclick=\"closeGame()\">Close Game</button>
+                        <button class=\"fullscreen-button\" onclick=\"toggleFullscreen()\">Fullscreen</button>
+                        <iframe src=\"https://bloxd.io/\" allowfullscreen style=\"border:none;width:100vw;height:100vh;background:#13141E;\"></iframe>
+                    </div>
+                `;
+                iframeContainer.style.backgroundColor = '#13141E';
+                iframeContainer.style.zIndex = '999';
+                setTimeout(() => {
+                    if (loadingScreen) {
+                        loadingScreen.classList.add('fade-out');
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            loadingScreen.classList.remove('fade-out');
+                        }, 500);
+                    }
+                    iframeContainer.style.display = 'block';
+                }, 2000);
+                return;
+            }
             console.log('Opening game:', url, title);
             const loadingScreen = document.querySelector('.loading-screen');
             const gameTitle = title || url.split('/').pop().split('.')[0];
@@ -11772,6 +11825,21 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
+                    <div class="game-card" onclick="openGame('bloxdio-embed', 'Bloxd.io')" data-category="io">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://images.crazygames.com/games/bloxdhop-io/cover_16x9-1709115453824.png" alt="Bloxd.io" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Bloxd.io</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">IO</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">PARKOUR</span>
+                                <span class="game-tag" style="background: rgba(0, 255, 255, 0.3);">MULTIPLAYER</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbz3OFREmzT4e81mEypXp05AuZRpouds_D___kSEYZQrYzotlRohTErTei3J_l-CIWRe_w/exec')" data-category="rhythm">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
