@@ -196,19 +196,34 @@
 .game-card {
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
-    border: 2px solid transparent;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    aspect-ratio: 1 / 1;
+    width: 220px;
+    height: auto;
+    min-width: 180px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(20,30,90,0.9), rgba(0,255,255,0.12));
+    cursor: pointer;
+    margin: 0 auto;
+    user-select: none;
+    outline: none;
     transition: transform 0.3s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
     will-change: transform, box-shadow;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
 }
 
 /* Cool hover effect */
-.game-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 15px 30px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.2);
-    border-color: rgba(255, 0, 255, 0.6);
+.game-card:hover, .game-card:focus {
+    transform: translateY(-12px) scale(1.06);
+    box-shadow: 0 20px 40px rgba(255, 0, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+    border-color: #00ffff;
     z-index: 10;
+    outline: none;
 }
 
 /* Add subtle glow animation that's still smooth */
@@ -483,10 +498,28 @@ body {
 /* Fix for any broken elements at the bottom */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    margin-bottom: 50px; /* Add space before footer */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.proxy-grid, .apps-grid, .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.proxy-grid > .game-card,
+.apps-grid > .game-card,
+.games-grid > .game-card {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto;
+    min-width: 180px;
+    max-width: 100%;
+    justify-self: center;
+    align-self: center;
 }
 
 /* Make sure all content is contained properly */
@@ -494,6 +527,85 @@ body {
     min-height: calc(100vh - 200px);
     padding-bottom: 50px;
 }
+/* CASCADE: Circular Game Card Styles */
+.game-card .game-thumbnail {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    object-fit: cover;
+    border: 3px solid #fff;
+    background: #222;
+    padding: 0;
+}
+
+.game-title {
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding-bottom: 10px;
+}
+
+.game-card-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.18);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.game-card:hover .game-card-overlay, .game-card:focus .game-card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.game-info {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 8px;
+    color: #fff;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.game-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    padding: 3px 12px;
+    margin: 2px 2px 0 2px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.18);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 1px 4px rgba(0,255,255,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+/* END CASCADE: Circular Game Card Styles */
     </style>
     <style>
 /* Blue Network-themed Loading Screen */
@@ -2241,7 +2353,7 @@ function toggleFullscreen() {
         }
         
         .primary-btn:hover {
-            background: #3d8b40;
+            background: #099bfc;
         }
         
         .secondary-btn {
@@ -8494,29 +8606,39 @@ function toggleFullscreen() {
 
         <!-- Home Tab Content -->
         <div class="main-tab-content" id="home">
-            <div class="glass-panel" style="background-color: #1a1a2e; padding: 20px; border-radius: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="color: #ff00ff; text-shadow: 0 0 10px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0;">WELCOME TO EDUFUN!</h2>
+            <div class="glass-panel" style="background-color: #1a1a2e; padding: 32px; border-radius: 16px; max-width: 900px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h2 style="color: #ff00ff; text-shadow: 0 0 12px #ff00ff; font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.3em; letter-spacing: 1px;">🎉 Welcome to Edufun! 🎉</h2>
+                    <p style="color: #fff; font-size: 1.2em; margin-top: 10px;">Your friendly hub for fun, learning, and discovery. Jump in and explore our games, tools, and resources!</p>
                 </div>
-                <p style="color: #fff; margin-bottom: 20px;">Your ultimate destination for games, and more!</p>
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
-                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">GAMES</h3>
-                        <p style="color: #fff;">Access hundreds of unblocked games</p>
-                        <button class="main-tab" data-tab="games" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">EXPLORE GAMES</button>
+                <div style="display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px;">
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 12px; padding: 18px; width: 260px; text-align: center; box-shadow: 0 2px 12px #0004;">
+                        <div style="font-size: 2.2em; margin-bottom: 8px;">🎮</div>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif; margin-bottom: 6px;">Games</h3>
+                        <p style="color: #fff; font-size: 1em;">Play hundreds of unblocked games, handpicked for fun and learning.</p>
+                        <button class="main-tab" data-tab="games" style="margin-top: 10px; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">Explore Games</button>
                     </div>
-                
-                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
-                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">PROXY</h3>
-                        <p style="color: #fff;">Bypass restrictions with our proxy services</p>
-                        <button class="main-tab" data-tab="proxy" style="background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">ACCESS PROXY</button>
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 12px; padding: 18px; width: 260px; text-align: center; box-shadow: 0 2px 12px #0004;">
+                        <div style="font-size: 2.2em; margin-bottom: 8px;">🛡️</div>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif; margin-bottom: 6px;">Proxy</h3>
+                        <p style="color: #fff; font-size: 1em;">Bypass restrictions and browse safely with our built-in proxy tools.</p>
+                        <button class="main-tab" data-tab="proxy" style="margin-top: 10px; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif;">Access Proxy</button>
                     </div>
-                    
-                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.7); border: 1px solid #ff00ff; border-radius: 10px; padding: 15px; width: 250px; text-align: center;">
-                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif;">MORE LINKS</h3>
-                        <p style="color: #fff;">Access cool things and extra games, apps, and more links!</p>
-                        <a href="https://docs.google.com/document/d/1YUqDO15FlRWEb8eVnxf8v6njzPTUZSZQDayIqwWYgwM/edit?usp=sharing" target="_blank" style="display: inline-block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif; text-decoration: none;">VIEW MORE LINKS</a>
+                    <div class="feature-card" style="background-color: rgba(10, 10, 20, 0.8); border: 1px solid #ff00ff; border-radius: 12px; padding: 18px; width: 260px; text-align: center; box-shadow: 0 2px 12px #0004;">
+                        <div style="font-size: 2.2em; margin-bottom: 8px;">🔗</div>
+                        <h3 style="color: #ff00ff; text-shadow: 0 0 5px #ff00ff; font-family: 'Orbitron', sans-serif; margin-bottom: 6px;">More Links</h3>
+                        <p style="color: #fff; font-size: 1em;">Find extra games, apps, and cool resources curated just for you.</p>
+                        <a href="https://docs.google.com/document/d/1YUqDO15FlRWEb8eVnxf8v6njzPTUZSZQDayIqwWYgwM/edit?usp=sharing" target="_blank" style="margin-top: 10px; display: inline-block; background: linear-gradient(45deg, #ff00ff, #00ffff); color: #000; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif; text-decoration: none;">View More Links</a>
                     </div>
+                </div>
+                <div style="background: rgba(30,30,50,0.6); border-radius: 8px; padding: 18px 20px; margin: 0 auto; max-width: 520px;">
+                    <h4 style="color: #00ffff; font-family: 'Orbitron', sans-serif; margin-bottom: 8px;">🚀 Quick Start Guide</h4>
+                    <ul style="color: #fff; font-size: 1em; margin: 0 0 0 18px; padding: 0; text-align: left;">
+                        <li>Choose a tab above to explore Games, Proxy, or More Links.</li>
+                        <li>Click <b>Explore Games</b> to start playing instantly.</li>
+                        <li>Need safe browsing? Use the <b>Proxy</b> tab.</li>
+                        <li>Looking for more? Check out <b>More Links</b> for extra fun and resources.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -9177,7 +9299,7 @@ function toggleFullscreen() {
                 <div class="cloaking-methods">
                     <h3>Select Cloaking Method</h3>
                     <div class="method-grid">
-                        <button class="method-btn" onclick="selectMethod('about:blank')">About:Blank</button>
+                        <button class="method-btn" onclick="selectMethod(':blankabout')">About:Blank</button>
                         <button class="method-btn" onclick="selectMethod('iframe')">iFrame Embed</button>
                         <button class="method-btn" onclick="selectMethod('classroom')">Google Classroom</button>
                         <button class="method-btn" onclick="selectMethod('canvas')">Canvas LMS</button>
@@ -9268,10 +9390,21 @@ function toggleFullscreen() {
                             <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Advanced proxy with session support</p>
                         </div>
                     </div>
-                    
-                
-                    
-                        
+                    <!-- Rammerhead Proxy 2 -->
+                    <div class="game-card" onclick="openGame('https://pbs.lookids.com', 'Rammerhead Proxy link 2')" data-category="proxy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">LAUNCH PROXY</button>
+                        </div>
+                        <img src="https://demo-opensource.rammerhead.org/logo.png" alt="Rammerhead Proxy link 2" class="game-thumbnail" style="background-color: #1a1a2e;">
+                        <div class="game-info">
+                            <h3>Rammerhead Proxy link 2</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PROXY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SECURE</span>
+                            </div>
+                            <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Advanced proxy with session support</p>
+                        </div>
+                    </div>
                  </div>
             </div>
         </div>
@@ -9321,9 +9454,9 @@ function toggleFullscreen() {
                     
                     
                     <!-- Soundboard -->
-                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/soundboard/index.html', 'Soundboard')" data-category="app" style="width: 300px;">
+                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/soundboard/index.html', 'Soundboard')" data-category="app" >
                         <div class="game-card-overlay">
-                            <button class="play-now-btn">LAUNCH APP</button>
+<button class="play-now-btn">LAUNCH APP</button>
                         </div>
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9ugIFCw6PdRy9e3cIgL8XJak5OXeVAFwnNKdO9-LhplD25KYH0tQjJctG_oMPuCxCzI&usqp=CAU" alt="Soundboard" class="game-thumbnail" style="background-color: #1a1a2e;">
                         <div class="game-info">
@@ -9368,7 +9501,7 @@ function toggleFullscreen() {
                                 <i class="fas fa-sync-alt" style="margin-right: 5px;"></i> Next update in: <span id="countdown-timer">00:00:00</span>
                             </div>
                             <button onclick="selectNewGameOfHour()" style="background: rgba(255, 0, 255, 0.3); border: 1px solid #ff00ff; color: white; padding: 5px 10px; border-radius: 15px; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 0.8rem; transition: all 0.3s ease;">
-                                <i class="fas fa-dice"></i> New Random Pick
+                                <i class="fas fa-dice"></i> Refresh
                             </button>
                         </div>
                     </div>
@@ -9400,10 +9533,96 @@ function toggleFullscreen() {
                 </div>
                 
                 <div class="games-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
-                    <!-- Game cards organized alphabetically -->
-                    <!-- Aces of the Sky (CrazyGames) -->
-                 
-                    
+                    <!-- Ragdoll Archers Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/ragdollarchers.html')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://cdn-bgp.bluestacks.com/BGP/us/gametiles_com.Ericetto.RagdollArchers.jpg" alt="Ragdoll Archers" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Ragdoll Archers</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">ARCHERY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spiral Roll Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/spiralroll.html')" data-category="arcade">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/spiralroll-min.jpg" alt="Spiral Roll" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Spiral Roll</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ARCADE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SKILL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TABS Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/tabs.html')" data-category="strategy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/tabs-min.jpg" alt="TABS" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>TABS</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMULATION</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moto X3M Spooky Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/motox3mspooky.html')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/motox3mspooky.png" alt="Moto X3M Spooky" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Moto X3M Spooky</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BIKE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cut the Rope Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/cuttherope.html')" data-category="puzzle">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/cuttherope-min.png" alt="Cut the Rope" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Cut the Rope</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PUZZLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Capybara Clicker Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/capybaraclicker.html')" data-category="clicker">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/capybaraclicker-min.png" alt="Capybara Clicker" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Capybara Clicker</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IDLE</span>
+                            </div>
+                        </div>
+                    </div>
+
                   
 
                    
@@ -9633,11 +9852,11 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/snowrider3d/index.html')" data-category="sports" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
+                    <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/snowrider3d/index.html')" data-category="sports">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
-                        <img src="https://bloximages.newyork1.vip.townnews.com/wfmz.com/content/tncms/assets/v3/editorial/2/0f/20fb5e48-c282-11ec-82b7-f7dd1aaba15d/62631c9fc3db1.preview.png?crop=512%2C269%2C0%2C57&resize=438%2C230&order=crop%2Cresize" alt="Snow Rider 3D" style="width: 100%; height: 150px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        <img src="https://bloximages.newyork1.vip.townnews.com/wfmz.com/content/tncms/assets/v3/editorial/2/0f/20fb5e48-c282-11ec-82b7-f7dd1aaba15d/62631c9fc3db1.preview.png?crop=512%2C269%2C0%2C57&resize=438%2C230&order=crop%2Cresize" alt="Snow Rider 3D" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Snow Rider 3D</h3>
                             <div class="game-tags">
@@ -9646,11 +9865,11 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/racesurvival.html')" data-category="racing" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/racesurvival.html')" data-category="racing">
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
-                        <img src="https://static.playhop.com/images/ca611_11385414_76bc4/48682f74f/2a0000018d6530b2_94b6c6c/0c984e8b962260096fe0_e0d63c/orig" alt="Sky Car Rider" style="width: 100%; height: 150px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        <img src="https://static.playhop.com/images/ca611_11385414_76bc4/48682f74f/2a0000018d6530b2_94b6c6c/0c984e8b962260096fe0_e0d63c/orig" alt="Sky Car Rider" class="game-thumbnail">
                         <div class="game-info">
                             <h3>Race Survival: Arena King</h3>
                             <div class="game-tags">
@@ -9730,7 +9949,98 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwXhPAppqZUy69d6b26B3Z6daQdZmzPsiaSsywQseSBMh94FLNnVTmupJqtonwt9oaQLw/exec')" data-category="arcade" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
+                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbwXhPAppqZUy69d6b26B3Z6daQdZmzPsiaSsywQseSBMh94FLNnVTmupJqtonwt9oaQLw/exec')" data-category="arcade">
+
+                    <!-- Ragdoll Archers Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/ragdollarchers.html')" data-category="action">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/ragdollarchers-min.png" alt="Ragdoll Archers" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Ragdoll Archers</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ACTION</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SHOOTER</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spiral Roll Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/spiralroll.html')" data-category="arcade">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/spiralroll-min.jpg" alt="Spiral Roll" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Spiral Roll</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">ARCADE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SKILL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TABS Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/tabs.html')" data-category="strategy">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/tabs-min.jpg" alt="TABS" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>TABS</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">STRATEGY</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">SIMULATION</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moto X3M Spooky Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/motox3mspooky.html')" data-category="racing">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/motox3mspooky.png" alt="Moto X3M Spooky" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Moto X3M Spooky</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">RACING</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BIKE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cut the Rope Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/cuttherope.html')" data-category="puzzle">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/cuttherope-min.png" alt="Cut the Rope" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Cut the Rope</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">PUZZLE</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CASUAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Capybara Clicker Card -->
+                    <div class="game-card" onclick="openGame('https://read.ebookswest.com.au/assets/mainstorage/capybaraclicker.html')" data-category="clicker">
+                        <div class="game-card-overlay">
+                            <button class="play-now-btn">PLAY NOW</button>
+                        </div>
+                        <img src="https://read.ebookswest.com.au/images/games/capybaraclicker-min.png" alt="Capybara Clicker" class="game-thumbnail">
+                        <div class="game-info">
+                            <h3>Capybara Clicker</h3>
+                            <div class="game-tags">
+                                <span class="game-tag">CLICKER</span>
+                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">IDLE</span>
+                            </div>
+                        </div>
+                    </div>
+
                         <div class="game-card-overlay">
                             <button class="play-now-btn">PLAY NOW</button>
                         </div>
@@ -9743,19 +10053,7 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbx_sIQG2rUisJPhvCnaoOFGDwTou_89iDBoJTAB5RsdykYLw7IQF8vUYUKMBDoJDY0asQ/exec')" data-category="arcade" style="position: relative; background: rgba(0, 0, 0, 0.5); border-radius: 10px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);">
-                        <div class="game-card-overlay">
-                            <button class="play-now-btn">PLAY NOW</button>
-                        </div>
-                        <img src="data:image/png;base64,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" alt="Car Drawing" style="width: 100%; height: 150px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                        <div class="game-info">
-                            <h3>Car Drawing</h3>
-                            <div class="game-tags">
-                                <span class="game-tag">ARCADE</span>
-                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">CREATIVE</span>
-                            </div>
-                        </div>
-                    </div>
+                 
                     <!-- Fake Virus Troll -->
                     <div class="game-card" onclick="openGame('https://storage.classroomsarecool.mex.com/fake-virus/index.html')" data-category="prank">
                         <div class="game-card-overlay">
@@ -11625,19 +11923,7 @@ function toggleFullscreen() {
                             </div>
                         </div>
                     </div>
-                    <div class="game-card" onclick="window.open('https://notawebsite.com.com.com.com.com.com.l5.ca/browser?q=https%3A%2F%2F23azostore.github.io%2Fs2%2Fbrain-test-tricky-puzzles%2F', 'Brain Test: Trick Puzzles')" data-category="puzzle">
-                        <div class="game-card-overlay">
-                            <button class="play-now-btn">PLAY NOW</button>
-                        </div>
-                        <img src="https://thepizzaeditions.github.io/media/brain-test-tricky-puzzles.png" alt="Brain Test: Trick Puzzles" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3>Brain Test: Trick Puzzles</h3>
-                            <div class="game-tags">
-                                <span class="game-tag">PUZZLE</span>
-                                <span class="game-tag" style="background: rgba(255, 0, 255, 0.3);">BRAIN</span>
-                            </div>
-                        </div>
-                    </div>
+                   
                  
                     <div class="game-card" onclick="openGame('https://script.google.com/macros/s/AKfycbxOdvIWKB1iyuZ7zwU0c45svNrf3GTGbiQp6mOxw-p8Bf-BbJ4m00fyTwjp3QeMuwCjmQ/exec')" data-category="sports">
                         <div class="game-card-overlay">
@@ -16287,8 +16573,7 @@ function toggleFullscreen() {
                 "Lee is 6 foot",
                 "gus loves taco bell",
                 "theo is cool",
-                "six sevennnnn",
-                "Monty is watching you"
+                "six sevennnnn"
             ];
             
             // Function to show the slap animation with a random quote
